@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import numpy as np
 
 # Define architecture of the video transformer
 # It will be composed of the following parts:
@@ -42,6 +41,9 @@ class MultiHeadAttention(nn.module):
         x = self.proj_drop(x)
 
         return x
+
+class Block(nn.Module):
+
     
     
 
