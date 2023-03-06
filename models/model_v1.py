@@ -8,13 +8,13 @@ import torch.nn as nn
 #   - MLP
 
 
-class LinearMap(nn.Module):
-    def __init__(self, in_features, out_features):
+class PatchTokenization(nn.Module):
+    def __init__(self, patch_size=16, chanels=3, embed_dim=768):  # embed_dim = 16x16x3
         super().__init__()
-        self.fc = nn.Linear(in_features, out_features)
+        self.proj = nn.Conv2d(chanels, embed_dim, kernel_size=patch_size, stride=patch_size)
 
     def forward(self, x):
-        x = self.fc(x)
+        x = self.proj(x)
         return x
 
 
@@ -29,7 +29,7 @@ class MultiHeadAttention(nn.Module):
         self.attn_drop = nn.Dropout(attn_drop)
 
     def forward(self, x):
-        W, H, C = x.shape()
+        W, H, C = x.shape
         qkv = self.qkv(x).reshape(W, H, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # (3, head, C/head, W, H)
         q, k, v = qkv[0], qkv[1], qkv[2]
 
