@@ -18,7 +18,7 @@ class LinearMap(nn.Module):
         return x
 
 
-class MultiHeadAttention(nn.module):
+class MultiHeadAttention(nn.Module):
     def __init__(self, dim, num_heads=8, proj_drop=0., attn_drop=0.):
         super().__init__()
         self.num_heads = num_heads
@@ -74,14 +74,3 @@ class Block(nn.Module):
         self.mlp = MLP(dim, mlp_hidden_dim, act_layer, drop=proj_drop)
 
     def forward(self, x):
-
-
-
-
-    
-    
-
-
-
-
-
