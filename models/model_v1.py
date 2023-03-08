@@ -49,6 +49,7 @@ class MultiHeadAttention(nn.Module):
 class MLP(nn.Module):
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
         super().__init__()
+        out_features = out_features or in_features
         self.fc1 = nn.Linear(in_features, hidden_features)
         self.act = act_layer()
         self.fc2 = nn.Linear(hidden_features, out_features)
@@ -65,7 +66,7 @@ class MLP(nn.Module):
  
 
 class Block(nn.Module):
-    def __init__(self, dim, num_heads, mlp_ratio=4., proj_drop=0., attn_drop=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
+    def __init__(self, dim, num_heads, mlp_ratio=1., proj_drop=0., attn_drop=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = MultiHeadAttention(dim, num_heads, proj_drop, attn_drop)
@@ -74,4 +75,10 @@ class Block(nn.Module):
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = MLP(dim, mlp_hidden_dim, act_layer, drop=proj_drop)
 
-    def forward(self, x):
+    def forward(self, x, B, T, W):
+        num_spatial_tokens = (x.size(1) - 1) // T
+        H = num_spatial_tokens // W
+
+        x = x + self.attn(self.norm1(x))
+        x = x + self.mlp(self.norm2(x))
+        return x
