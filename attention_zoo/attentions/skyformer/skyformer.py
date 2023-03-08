@@ -2,11 +2,11 @@
 
 from functools import partial
 import torch
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from einops import rearrange
 from torch import Tensor
 from torch import nn
-from attention_zoo.utils import iterative_inv
+from utils import iterative_inv
 from collections.abc import Callable
 from typing import Tuple
 from omegaconf import DictConfig

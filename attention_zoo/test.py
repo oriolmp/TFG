@@ -3,29 +3,29 @@ from base_attention import BaseAttention
 import hydra
 import torch
 from omegaconf import OmegaConf
-
-attn_config = OmegaConf.create({'name': 'vanilla_attention'})
+import sys
 
 # CONSTANTS
 # This constant includes all the supported attention mechanisms
-# attention_names = ['vanilla_attention',
-#                     'skyformer',
-#                     'rela_attention',
-#                     'performer',
-#                     'nystromformer',
-#                     'linformer',
-#                     'linear_attention',
-#                     'galerkin',
-#                     'fastformer',
-#                     'custom_nystrom_attention',
-#                     'custom_full_attention',
-#                     'cosformer']
-
-attention_names = ['vanilla_attention']
-
+attention_names = ['vanilla_attention',
+                    # 'skyformer',
+                    'rela_attention',
+                    # 'performer',
+                    # 'nystromformer',
+                    # 'linformer',
+                    'linear_attention',
+                    'galerkin',
+                    # 'fastformer',
+                    # 'custom_nystrom_attention',
+                    # 'custom_full_attention',
+                    # 'cosformer'
+]
 
 # Iterate over all the attention mechanisms and initialize them
 for att_method in attention_names:
+
+    attn_config = OmegaConf.create({'name': att_method})
+
     # Create a basic configuration
     b = 5
     n = 1024
@@ -47,6 +47,8 @@ for att_method in attention_names:
 
     # Try a forward pass
     print("Forward passing...")
-    model(test_input)
-
+    out = model(test_input)
+    # print(len(out)) = 2. out[1] is None
+    print(out[0].size())
+   
     hydra.core.global_hydra.GlobalHydra.instance().clear()
