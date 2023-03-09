@@ -147,7 +147,6 @@ def preprocess_dataset(data_path=None, label_path=None, output_dir:str = None):
             torch.save(data, segment_path)
 
 
-# Preprocess domain P01
 preprocess_dataset(data_path='',
                    label_path='',
                    output_dir='/data-local/data1-ssd/dpujolpe/Processed_EK100_I3D_frame')
