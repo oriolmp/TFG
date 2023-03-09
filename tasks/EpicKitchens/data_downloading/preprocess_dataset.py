@@ -124,6 +124,8 @@ def preprocess_dataset(data_path=None, label_path=None, output_dir:str = None):
                                            end=stop_frame,
                                            samp_rate=0.5)
 
+            # TODO: Add padding so that all the segments have the same size?
+
             # Apply the data transformation, resizing and normalizing
             # Input has shape TxHxWxC
             # The transformation takes as input C x T x H x W, and returns
