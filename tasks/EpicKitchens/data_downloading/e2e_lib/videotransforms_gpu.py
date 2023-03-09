@@ -19,7 +19,6 @@ class GroupResize(object):
 
     def __call__(self, imgs):
         # imgs: shape CxTxHxW
-
         imgs = imgs.permute(1,0,2,3)    # TxCxHxW
 
         src_shape = imgs[0].shape[-2:]

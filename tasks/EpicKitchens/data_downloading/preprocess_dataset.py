@@ -3,21 +3,13 @@ import random
 import time
 from typing import List
 
+import csv
 import hydra
 import torch
 import wandb
 from hydra import compose, initialize
 from einops import rearrange
-
 from utils.misc import collate_fn
-
-
-# This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-net/datasets/EpicKitchens/EPIC-KITCHENS'
-LABEL_PATH = '/data-net/datasets/EpicKitchens/EPIC-KITCHENS/labels'
-FILE_NAMES = {'train': 'EPIC_100_train.pkl',
-              'val': 'EPIC_100_validation.pkl',
-              'test': 'EPIC_100_test_timestamps.pkl'}
 
 def create_transformation():
     from tasks.EpicKitchens.data_downloading.e2e_lib.videotransforms_gpu import GroupRandomHorizontalFlip, GroupRandomCrop, GroupCenterCrop, \
@@ -59,37 +51,46 @@ def apply_backbone(x, backbone):
         return rearrange(x_frame, '(b t) c -> b c t', b=b)
 
 
-def preprocess_dataset(data_path=None, output_dir:str = None):
+def load_video_frames(frame_dir,
+                      start,
+                      end,
+                      fn_tmpl='img_%07d.jpg',
+                      samp_rate:float=0.5):
+    '''
+    Load a sequence of video frames into memory, while discarding (1-samp_rate) frames
+
+    Params:
+        frame_dir: the directory to the decoded video frames
+        start: load image starting with this index. 1-indexed
+        end: length of the loaded sub-sequence.
+        stride: load one frame every `stride` frame from the sequence.
+    Returns:
+        Nd-array with shape (T, H, W, C) in float32 precision. T = num // stride
+    '''
+    # Read the images in parallel
+
+    # Calculate the stride, depending on the sampling rate
+    stride = int(1 / samp_rate)
+
+    img_paths = [os.path.join(frame_dir, fn_tmpl % i) for i in range(start, end, stride)]
+    frames = [cv2.imread(path) for path in img_paths]
+
+    return np.asarray(frames, dtype=np.float32)  # T x H x W x C
+
+
+def preprocess_dataset(data_path=None, label_path=None, output_dir:str = None):
     # Set the cuda device
     torch.cuda.set_device(3)
 
-    # -------------------------------------------------
-    print("Loading the data...")
-
-    data_threads = 8
-
-    # Load the source training domain
-    print("Loading the training dataset")
-    train_src_path = os.path.join(DATA_PATH, 'train', src_domain, 'rgb_frames')
-
-    info_path = os.path.join(
-        '/home-net/dpujolpe/Domain_adaptive_WTAL/Domain_adaptive_WTAL/src/tasks/Epic_kitchens_100vs100/video_info',
-        'video_info_train')
-    label_path = os.path.join(LABEL_PATH, FILE_NAMES['train'])
-    train_source_set = build_dataset(data_path=train_src_path,
-                                    info_path=info_path,
-                                    label_path=label_path,
-                                    get_labels=True,
-                                    mode='train',
-                                    samp_rate=0.5)
-    train_src_loader = torch.utils.data.DataLoader(train_source_set, batch_size=1, num_workers=data_threads, collate_fn=collate_fn, drop_last=True, pin_memory=True)
-
+    # Create the output directory
+    output_dir = os.path.join(output_dir, src_domain)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     # Create the data transformation
-    transformation = create_transformation()
+    transform = create_transformation()
 
-
-    # Load the I3D model
+    # Load the I3D model to extract features
     from Domain_adaptive_WTAL.src.models.backbone.models.pytorch_i3d import InceptionI3d
     backbone = InceptionI3d(400, in_channels=3).cuda()
     backbone.load_state_dict(torch.load('/home-net/dpujolpe/Domain_adaptive_WTAL/Domain_adaptive_WTAL/src/models/backbone/pretrained_models/I3D/rgb_imagenet.pt'))
@@ -97,40 +98,55 @@ def preprocess_dataset(data_path=None, output_dir:str = None):
     backbone.num_channels = 1024
     backbone.requires_grad_(False)
 
-    # Create the output directory
-    output_dir = os.path.join(output_dir, src_domain)
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    # Iterate over each of the segments
+    with open(label_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            # Iterate over each of the segments
+            start_frame = row['start_frame']
+            stop_frame = row['stop_frame']
 
+            verb_class = row['verb_class']
+            noun_class = row['noun_class']
 
-    # TODO: Iterate over each of the segments of the label set. Then apply I3D over their corresponding RGB. Then save the extracted features
-    # Now process the train dataset
-    output_dir_train = os.path.join(output_dir, 'train')
-    if not os.path.exists(output_dir_train):
-        os.makedirs(output_dir_train)
+            participant_id = row['participant_id']
+            video_id = row['video_id']
+            narration_id = row['narration_id']
 
-    for i, (batch, label) in enumerate(train_src_loader):
-        # Load the target input (shape BxCxTxHxW) and the annotations
-        input = batch.tensors.cuda()  # Load the target data
-        label = label[0]
+            # Now read the RGBs of this segments
+            # Compute the directory of this segment
+            frame_dir = ''
 
-        # Apply the data augmentations
-        input = apply_transformation(input, transforms=transformation)
+            # Extract the corresponding RGBs
+            # shape: T x H x W x C
+            video_data = load_video_frames(frame_dir=frame_dir,
+                                           start=start_frame,
+                                           end=stop_frame,
+                                           samp_rate=0.5)
 
-        # Apply a pretrained I3D model (on Imagenet).
-        # Apply a backbone so that the input data has shape BxCxTxHxW -> B x F' x T
-        input = apply_backbone(input, backbone)
+            # Apply the data transformation, resizing and normalizing
+            # Input has shape TxHxWxC
+            # The transformation takes as input C x T x H x W, and returns
+            video_data = transform(video_data.permute(3,0,1,2))  # Apply the transformation to the images (data augmentation)
 
-        input = rearrange(input, 'b f t -> b t f')
+            # Apply a pretrained I3D model (on Imagenet).
+            # Apply a backbone so that the input data has shape CxTxHxW -> B x F' x T
+            video_data = apply_backbone(torch.unsqueeze(video_data, 0), backbone)
 
-        data = {'data': input,
-                'label': label}
+            # Transpose to the final shape T x F
+            video_data = rearrange(video_data, 'b f t -> b t f')
 
-        # Save the preprocessed features into a .pt file
-        cut_path = os.path.join(output_dir_train, 'cut_' + str(i)+'.pt')
-        torch.save(data, cut_path)
+            data = {'data': video_data,
+                    'verb_class': verb_class,
+                    'noun_class': noun_class}
+
+            # Save the preprocessed features into a .pt file
+            segment_path = os.path.join(output_dir, narration_id + '.pt')
+            torch.save(data, segment_path)
 
 
 # Preprocess domain P01
-preprocess_dataset(data_path='', output_dir='/data-local/data1-ssd/dpujolpe/Processed_EK100_I3D_frame')
+preprocess_dataset(data_path='',
+                   label_path='',
+                   output_dir='/data-local/data1-ssd/dpujolpe/Processed_EK100_I3D_frame')
 
