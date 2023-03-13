@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from einops import rearrange, reduce, repeat
+
 from omegaconf import DictConfig, OmegaConf
 import hydra
 
@@ -14,13 +16,28 @@ def cfg_setup(cfg: DictConfig):
     return cfg
 
 class PatchTokenization(nn.Module):
-    def __init__(self, patch_size=16, chanels=3, embed_dim=768):  # embed_dim = 16x16x3
+    """ 
+        Image to Patch Embedding
+        Usually embed_dim = patch_size^2 * in_chans
+    """
+    def __init__(self, img_size=480, patch_size=16, in_chans=3, embed_dim=768):
         super().__init__()
-        self.proj = nn.Conv2d(chanels, embed_dim, kernel_size=patch_size, stride=patch_size)
+        img_size = [img_size, img_size]
+        patch_size = [patch_size, patch_size]
+        num_patches = (img_size[1] // patch_size[1]) * (img_size[0] // patch_size[0])
+        self.img_size = img_size
+        self.patch_size = patch_size
+        self.num_patches = num_patches
+
+        self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
 
     def forward(self, x):
+        B, C, T, H, W = x.shape
+        x = rearrange(x, 'b c t h w -> (b t) c h w')
         x = self.proj(x)
-        return x
+        W = x.size(-1)
+        x = rearrange(x, 'b c h w -> b (h w) c') 
+        return x, T, W
 
 
 class MultiHeadAttention(nn.Module):
