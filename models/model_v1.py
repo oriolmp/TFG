@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from omegaconf import DictConfig, OmegaConf
+import hydra
 
 # Define architecture of the video transformer
 # It will be composed of the following parts:
@@ -7,6 +9,10 @@ import torch.nn as nn
 #   - N x encoder block (multihead attention + LN + MLP)
 #   - MLP
 
+@hydra.main(version=None, config_path='./configs', config_name='model_v1')
+def cfg_setup(cfg):
+    config = OmegaConf.to_yaml(cfg)
+    return config
 
 class PatchTokenization(nn.Module):
     def __init__(self, patch_size=16, chanels=3, embed_dim=768):  # embed_dim = 16x16x3
