@@ -116,5 +116,10 @@ class Model_v1(nn.Module):
             embed_dim=embed_dim
         )
 
+        # Add classification tokens as parameters
+        self.cls_token = nn.Parameter(1, 1, embed_dim)
+
         
+
+
 
