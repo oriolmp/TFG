@@ -10,9 +10,8 @@ import hydra
 #   - MLP
 
 @hydra.main(version=None, config_path='./configs', config_name='model_v1')
-def cfg_setup(cfg):
-    config = OmegaConf.to_yaml(cfg)
-    return config
+def cfg_setup(cfg: DictConfig):
+    return cfg
 
 class PatchTokenization(nn.Module):
     def __init__(self, patch_size=16, chanels=3, embed_dim=768):  # embed_dim = 16x16x3
