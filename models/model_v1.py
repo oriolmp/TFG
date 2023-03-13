@@ -115,11 +115,15 @@ class Model_v1(nn.Module):
             in_chans=in_chans,
             embed_dim=embed_dim
         )
+        num_patches = self.patch_emebed.num_patches
 
-        # Add classification tokens as parameters
-        self.cls_token = nn.Parameter(1, 1, embed_dim)
+        # Add classification token as parameters
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
 
-        
+        # Add positional embedding
+        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, embed_dim))
+
+
 
 
 
