@@ -97,3 +97,24 @@ class Block(nn.Module):
         self.mlp = MLP(dim, mlp_hidden_dim, act_layer, drop=proj_drop)
 
     def forward(self, x):
+
+
+class Model_v1(nn.Module):
+    """
+    First model backbone
+    """
+    def __init__(self, img_size=480, patch_size=16, in_chans=3, embed_dim=768, num_classes=97, num_heads=4, depth=2):
+        super.__init__()
+        self.depth = depth
+        self.heads = 4
+        self.num_classes = num_classes
+        
+        self.patch_embed = PatchTokenization(
+            img_size=img_size,
+            patch_size=patch_size,
+            in_chans=in_chans,
+            embed_dim=embed_dim
+        )
+
+        
+
