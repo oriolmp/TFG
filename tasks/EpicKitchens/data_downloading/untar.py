@@ -13,6 +13,7 @@ def untar_dirs(path):
             tar_files = glob.glob(kitchen_path + '/*.tar')
 
             for file in tar_files:
+                print("Untaring file...", file)
                 # Extract the kitchen name
                 name = file.split('/')[-1]
                 name = name.split('.')[0]
@@ -32,4 +33,4 @@ def untar_dirs(path):
                 os.remove(file)
 
 if __name__ == '__main__':
-    untar_dirs(path='/data-net/datasets/EpicKitchens/UDA_EPIC_KITCHENS100')
+    untar_dirs(path='/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS')
