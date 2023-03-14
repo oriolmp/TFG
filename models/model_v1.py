@@ -62,17 +62,8 @@ class MultiHeadAttention(nn.Module):
         print(f'qkv reshaped and permuted: {qkv.shape}')
         q, k, v = qkv[0], qkv[1], qkv[2]
 
-        attn = q @ k.transpose(-2, -1)  # @ operator? 
-        # attn = attn * (self.head_dim ** -0.5)
-        attn = attn.softmax(dim=-1)
-        attn = self.attn_drop(attn)
-
-        x = (attn @ v).transpose(1, 2)
-        x = x.reshape(B, N, C)
-        x = self.proj(x)
-        x = self.proj_drop(x)
-
-        return x
+        output = self.attention.apply_attention(Q=q, K=k, V=v)
+        return output
 
 
 class MLP(nn.Module):
