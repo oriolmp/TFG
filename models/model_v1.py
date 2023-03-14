@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from einops import rearrange, reduce, repeat
+from attention_zoo.base_attention import BaseAttention
 
 from omegaconf import DictConfig, OmegaConf
 import hydra
@@ -41,9 +42,10 @@ class PatchTokenization(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, dim, num_heads=8, proj_drop=0., attn_drop=0.):
+    def __init__(self, config, dim, num_heads=8, proj_drop=0., attn_drop=0.):
         super().__init__()
         self.num_heads = num_heads
+        self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=dim, h=dim)
         # self.head_dim = dim // num_heads
         self.qkv = nn.Linear(dim, dim * 3)  # (B, N, C) -> (B, N, C * 3)
         self.proj = nn.Linear(dim, dim)
@@ -52,7 +54,12 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, x):
         B, N, C = x.shape
-        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)  # (3, head, C/head, W, H)
+        qkv = self.qkv(x)
+        print(f'qkv: {self.qkv(x).shape}')
+        qkv = rearrange(qkv, 'b n (c h w) -> b n c h w', h=self.num_heads, w=C//self.num_heads)
+        print(f'qkv reshaped: {qkv.shape}')
+        qkv = rearrange(qkv, 'b n c h w -> c b h n w')
+        print(f'qkv reshaped and permuted: {qkv.shape}')
         q, k, v = qkv[0], qkv[1], qkv[2]
 
         attn = q @ k.transpose(-2, -1)  # @ operator? 
