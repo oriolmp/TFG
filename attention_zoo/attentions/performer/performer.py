@@ -1,7 +1,7 @@
 import math
 import torch
 import torch.nn as nn
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from einops import rearrange
 from performer_pytorch import FastAttention
 from torch import Tensor

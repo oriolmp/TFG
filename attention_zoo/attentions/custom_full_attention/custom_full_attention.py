@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 import math
 from einops import rearrange, reduce
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from torch import Tensor
 from typing import Tuple
 from omegaconf import DictConfig

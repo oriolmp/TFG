@@ -9,7 +9,7 @@ from omegaconf import DictConfig
 from torch import Tensor
 from torch import nn, einsum
 
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 
 
 class GalerkinAttention(AbstractAttention):

@@ -3,7 +3,7 @@
 import torch
 import numpy as np
 from torch import nn
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from einops import rearrange
 from torch import Tensor
 from typing import Tuple
