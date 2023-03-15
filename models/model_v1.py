@@ -99,29 +99,51 @@ class Block(nn.Module):
         return x
 
 
-class Model_v1(nn.Module):
+class Model(nn.Module):
     """
-    First model backbone
+    Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + MLP
     """
-    def __init__(self, img_size=480, patch_size=16, in_chans=3, embed_dim=768, num_classes=97, num_heads=4, depth=2):
-        super.__init__()
+    def __init__(self, cfg, img_size=240, patch_size=16, in_chans=3, embed_dim=768, num_classes=97, depth=2, num_heads=4, mlp_ratio=4.,
+                 proj_drop=0., attn_drop=0., norm_layer=nn.LayerNorm, num_frames=30, dropout=0.):
+        super().__init__()
         self.depth = depth
-        self.heads = 4
+        self.dropout = nn.Dropout(dropout)
         self.num_classes = num_classes
+        self.num_features = self.embed_dim = embed_dim
+        self.num_frames = num_frames
+        self.patch_embed= PatchTokenization(img_size, patch_size, in_chans, embed_dim)
+        num_patches = self.patch_embed.num_patches
         
-        self.patch_embed = PatchTokenization(
-            img_size=img_size,
-            patch_size=patch_size,
-            in_chans=in_chans,
-            embed_dim=embed_dim
-        )
-        num_patches = self.patch_emebed.num_patches
-
-        # Add classification token as parameters
+        # Positional Embeddings
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
-
-        # Add positional embedding
-        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(num_frames, num_patches+1, embed_dim))
+        # self.time_embed = nn.Parameter(torch.zeros(1, num_frames, embed_dim))
+                                       
+        # Attention Blocks
+        self.blocks = nn.ModuleList([
+            Block(cfg, embed_dim, num_heads, mlp_ratio, proj_drop, attn_drop, act_layer=nn.GELU, norm_layer=norm_layer)
+            for i in range(self.depth)])                            
+        self.norm = norm_layer(embed_dim)
+        
+        # Classifier head
+        self.head = nn.Linear(embed_dim, num_classes)
+        
+    def forward(self, x):
+        x, T, W = self.patch_embed(x)
+        
+        # add class token
+        cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # (1, 1, embed) -> (30, 1, embed)
+        x = torch.cat((cls_tokens, x), dim=1) # (batch x frames, patches, embed) -> (batch x frames, patches + 1, embed)
+    
+        # add positional/temporal embedding
+        x = x + self.pos_embed
+        
+        for block in self.blocks:
+            x = block.forward(x)
+        x = rearrange(x, '(b f) p e -> b f p e', f=self.num_frames) # (batch x frames, patches, embed) -> (batch, frames, patch, embed)
+        x = torch.mean(x, [1,2])
+        x = self.head(x)
+        return x   
 
 
 
