@@ -85,16 +85,18 @@ class MLP(nn.Module):
  
 
 class Block(nn.Module):
-    def __init__(self, dim, num_heads, mlp_ratio=4., proj_drop=0., attn_drop=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
+    def __init__(self, cfg, dim, num_heads, mlp_ratio=4., proj_drop=0., attn_drop=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
-        self.attn = MultiHeadAttention(dim, num_heads, proj_drop, attn_drop)
-        self.temporal_fc = nn.Linear(dim, dim)
+        self.attn = MultiHeadAttention(cfg, dim, num_heads, proj_drop, attn_drop)
         self.norm2 = norm_layer(dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = MLP(dim, mlp_hidden_dim, act_layer, drop=proj_drop)
+        self.mlp = MLP(dim, mlp_hidden_dim, act_layer=act_layer, drop=proj_drop)
 
     def forward(self, x):
+        x = x + self.attn(self.norm1(x))[0]
+        x = x + self.mlp(self.norm2(x))
+        return x
 
 
 class Model_v1(nn.Module):
