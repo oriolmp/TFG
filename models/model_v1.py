@@ -12,6 +12,7 @@ import hydra
 #   - N x encoder block (multihead attention + LN + MLP)
 #   - MLP
 
+# This shouldn't be here, but we leave it here for the moment until we move it
 @hydra.main(version=None, config_path='./configs', config_name='model_v1')
 def cfg_setup(cfg: DictConfig):
     return cfg
@@ -19,7 +20,7 @@ def cfg_setup(cfg: DictConfig):
 class PatchTokenization(nn.Module):
     """ 
         Video to Patch Embedding.
-        Applies Conv2d to transform the imput video 
+        Applies Conv2d to transform the input video 
         (batch, chanels, frames, width, height) -> (frames, patches, embed_dim)
     """
     def __init__(self, img_size: int, patch_size: int, in_chans: int, embed_dim: int):
