@@ -18,10 +18,11 @@ def cfg_setup(cfg: DictConfig):
 
 class PatchTokenization(nn.Module):
     """ 
-        Image to Patch Embedding
-        Usually embed_dim = patch_size^2 * in_chans
+        Video to Patch Embedding.
+        Applies Conv2d to transform the imput video 
+        (batch, chanels, frames, width, height) -> (frames, patches, embed_dim)
     """
-    def __init__(self, img_size=480, patch_size=16, in_chans=3, embed_dim=768):
+    def __init__(self, img_size: int, patch_size: int, in_chans: int, embed_dim: int):
         super().__init__()
         img_size = [img_size, img_size]
         patch_size = [patch_size, patch_size]
@@ -33,16 +34,21 @@ class PatchTokenization(nn.Module):
         self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
 
     def forward(self, x):
-        B, C, T, H, W = x.shape
-        x = rearrange(x, 'b c t h w -> (b t) c h w')
+        _, _, T, _, W = x.shape
+        x = rearrange(x, 'b c t w h -> (b t) c w h')
         x = self.proj(x)
         W = x.size(-1)
-        x = rearrange(x, 'b c h w -> b (h w) c') 
+        x = rearrange(x, 'b c w h -> b (w h) c') 
         return x, T, W
 
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, cfg, dim, num_heads=8, proj_drop=0., attn_drop=0.):
+    """
+        Computes the Q, K, V values from the patch embeddings and computes attention.
+        To select which attention we want to apply, the cfg file must have the variable
+        ATTENTION set to one of the available models in the library attention_zoo.
+    """
+    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, proj_drop: float, attn_drop: float):
         super().__init__()
         self.num_heads = num_heads
         self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=dim, h=dim)
@@ -53,22 +59,28 @@ class MultiHeadAttention(nn.Module):
         self.attn_drop = nn.Dropout(attn_drop)
 
     def forward(self, x):
-        B, N, C = x.shape
+        _, _, C = x.shape
         qkv = self.qkv(x)
-        print(f'qkv: {self.qkv(x).shape}')
         qkv = rearrange(qkv, 'b n (c h w) -> b n c h w', h=self.num_heads, w=C//self.num_heads)
-        print(f'qkv reshaped: {qkv.shape}')
         qkv = rearrange(qkv, 'b n c h w -> c b h n w')
-        print(f'qkv reshaped and permuted: {qkv.shape}')
         q, k, v = qkv[0], qkv[1], qkv[2]
 
         output = self.attention.apply_attention(Q=q, K=k, V=v)
+        
         return output
 
 
 class MLP(nn.Module):
-    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
+    """
+        Applies 2 linear layers after attention is computed.
+        Should have as output a tensor of the same size as the patch tokens. 
+    """
+    def __init__(self, in_features: int, hidden_features: int = None, out_features: int = None, 
+                 act_layer: nn.Module = nn.GELU, drop: float = 0.):
         super().__init__()
+        out_features = out_features or in_features
+        hidden_features = hidden_features or in_features
+
         self.fc1 = nn.Linear(in_features, hidden_features)
         self.act = act_layer()
         self.fc2 = nn.Linear(hidden_features, out_features)
@@ -85,7 +97,11 @@ class MLP(nn.Module):
  
 
 class Block(nn.Module):
-    def __init__(self, cfg, dim, num_heads, mlp_ratio=4., proj_drop=0., attn_drop=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
+    """
+        Implements the NL + MultiheadAttention + NL + MLP block 
+    """
+    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, mlp_ratio: float, proj_drop: float, 
+                 attn_drop:float, act_layer: nn.Module = nn.GELU, norm_layer: nn.Module = nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.attn = MultiHeadAttention(cfg, dim, num_heads, proj_drop, attn_drop)
@@ -94,17 +110,17 @@ class Block(nn.Module):
         self.mlp = MLP(dim, mlp_hidden_dim, act_layer=act_layer, drop=proj_drop)
 
     def forward(self, x):
-        x = x + self.attn(self.norm1(x))[0]
+        x = x + self.attn(self.norm1(x))[0] # [out, scores]
         x = x + self.mlp(self.norm2(x))
         return x
 
 
 class Model(nn.Module):
     """
-    Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + MLP
+    Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + classification head
     """
-    def __init__(self, cfg, mlp_ratio=4., proj_drop=0., attn_drop=0., norm_layer=nn.LayerNorm, num_frames=30, 
-                 dropout=0.):
+    def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0., attn_drop: float = 0., 
+                 norm_layer: nn.Module = nn.LayerNorm, num_frames: int = 30, dropout: float = 0.):
         super().__init__()
         
         self.num_classes = cfg.NUM_CLASSES
@@ -142,7 +158,7 @@ class Model(nn.Module):
         self.head = nn.Linear(self.embed_dim, self.num_classes)
         
     def forward(self, x):
-        x, T, W = self.patch_embed(x)
+        x, _, _ = self.patch_embed(x)
         
         # add class token
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # (1, 1, embed) -> (30, 1, embed)
