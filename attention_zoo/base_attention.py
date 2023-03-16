@@ -6,7 +6,7 @@ class BaseAttention(nn.Module):
     def init_att_module(att_config: OmegaConf, n:int, h:int, in_feat:int, out_feat:int, debug: bool = False, **kwargs):
         # Load the configuration passed as parameter
         model_config = att_config
-        att_name = model_config.name
+        att_name = model_config.ATTENTION
 
         # This method takes as input a name of an attention mechanism, and if implemented,
         # returns an instance of the corresponding object.
