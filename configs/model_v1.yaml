@@ -1,3 +1,9 @@
 MODEL:
+  ATTENTION: 'vanilla_attention'
   NUM_CLASSES: 97
-  INPUT_SIZE: (3, 480, 480)
+  FRAME_SIZE: 240
+  PATCH_SIZE: 16
+  IN_CHANNELS: 3
+  DEPTH: 2
+  HEADS: 4
+
