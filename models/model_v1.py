@@ -42,7 +42,7 @@ class PatchTokenization(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, config, dim, num_heads=8, proj_drop=0., attn_drop=0.):
+    def __init__(self, cfg, dim, num_heads=8, proj_drop=0., attn_drop=0.):
         super().__init__()
         self.num_heads = num_heads
         self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=dim, h=dim)
@@ -103,30 +103,43 @@ class Model(nn.Module):
     """
     Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + MLP
     """
-    def __init__(self, cfg, img_size=240, patch_size=16, in_chans=3, embed_dim=768, num_classes=97, depth=2, num_heads=4, mlp_ratio=4.,
-                 proj_drop=0., attn_drop=0., norm_layer=nn.LayerNorm, num_frames=30, dropout=0.):
+    def __init__(self, cfg, mlp_ratio=4., proj_drop=0., attn_drop=0., norm_layer=nn.LayerNorm, num_frames=30, 
+                 dropout=0.):
         super().__init__()
-        self.depth = depth
-        self.dropout = nn.Dropout(dropout)
-        self.num_classes = num_classes
-        self.num_features = self.embed_dim = embed_dim
-        self.num_frames = num_frames
-        self.patch_embed= PatchTokenization(img_size, patch_size, in_chans, embed_dim)
-        num_patches = self.patch_embed.num_patches
         
+        self.num_classes = cfg.NUM_CLASSES
+        self.img_size = cfg.FRAME_SIZE
+        self.patch_size = cfg.PATHC_SIZE
+        self.in_chans = cfg.IN_CHANNELS
+        self.depth = cfg.DEPTH
+        self.num_heads = cfg.HEADS
+
+        self.num_features = self.embed_dim = (self.patch_size^2) * self.in_chans
+        self.dropout = nn.Dropout(dropout)
+        
+        self.num_frames = num_frames # TODO: How do we handle variable number of frames
+
+        self.patch_embed= PatchTokenization(
+            img_size=self.img_size, 
+            patch_size=self.patch_size, 
+            in_chans=self.in_chans, 
+            embed_dim=self.embed_dim)
+        
+        num_patches = self.patch_embed.num_patches
+    
         # Positional Embeddings
-        self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(num_frames, num_patches+1, embed_dim))
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, self.embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(num_frames, num_patches+1, self.embed_dim))
         # self.time_embed = nn.Parameter(torch.zeros(1, num_frames, embed_dim))
                                        
         # Attention Blocks
         self.blocks = nn.ModuleList([
-            Block(cfg, embed_dim, num_heads, mlp_ratio, proj_drop, attn_drop, act_layer=nn.GELU, norm_layer=norm_layer)
+            Block(cfg, self.embed_dim, self.num_heads, mlp_ratio, proj_drop, attn_drop, act_layer=nn.GELU, norm_layer=norm_layer)
             for i in range(self.depth)])                            
-        self.norm = norm_layer(embed_dim)
+        self.norm = norm_layer(self.embed_dim)
         
         # Classifier head
-        self.head = nn.Linear(embed_dim, num_classes)
+        self.head = nn.Linear(self.embed_dim, self.num_classes)
         
     def forward(self, x):
         x, T, W = self.patch_embed(x)
