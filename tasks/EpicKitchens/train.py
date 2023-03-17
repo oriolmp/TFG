@@ -1,10 +1,6 @@
 import time
 import copy
 import torch
-import torch.nn as nn
-import torch.optim as optim
-
-from sklearn.metrics import accuracy_score, top_k_accuracy_score
 
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50):
     since = time.time()
