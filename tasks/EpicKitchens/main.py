@@ -5,14 +5,19 @@ import argparse
 
 import hydra
 import torch
+import torch.nn as nn
+import torch.optim as optim
+
+from sklearn.metrics import accuracy_score, top_k_accuracy_score
+
 from omegaconf import DictConfig, OmegaConf
 import wandb
 from hydra import compose, initialize
 
 from tasks.EpicKitchens.dataset.dataset import Dataset
 from Domain_adaptive_WTAL.src.utils.misc import collate_fn
-
 from models.model_v1 import Model
+from tasks.EpicKitchens.train import train_model
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS'
@@ -87,7 +92,7 @@ def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = 
 
     # TODO: Add here the initialization of your model
     # This is our general model, even though we may have different configurations (depending on what
-    model = Model(cfg)
+    model = Model(model_cfg)
     
     # Send it to the desired device
     model = model.to(DEVICE)
@@ -104,7 +109,7 @@ def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = 
 
     batch_size = opt.batch_size
     data_threads = opt.data_threads    # These are the number of workers to use for the data loader
-
+    num_epochs = opt.epochs
     # Load the source training domain
     print("Loading the training dataset")
 
@@ -123,11 +128,24 @@ def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = 
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False,
                                              num_workers=data_threads, collate_fn=collate_fn, drop_last=True,
                                              pin_memory=True)
+    
+    dataloaders = [train_loader, val_loader]
 
     wandb.config.update(opt)
 
     # TODO: Run here the training function of your model
+    params_to_update = model.parameters()
+    optimizer = optim.Adam(params_to_update)
+    criterion = nn.CrossEntropyLoss()
 
+    trained_model, _ = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch=10000)
+
+    i = 1
+    save_model_path = pretrain_exp + f'model_{i}'
+    while os.path.isdir(save_model_path):
+        i += 1
+        save_model_path = pretrain_exp + f'model_{i}'
+    torch.save(trained_model.state_dict(), save_model_path)
 
     # Stop the logging
     wandb.finish()
