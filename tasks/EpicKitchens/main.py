@@ -21,7 +21,6 @@ FILE_NAMES = {'train': 'EPIC_100_train.pkl',
               'val': 'EPIC_100_validation.pkl',
               'test': 'EPIC_100_test_timestamps.pkl'}
 
-# This shouldn't be here, but we leave it here for the moment until we move it
 @hydra.main(version=None, config_path='./configs', config_name='model_v1')
 def cfg_setup(cfg: DictConfig):
     return cfg
