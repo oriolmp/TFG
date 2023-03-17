@@ -5,11 +5,14 @@ import argparse
 
 import hydra
 import torch
+from omegaconf import DictConfig, OmegaConf
 import wandb
 from hydra import compose, initialize
 
 from tasks.EpicKitchens.dataset.dataset import Dataset
 from Domain_adaptive_WTAL.src.utils.misc import collate_fn
+
+from models import model_v1
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS'
@@ -17,6 +20,11 @@ LABEL_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS/annotati
 FILE_NAMES = {'train': 'EPIC_100_train.pkl',
               'val': 'EPIC_100_validation.pkl',
               'test': 'EPIC_100_test_timestamps.pkl'}
+
+# This shouldn't be here, but we leave it here for the moment until we move it
+@hydra.main(version=None, config_path='./configs', config_name='model_v1')
+def cfg_setup(cfg: DictConfig):
+    return cfg
 
 def load_ckp(checkpoint_fpath, model, optimizer):
     checkpoint = torch.load(checkpoint_fpath)

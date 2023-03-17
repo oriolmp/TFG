@@ -12,11 +12,6 @@ import hydra
 #   - N x encoder block (multihead attention + LN + MLP)
 #   - MLP
 
-# This shouldn't be here, but we leave it here for the moment until we move it
-@hydra.main(version=None, config_path='./configs', config_name='model_v1')
-def cfg_setup(cfg: DictConfig):
-    return cfg
-
 class PatchTokenization(nn.Module):
     """ 
         Video to Patch Embedding.
