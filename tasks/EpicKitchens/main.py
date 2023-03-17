@@ -56,7 +56,7 @@ def create_options():
     return opt
 
 
-def run_experiment(name: str, cfg: OmegaConf, pretrained_state_path:str = None) -> None:
+def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = None) -> None:
     opt = create_options()
 
     wandb.init(project=name)
@@ -136,5 +136,7 @@ def run_experiment(name: str, cfg: OmegaConf, pretrained_state_path:str = None) 
 
 
 if __name__ == '__main__':
+
+    cfg = cfg_setup()
     # Create the experiment
-    run_experiment(name='action_classificatoin')
+    run_experiment(model_cfg=cfg, name='action_classificatoin')
