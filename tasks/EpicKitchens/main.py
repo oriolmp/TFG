@@ -12,7 +12,7 @@ from hydra import compose, initialize
 from tasks.EpicKitchens.dataset.dataset import Dataset
 from Domain_adaptive_WTAL.src.utils.misc import collate_fn
 
-from models import model_v1
+from models.model_v1 import Model
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS'
@@ -56,7 +56,7 @@ def create_options():
     return opt
 
 
-def run_experiment(name: str, pretrained_state_path:str = None) -> None:
+def run_experiment(name: str, cfg: OmegaConf, pretrained_state_path:str = None) -> None:
     opt = create_options()
 
     wandb.init(project=name)
@@ -88,7 +88,8 @@ def run_experiment(name: str, pretrained_state_path:str = None) -> None:
 
     # TODO: Add here the initialization of your model
     # This is our general model, even though we may have different configurations (depending on what
-
+    model = Model(cfg)
+    
     # Send it to the desired device
     model = model.to(DEVICE)
 
