@@ -1,5 +1,6 @@
 import torch.nn as nn
 from omegaconf import OmegaConf
+import sys
 
 class BaseAttention(nn.Module):
     @staticmethod
@@ -11,6 +12,7 @@ class BaseAttention(nn.Module):
         # This method takes as input a name of an attention mechanism, and if implemented,
         # returns an instance of the corresponding object.
         if att_name == 'vanilla_attention':
+            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.vanilla_attention.vanilla_attention import VanillaAttention
             att_mech = VanillaAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'rela_attention':
