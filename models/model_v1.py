@@ -121,7 +121,7 @@ class Model(nn.Module):
         
         self.num_classes = cfg.NUM_CLASSES
         self.img_size = cfg.FRAME_SIZE
-        self.patch_size = cfg.PATHC_SIZE
+        self.patch_size = cfg.PATCH_SIZE
         self.in_chans = cfg.IN_CHANNELS
         self.depth = cfg.DEPTH
         self.num_heads = cfg.HEADS
