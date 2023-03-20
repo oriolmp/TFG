@@ -34,7 +34,7 @@ class PatchTokenization(nn.Module):
         x = rearrange(x, 'b c t w h -> (b t) c w h')
         x = self.proj(x)
         W = x.size(-1)
-        x = rearrange(x, 'b c w h -> b (w h) c') 
+        x = rearrange(x, 'b c w h -> b (w h) c')
         return x, T, W
 
 
@@ -126,7 +126,7 @@ class Model(nn.Module):
         self.depth = cfg.DEPTH
         self.num_heads = cfg.HEADS
 
-        self.num_features = self.embed_dim = (self.patch_size^2) * self.in_chans
+        self.num_features = self.embed_dim = (self.patch_size * self.patch_size) * self.in_chans
         self.dropout = nn.Dropout(dropout)
         
         self.num_frames = num_frames # TODO: How do we handle variable number of frames
@@ -155,14 +155,11 @@ class Model(nn.Module):
         
     def forward(self, x):
         x, _, _ = self.patch_embed(x)
-        
         # add class token
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # (1, 1, embed) -> (30, 1, embed)
         x = torch.cat((cls_tokens, x), dim=1) # (batch x frames, patches, embed) -> (batch x frames, patches + 1, embed)
-    
         # add positional/temporal embedding
         x = x + self.pos_embed
-        
         for block in self.blocks:
             x = block.forward(x)
         x = rearrange(x, '(b f) p e -> b f p e', f=self.num_frames) # (batch x frames, patches, embed) -> (batch, frames, patch, embed)
