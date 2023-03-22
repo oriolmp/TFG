@@ -2,6 +2,7 @@ import os
 import random
 from typing import List
 import argparse
+import sys
 
 import hydra
 import torch
@@ -14,10 +15,12 @@ from omegaconf import DictConfig, OmegaConf
 import wandb
 from hydra import compose, initialize
 
-from tasks.EpicKitchens.dataset.dataset import Dataset
-from Domain_adaptive_WTAL.src.utils.misc import collate_fn
+from dataset.dataset import Dataset
+from train import train_model
+# from Domain_adaptive_WTAL.src.utils.misc import collate_fn
+sys.path.append(r'C:\Users\34609\VisualStudio\TFG') 
 from models.model_v1 import Model
-from tasks.EpicKitchens.train import train_model
+
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS'
@@ -26,9 +29,9 @@ FILE_NAMES = {'train': 'EPIC_100_train.pkl',
               'val': 'EPIC_100_validation.pkl',
               'test': 'EPIC_100_test_timestamps.pkl'}
 
-@hydra.main(version=None, config_path='./configs', config_name='model_v1')
-def cfg_setup(cfg: DictConfig):
-    return cfg
+# @hydra.main(version_base=None, config_path=r'C:\Users\34609\VisualStudio\TFG\configs', config_name='model_v1')
+# def cfg_setup(cfg: DictConfig):
+#     print(OmegaConf.to_yaml(cfg))
 
 def load_ckp(checkpoint_fpath, model, optimizer):
     checkpoint = torch.load(checkpoint_fpath)
@@ -59,11 +62,11 @@ def create_options():
     opt = parser.parse_args()
     return opt
 
-
-def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = None) -> None:
+@hydra.main(version_base=None, config_path=r'C:\Users\34609\VisualStudio\TFG\configs', config_name='config')
+def run_experiment(cfg: OmegaConf) -> None:
     opt = create_options()
 
-    wandb.init(project=name)
+    wandb.init(project=cfg.NAME)
     working_directory = wandb.run.dir
 
     # Set all the random seeds
@@ -92,16 +95,16 @@ def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = 
 
     # TODO: Add here the initialization of your model
     # This is our general model, even though we may have different configurations (depending on what
-    model = Model(model_cfg)
+    model = Model(cfg.model_v1)
     
     # Send it to the desired device
     model = model.to(DEVICE)
 
     # Load a pretrained model, if specified
     start_epoch = 1
-    if pretrained_state_path is not None and os.path.isfile(pretrained_state_path):
+    if cfg.PRETRAINED_STATE_PATH is not None and os.path.isfile(cfg.PRETRAINED_STATE_PATH):
         print('Loading the model and optimizer')
-        model, optimizer, start_epoch = load_ckp(pretrained_state_path, model, optimizer)
+        model, optimizer, start_epoch = load_ckp(cfg.PRETRAINED_STATE_PATH, model, optimizer)
 
 
     # -------------------------------------------------
@@ -154,6 +157,5 @@ def run_experiment(name: str, model_cfg: OmegaConf, pretrained_state_path:str = 
 
 if __name__ == '__main__':
 
-    cfg = cfg_setup()
     # Create the experiment
-    run_experiment(model_cfg=cfg, name='action_classificatoin')
+    run_experiment()

@@ -1,0 +1,2 @@
+NAME: 'action_classification' 
+PRETRAINED_STATE_PATH: None # Missing value. Must be provided at command line
