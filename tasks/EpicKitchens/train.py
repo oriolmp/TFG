@@ -6,6 +6,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
     since = time.time()
 
     val_acc_history = []
+    val_loss_history = []
 
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
@@ -68,6 +69,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 best_model_wts = copy.deepcopy(model.state_dict())
             if phase == 'val':
                 val_acc_history.append(epoch_acc)
+                val_loss_history.append(epoch_loss)
 
         print()
 
