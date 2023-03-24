@@ -79,4 +79,4 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    return model, val_acc_history
+    return model, val_acc_history, val_loss_history
