@@ -18,9 +18,9 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-                model.train()  # Set model to training mode
+                model.train()  
             else:
-                model.eval()   # Set model to evaluate mode
+                model.eval()   
 
             running_loss = 0.0
             running_corrects = 0
