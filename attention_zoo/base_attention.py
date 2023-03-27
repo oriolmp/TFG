@@ -19,6 +19,7 @@ class BaseAttention(nn.Module):
             from attentions.rela_attention.rela_attention import RelaAttention
             att_mech = RelaAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'skyformer':
+            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.skyformer.skyformer import SkyformerAttention
             att_mech = SkyformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'cosformer':
@@ -40,6 +41,7 @@ class BaseAttention(nn.Module):
             from attentions.performer.performer import PerformerAttention
             att_mech = PerformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'nystromformer':
+            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.nystromformer.nystrom_attention import NystromformerAttention
             att_mech = NystromformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'custom_full_attention':
