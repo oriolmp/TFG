@@ -1,6 +1,6 @@
 # This implementation is based on https://github.com/lucidrains/fast-transformer-pytorch
 
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from einops import rearrange, reduce
 from torch import Tensor
 from torch import nn, einsum

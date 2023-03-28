@@ -3,11 +3,11 @@
 from math import ceil
 import torch
 import torch.nn.functional as F
-from attention_zoo.attentions.abstract_attention import AbstractAttention
+from attentions.abstract_attention import AbstractAttention
 from einops import rearrange, reduce
 from torch import Tensor
 from torch import einsum
-from attention_zoo.utils import iterative_inv
+from utils import iterative_inv
 from typing import Tuple
 from omegaconf import DictConfig
 
