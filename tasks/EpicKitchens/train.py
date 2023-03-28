@@ -1,12 +1,13 @@
 import time
 import copy
 import torch
+import wandb
 
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50):
     since = time.time()
 
-    val_acc_history = []
-    val_loss_history = []
+    # val_acc_history = []
+    # val_loss_history = []
 
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
@@ -63,13 +64,23 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
+            if phase == 'train':
+                wandb.log({'train/train_loss': epoch_loss,
+                           'train/train_acc': epoch_acc,
+                           'train/epoch': epoch / (num_epochs-1)})
+            elif phase == 'val':
+                wandb.log({'val/val_loss': epoch_loss,
+                           'val/val_acc': epoch_acc,
+                           'val/epoch': epoch / (num_epochs-1)})
+
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val':
-                val_acc_history.append(epoch_acc)
-                val_loss_history.append(epoch_loss)
+            
+            # if phase == 'val':
+            #     val_acc_history.append(epoch_acc)
+            #     val_loss_history.append(epoch_loss)
 
         print()
 
@@ -79,4 +90,4 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    return model, val_acc_history, val_loss_history
+    return model #, val_acc_history, val_loss_history

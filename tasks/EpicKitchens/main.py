@@ -140,7 +140,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     optimizer = optim.Adam(params_to_update)
     criterion = nn.CrossEntropyLoss()
 
-    trained_model, _ = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch=10000)
+    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch=10000)
 
     # Save model
     i = 1
