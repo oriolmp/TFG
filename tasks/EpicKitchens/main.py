@@ -9,8 +9,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from sklearn.metrics import accuracy_score, top_k_accuracy_score
-
 from omegaconf import DictConfig, OmegaConf
 import wandb
 from hydra import compose, initialize
@@ -87,7 +85,7 @@ def run_experiment(cfg: OmegaConf) -> None:
         DEVICE = torch.device('cuda')
 
         # Set the device
-        torch.cuda.set_device(5)#opt.runtime.gpu)
+        torch.cuda.set_device(5) # opt.runtime.gpu
 
 
     # Create the model with the given options
@@ -111,8 +109,11 @@ def run_experiment(cfg: OmegaConf) -> None:
     print("Loading the data...")
 
     batch_size = opt.batch_size
-    data_threads = opt.data_threads    # These are the number of workers to use for the data loader
+    data_threads = opt.data_threads  # These are the number of workers to use for the data loader
     num_epochs = opt.epochs
+
+    wandb.config.update(opt)
+    
     # Load the source training domain
     print("Loading the training dataset")
 
@@ -123,7 +124,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size,
                                                 num_workers=data_threads, collate_fn=collate_fn, drop_last=True, pin_memory=True)
 
-    # Load the validation clips (this is the data that we test it with
+    # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
     val_path = os.path.join(DATA_PATH, 'val')
     val_set =  Dataset(data_dirs = [val_path])
@@ -134,8 +135,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     
     dataloaders = [train_loader, val_loader]
 
-    wandb.config.update(opt)
-
     # TODO: Run here the training function of your model
     params_to_update = model.parameters()
     optimizer = optim.Adam(params_to_update)
@@ -143,6 +142,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     trained_model, _ = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch=10000)
 
+    # Save model
     i = 1
     save_model_path = pretrain_exp + f'model_{i}'
     while os.path.isdir(save_model_path):
