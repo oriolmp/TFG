@@ -12,7 +12,7 @@ from omegaconf import OmegaConf
 from dataset.dataset import Dataset
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS'
+DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/'
 LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels'
 
 @hydra.main(version_base=None, config_path='configs', config_name='config')
@@ -40,7 +40,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     train_path = os.path.join(DATA_PATH, 'train')
     train_set = Dataset(data_dirs = [train_path])
 
-    sample, label = train_set.__get_item__()
+    idx = 0
+    sample, label = train_set.__getitem__(idx)
 
     print(f'Sample type: {type(sample)}')
     print(f'Sample shape: {sample.shape}')
