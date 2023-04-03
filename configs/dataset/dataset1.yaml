@@ -1,4 +1,3 @@
-# @package _group_
 NAME: 'epic_kitchens'
 FRAME_SIZE: 224
 NUM_FRAMES: 30

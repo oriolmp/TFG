@@ -2,5 +2,7 @@ NAME: 'action_classification'
 
 # @package _group_
 defaults:
+  - _self_
   - dataset: dataset1
-  - models: model_v1
+  - model: model_v1
+  - training: train1

@@ -1,4 +1,3 @@
-# @package _group_
 ATTENTION: 'vanilla_attention'
 NUM_CLASSES: 97
 PATCH_SIZE: 16
