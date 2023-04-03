@@ -53,7 +53,7 @@ def create_options():
     opt = parser.parse_args()
     return opt
 
-@hydra.main(version_base=None, config_path=r'C:\Users\34609\VisualStudio\TFG\configs', config_name='config')
+@hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_experiment(cfg: OmegaConf) -> None:
     opt = create_options()
 
