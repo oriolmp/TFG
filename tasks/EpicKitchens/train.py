@@ -6,9 +6,7 @@ import wandb
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50):
     since = time.time()
 
-    # val_acc_history = []
-    # val_loss_history = []
-
+    softmax = torch.nn.Softmax(dim=0)
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
@@ -42,7 +40,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)
 
-                    _, preds = torch.max(outputs, 1)
+                    _, preds = torch.max((softmax(outputs), 1))
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -78,11 +76,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
             
-            # if phase == 'val':
-            #     val_acc_history.append(epoch_acc)
-            #     val_loss_history.append(epoch_loss)
-
-        print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
@@ -90,4 +83,4 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
     # load best model weights
     model.load_state_dict(best_model_wts)
-    return model #, val_acc_history, val_loss_history
+    return model 
