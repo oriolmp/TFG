@@ -18,7 +18,8 @@ class Dataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         file_path = self.clip_paths[index]
         data = torch.load(file_path,map_location=torch.device('cpu'))
-
+        # data = torch.load(self.data_dirs[index],map_location=torch.device('cpu'))
+    
         # Process the data if necessary
         video_data = data['data'].squeeze(0)    # shape: T x C
 
