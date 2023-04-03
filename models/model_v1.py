@@ -19,7 +19,7 @@ class PatchTokenization(nn.Module):
         Applies Conv2d to transform the input video
         (batch, chanels, frames, width, height) -> (batches, frames*patches, embed_dim)
     """
-    def __init__(self, img_size: int, patch_size: int, in_chans: int, embed_dim: int):
+    def __init__(self, img_size: int, patch_size: int, frames: int, in_chans: int, embed_dim: int):
         super().__init__()
         img_size = [img_size, img_size]
         patch_size = [patch_size, patch_size]
@@ -27,6 +27,7 @@ class PatchTokenization(nn.Module):
         self.img_size = img_size
         self.patch_size = patch_size
         self.num_patches = num_patches
+        self.frames = frames
 
         self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
 
@@ -35,7 +36,7 @@ class PatchTokenization(nn.Module):
         x = rearrange(x, 'b c t w h -> (b t) c w h') # shape: (batch x frames, channels, img_w, img_h)
         x = self.proj(x)    # shape: (batch x frame, frames, patches_w, patches_h
         W = x.size(-1)
-        x = rearrange(x, '(b t) c w h -> b (w h t) c', t=30)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
+        x = rearrange(x, '(b t) c w h -> b (w h t) c', t=self.frames)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
         return x, T, W
 
 
@@ -118,7 +119,7 @@ class Model(nn.Module):
     Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + classification head
     """
     def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0., attn_drop: float = 0.,
-                 norm_layer: nn.Module = nn.LayerNorm, num_frames: int = 30, dropout: float = 0., batch_size=16):
+                 norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0., batch_size=16):
         super().__init__()
 
         self.num_classes = cfg.NUM_CLASSES
@@ -127,19 +128,19 @@ class Model(nn.Module):
         self.in_chans = cfg.IN_CHANNELS
         self.depth = cfg.DEPTH
         self.num_heads = cfg.HEADS
+        self.num_frames = cfg.NUM_FRAMES
 
         self.num_features = self.embed_dim = (self.patch_size * self.patch_size) * self.in_chans
         self.dropout = nn.Dropout(dropout)
-
-        self.num_frames = num_frames # TODO: How do we handle variable number of frames
 
         self.patch_embed= PatchTokenization(
             img_size=self.img_size,
             patch_size=self.patch_size,
             in_chans=self.in_chans,
+            frames=self.num_frames,
             embed_dim=self.embed_dim)
 
-        num_patches = self.patch_embed.num_patches * self.num_frames
+        num_patches = self.patch_embed.num_patches * self.patch_embed.frames
 
         # Positional Embeddings
         self.cls_token = nn.Parameter(torch.zeros(1, 1, self.embed_dim))
