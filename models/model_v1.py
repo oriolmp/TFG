@@ -161,10 +161,7 @@ class Model(nn.Module):
         # add class token
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # shape: (1, 1, embed) -> (batches, 1, embed)
         x = torch.cat((cls_tokens, x), dim=1) # shape: (batch, frames * patches + 1, embed)
-        print(f'x shape: {x.shape}')
-        print(f'num patches: {self.num_patches}')
-        print(f'patch embed patches: {self.patch_embed.num_patches}')
-        print(f'patch embed frames: {self.patch_embed.frames}')
+
         # add positional/temporal embedding
         x = x + self.pos_embed
         for block in self.blocks:
