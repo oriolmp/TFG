@@ -2,16 +2,14 @@ import os
 import random
 from typing import List
 import argparse
-import sys
 
 import hydra
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import OmegaConf
 import wandb
-from hydra import compose, initialize
 
 from dataset.dataset import Dataset
 from train import train_model
