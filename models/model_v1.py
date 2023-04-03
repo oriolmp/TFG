@@ -17,7 +17,7 @@ class PatchTokenization(nn.Module):
     """
         Video to Patch Embedding.
         Applies Conv2d to transform the input video
-        (batch, chanels, frames, width, height) -> (frames, patches, embed_dim)
+        (batch, chanels, frames, width, height) -> (batches, frames*patches, embed_dim)
     """
     def __init__(self, img_size: int, patch_size: int, in_chans: int, embed_dim: int):
         super().__init__()
@@ -32,10 +32,10 @@ class PatchTokenization(nn.Module):
 
     def forward(self, x):
         _, _, T, _, W = x.shape
-        x = rearrange(x, 'b c t w h -> (b t) c w h')
-        x = self.proj(x)    # shape: BT x F x patches_w x patches_h
+        x = rearrange(x, 'b c t w h -> (b t) c w h') # shape: (batch x frames, channels, img_w, img_h)
+        x = self.proj(x)    # shape: (batch x frame, frames, patches_w, patches_h
         W = x.size(-1)
-        x = rearrange(x, 'b c w h -> b (w h) c')     # TODO: Check because this has shape (BT, total_num_patches, F)
+        x = rearrange(x, '(b t) c w h -> b (w h t) c', t=30)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
         return x, T, W
 
 
@@ -50,16 +50,16 @@ class MultiHeadAttention(nn.Module):
         self.num_heads = num_heads
         self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=dim, h=dim)
         # self.head_dim = dim // num_heads
-        self.qkv = nn.Linear(dim, dim * 3)  # (B, N, C) -> (B, N, C * 3)
+        self.qkv = nn.Linear(dim, dim * 3)  
         self.proj = nn.Linear(dim, dim)
         self.proj_drop = nn.Dropout(proj_drop)
         self.attn_drop = nn.Dropout(attn_drop)
 
     def forward(self, x):
         _, _, C = x.shape
-        qkv = self.qkv(x)
-        qkv = rearrange(qkv, 'b n (c h w) -> b n c h w', h=self.num_heads, w=C//self.num_heads)
-        qkv = rearrange(qkv, 'b n c h w -> c b h n w')
+        qkv = self.qkv(x) # shape: (B, N, C * 3)
+        qkv = rearrange(qkv, 'b n (c h1 c1) -> b n c h1 c1', h1=self.num_heads, c1=C//self.num_heads) # shape: (B, N, C, heads, C / heads)
+        qkv = rearrange(qkv, 'b n c h1 w1 -> c b h1 n c1') # shape: (C, B, heads, N, C / heads)
         q, k, v = qkv[0], qkv[1], qkv[2]
 
         output = self.attention.apply_attention(Q=q, K=k, V=v)
@@ -118,7 +118,7 @@ class Model(nn.Module):
     Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + classification head
     """
     def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0., attn_drop: float = 0.,
-                 norm_layer: nn.Module = nn.LayerNorm, num_frames: int = 30, dropout: float = 0.):
+                 norm_layer: nn.Module = nn.LayerNorm, num_frames: int = 30, dropout: float = 0., batch_size=16):
         super().__init__()
 
         self.num_classes = cfg.NUM_CLASSES
@@ -139,12 +139,11 @@ class Model(nn.Module):
             in_chans=self.in_chans,
             embed_dim=self.embed_dim)
 
-        num_patches = self.patch_embed.num_patches
+        num_patches = self.patch_embed.num_patches * self.num_frames
 
         # Positional Embeddings
         self.cls_token = nn.Parameter(torch.zeros(1, 1, self.embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(num_frames, num_patches+1, self.embed_dim))
-        # self.time_embed = nn.Parameter(torch.zeros(1, num_frames, embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(batch_size, num_patches+1, self.embed_dim))
 
         # Attention Blocks
         self.blocks = nn.ModuleList([
@@ -158,24 +157,18 @@ class Model(nn.Module):
     def forward(self, x):
         x, _, _ = self.patch_embed(x)
         # add class token
-        cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # (1, 1, embed) -> (30, 1, embed)
-        x = torch.cat((cls_tokens, x), dim=1) # (batch x frames, patches, embed) -> (batch x frames, patches + 1, embed)    # TODO: We want video-level sequences, so shape B x TP+1 x F
+        cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # shape: (1, 1, embed) -> (batches, 1, embed)
+        x = torch.cat((cls_tokens, x), dim=1) # shape: (batch, frames * patches + 1, embed)
         # add positional/temporal embedding
         x = x + self.pos_embed
         for block in self.blocks:
             x = block.forward(x)
-        x = rearrange(x, '(b f) p e -> b f p e', f=self.num_frames) # (batch x frames, patches, embed) -> (batch, frames, patch, embed)
-
+        
         # TODO: You are averaging all the patches of each of the videos.
         # TODO: Problem: You applied attention frame-wise. Also, this is what we use the CLS token for!
-        x = torch.mean(x, [1,2])
+        x = x[:, -1] # Get cls token to classify
         x = self.head(x)
         return x
-
-
-
-
-
 
 # Debugging code
 '''
