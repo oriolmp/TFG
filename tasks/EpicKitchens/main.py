@@ -15,7 +15,6 @@ from hydra import compose, initialize
 
 from dataset.dataset import Dataset
 from train import train_model
-# from Domain_adaptive_WTAL.src.utils.misc import collate_fn
 sys.path.append(r'C:\Users\34609\VisualStudio\TFG') 
 from models.model_v1 import Model
 
@@ -68,11 +67,14 @@ def run_experiment(cfg: OmegaConf) -> None:
     working_directory = wandb.run.dir
 
     # Set all the random seeds
-    random.seed(opt.runtime.seed)
-    torch.manual_seed(opt.runtime.seed)
-    torch.cuda.manual_seed_all(opt.runtime.seed)
-    torch.set_default_tensor_type(torch.FloatTensor)
+    # random.seed(opt.runtime.seed)
+    # torch.manual_seed(opt.runtime.seed)
+    # torch.cuda.manual_seed_all(opt.runtime.seed)
 
+    random.seed(cfg.train.seed)
+    torch.manual_seed(cfg.train.seed)
+    torch.cuda.manual_seed_all(cfg.train.seed)
+    torch.set_default_tensor_type(torch.FloatTensor)
 
     # Subdirectory for the pretrained model (if needed)
     pretrain_exp = os.path.join(working_directory, 'saved_models')
@@ -100,7 +102,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Load a pretrained model, if specified
     start_epoch = 1
-    if cfg.PRETRAINED_STATE_PATH is not None and os.path.isfile(cfg.PRETRAINED_STATE_PATH):
+    if cfg.train.PRETRAINED_STATE_PATH is not None and os.path.isfile(cfg.PRETRAINED_STATE_PATH):
         print('Loading the model and optimizer')
         model, optimizer, start_epoch = load_ckp(cfg.PRETRAINED_STATE_PATH, model, optimizer)
 
@@ -108,10 +110,14 @@ def run_experiment(cfg: OmegaConf) -> None:
     # -------------------------------------------------
     print("Loading the data...")
 
-    batch_size = opt.batch_size
-    data_threads = opt.data_threads  # These are the number of workers to use for the data loader
-    num_epochs = opt.epochs
+    # batch_size = opt.batch_size
+    # data_threads = opt.data_threads  # These are the number of workers to use for the data loader
+    # num_epochs = opt.epochs
 
+    batch_size = cfg.train.BATCH_SIZE
+    data_threads = cfg.train.DATA_THREADS  # These are the number of workers to use for the data loader
+    num_epochs = cfg.train.EPOCHS
+    print_batch = cfg.train.PRINT_BATCH
     wandb.config.update(opt)
     
     # Load the source training domain
@@ -122,7 +128,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
     train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size,
-                                                num_workers=data_threads, collate_fn=collate_fn, drop_last=True, pin_memory=True)
+                                                num_workers=data_threads, drop_last=True, pin_memory=True)
 
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
@@ -130,7 +136,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     val_set =  Dataset(data_dirs = [val_path])
 
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False,
-                                             num_workers=data_threads, collate_fn=collate_fn, drop_last=True,
+                                             num_workers=data_threads, drop_last=True,
                                              pin_memory=True)
     
     dataloaders = [train_loader, val_loader]
@@ -140,7 +146,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     optimizer = optim.Adam(params_to_update)
     criterion = nn.CrossEntropyLoss()
 
-    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch=10000)
+    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
     # Save model
     i = 1
