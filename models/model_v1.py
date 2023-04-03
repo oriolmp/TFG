@@ -122,14 +122,15 @@ class Model(nn.Module):
                  norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0.):
         super().__init__()
 
-        self.num_classes = cfg.NUM_CLASSES
-        self.img_size = cfg.FRAME_SIZE
-        self.patch_size = cfg.PATCH_SIZE
-        self.in_chans = cfg.IN_CHANNELS
-        self.depth = cfg.DEPTH
-        self.num_heads = cfg.HEADS
-        self.num_frames = cfg.NUM_FRAMES
-        self.batch_size = cfg.BATCH_SIZE
+        self.num_classes = cfg.model.NUM_CLASSES
+        self.depth = cfg.model.DEPTH
+        self.patch_size = cfg.model.PATCH_SIZE
+        self.num_heads = cfg.model.HEADS
+
+        self.img_size = cfg.dataset.FRAME_SIZE
+        self.in_chans = cfg.dataset.IN_CHANNELS
+        self.num_frames = cfg.dataset.NUM_FRAMES
+        self.batch_size = cfg.dataset.BATCH_SIZE
 
         self.num_features = self.embed_dim = (self.patch_size * self.patch_size) * self.in_chans
         self.dropout = nn.Dropout(dropout)
