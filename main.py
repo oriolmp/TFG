@@ -15,7 +15,6 @@ from hydra import compose, initialize
 
 from dataset.dataset import Dataset
 from train import train_model
-sys.path.append(r'C:\Users\34609\VisualStudio\TFG') 
 from models.model_v1 import Model
 
 
@@ -26,9 +25,6 @@ FILE_NAMES = {'train': 'EPIC_100_train.pkl',
               'val': 'EPIC_100_validation.pkl',
               'test': 'EPIC_100_test_timestamps.pkl'}
 
-# @hydra.main(version_base=None, config_path=r'C:\Users\34609\VisualStudio\TFG\configs', config_name='model_v1')
-# def cfg_setup(cfg: DictConfig):
-#     print(OmegaConf.to_yaml(cfg))
 
 def load_ckp(checkpoint_fpath, model, optimizer):
     checkpoint = torch.load(checkpoint_fpath)
@@ -41,20 +37,20 @@ def create_options():
     parser = argparse.ArgumentParser()
 
     # ========================= Runtime Configs ==========================
-    parser.add_argument('--seed', default=0, type=int,
-                        help='manual seed')
-    parser.add_argument('--data_threads', type=int, default=5,
-                        help='number of data loading threads')
+    # parser.add_argument('--seed', default=0, type=int,
+    #                     help='manual seed')
+    # parser.add_argument('--data_threads', type=int, default=5,
+    #                     help='number of data loading threads')
 
-    # ========================= Model Configs ==========================
-    parser.add_argument('--dropout_rate', default=0.5, type=float,
-                        help='dropout ratio for frame-level feature (default: 0.5)')
+    # # ========================= Model Configs ==========================
+    # parser.add_argument('--dropout_rate', default=0.5, type=float,
+    #                     help='dropout ratio for frame-level feature (default: 0.5)')
 
-    # ========================= Learning Configs ==========================
-    parser.add_argument('--epochs', default=1000, type=int,
-                        metavar='N', help='number of total epochs to run')
-    parser.add_argument('--batch_size', default=128, type=int,
-                        help='-batch size')
+    # # ========================= Learning Configs ==========================
+    # parser.add_argument('--epochs', default=1000, type=int,
+    #                     metavar='N', help='number of total epochs to run')
+    # parser.add_argument('--batch_size', default=128, type=int,
+    #                     help='-batch size')
 
     opt = parser.parse_args()
     return opt
@@ -93,7 +89,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Create the model with the given options
     samp_rate=0.5   # This implies sampling every other frame
 
-    # TODO: Add here the initialization of your model
     # This is our general model, even though we may have different configurations (depending on what
     model = Model(cfg.model_v1)
     
@@ -141,7 +136,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     
     dataloaders = [train_loader, val_loader]
 
-    # TODO: Run here the training function of your model
     params_to_update = model.parameters()
     optimizer = optim.Adam(params_to_update)
     criterion = nn.CrossEntropyLoss()
