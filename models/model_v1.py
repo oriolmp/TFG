@@ -59,7 +59,7 @@ class MultiHeadAttention(nn.Module):
         _, _, C = x.shape
         qkv = self.qkv(x) # shape: (B, N, C * 3)
         qkv = rearrange(qkv, 'b n (c h1 c1) -> b n c h1 c1', h1=self.num_heads, c1=C//self.num_heads) # shape: (B, N, C, heads, C / heads)
-        qkv = rearrange(qkv, 'b n c h1 w1 -> c b h1 n c1') # shape: (C, B, heads, N, C / heads)
+        qkv = rearrange(qkv, 'b n c h1 c1 -> c b h1 n c1') # shape: (C, B, heads, N, C / heads)
         q, k, v = qkv[0], qkv[1], qkv[2]
 
         output = self.attention.apply_attention(Q=q, K=k, V=v)
