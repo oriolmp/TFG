@@ -109,7 +109,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     data_threads = cfg.train.DATA_THREADS  # These are the number of workers to use for the data loader
     num_epochs = cfg.train.EPOCHS
     print_batch = cfg.train.PRINT_BATCH
-    wandb.config.update(opt)
+    # wandb.config.update(opt)
     
     # Load the source training domain
     print("Loading the training dataset")
