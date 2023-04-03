@@ -119,7 +119,7 @@ class Model(nn.Module):
     Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + classification head
     """
     def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0., attn_drop: float = 0.,
-                 norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0., batch_size=16):
+                 norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0.):
         super().__init__()
 
         self.num_classes = cfg.NUM_CLASSES
@@ -129,6 +129,7 @@ class Model(nn.Module):
         self.depth = cfg.DEPTH
         self.num_heads = cfg.HEADS
         self.num_frames = cfg.NUM_FRAMES
+        self.batch_size = cfg.BATCH_SIZE
 
         self.num_features = self.embed_dim = (self.patch_size * self.patch_size) * self.in_chans
         self.dropout = nn.Dropout(dropout)
@@ -140,11 +141,11 @@ class Model(nn.Module):
             frames=self.num_frames,
             embed_dim=self.embed_dim)
 
-        num_patches = self.patch_embed.num_patches * self.patch_embed.frames
+        self.num_patches = self.patch_embed.num_patches * self.patch_embed.frames
 
         # Positional Embeddings
         self.cls_token = nn.Parameter(torch.zeros(1, 1, self.embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(batch_size, num_patches+1, self.embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(self.batch_size, self.num_patches+1, self.embed_dim))
 
         # Attention Blocks
         self.blocks = nn.ModuleList([
@@ -160,6 +161,10 @@ class Model(nn.Module):
         # add class token
         cls_tokens = self.cls_token.expand(x.size(0), -1, -1) # shape: (1, 1, embed) -> (batches, 1, embed)
         x = torch.cat((cls_tokens, x), dim=1) # shape: (batch, frames * patches + 1, embed)
+        print(f'x shape: {x.shape}')
+        print(f'num patches: {self.num_patches}')
+        print(f'patch embed patches: {self.patch_embed.num_patches}')
+        print(f'patch embed frames: {self.patch_embed.frames}')
         # add positional/temporal embedding
         x = x + self.pos_embed
         for block in self.blocks:
