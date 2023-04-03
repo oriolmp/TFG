@@ -105,10 +105,9 @@ def run_experiment(cfg: OmegaConf) -> None:
     # data_threads = opt.data_threads  # These are the number of workers to use for the data loader
     # num_epochs = opt.epochs
 
-    batch_size = cfg.train.BATCH_SIZE
-    data_threads = cfg.train.DATA_THREADS  # These are the number of workers to use for the data loader
-    num_epochs = cfg.train.EPOCHS
-    print_batch = cfg.train.PRINT_BATCH
+    batch_size = cfg.dataset.BATCH_SIZE
+    data_threads = cfg.dataset.DATA_THREADS  # These are the number of workers to use for the data loader
+    
     # wandb.config.update(opt)
     
     # Load the source training domain
@@ -136,6 +135,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     optimizer = optim.Adam(params_to_update)
     criterion = nn.CrossEntropyLoss()
 
+    num_epochs = cfg.train.EPOCHS
+    print_batch = cfg.train.PRINT_BATCH
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
     # Save model
