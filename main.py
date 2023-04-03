@@ -31,31 +31,30 @@ def load_ckp(checkpoint_fpath, model, optimizer):
     return model, optimizer, checkpoint['epoch']
 
 
-def create_options():
-    parser = argparse.ArgumentParser()
+# def create_options():
+#     parser = argparse.ArgumentParser()
 
-    # ========================= Runtime Configs ==========================
-    # parser.add_argument('--seed', default=0, type=int,
-    #                     help='manual seed')
-    # parser.add_argument('--data_threads', type=int, default=5,
-    #                     help='number of data loading threads')
+#     ========================= Runtime Configs ==========================
+#     parser.add_argument('--seed', default=0, type=int,
+#                         help='manual seed')
+#     parser.add_argument('--data_threads', type=int, default=5,
+#                         help='number of data loading threads')
 
-    # # ========================= Model Configs ==========================
-    # parser.add_argument('--dropout_rate', default=0.5, type=float,
-    #                     help='dropout ratio for frame-level feature (default: 0.5)')
+#     # ========================= Model Configs ==========================
+#     parser.add_argument('--dropout_rate', default=0.5, type=float,
+#                         help='dropout ratio for frame-level feature (default: 0.5)')
 
-    # # ========================= Learning Configs ==========================
-    # parser.add_argument('--epochs', default=1000, type=int,
-    #                     metavar='N', help='number of total epochs to run')
-    # parser.add_argument('--batch_size', default=128, type=int,
-    #                     help='-batch size')
+#     # ========================= Learning Configs ==========================
+#     parser.add_argument('--epochs', default=1000, type=int,
+#                         metavar='N', help='number of total epochs to run')
+#     parser.add_argument('--batch_size', default=128, type=int,
+#                         help='-batch size')
 
-    opt = parser.parse_args()
-    return opt
+#     opt = parser.parse_args()
+#     return opt
 
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_experiment(cfg: OmegaConf) -> None:
-    opt = create_options()
 
     wandb.init(project=cfg.NAME)
     working_directory = wandb.run.dir
@@ -77,11 +76,10 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Define the device
     DEVICE = torch.device('cpu')
-    if opt.runtime.use_gpu:
+    if torch.cuda.is_available:
         DEVICE = torch.device('cuda')
-
         # Set the device
-        torch.cuda.set_device(5) # opt.runtime.gpu
+        torch.cuda.set_device(5) 
 
 
     # Create the model with the given options
