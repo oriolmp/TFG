@@ -86,7 +86,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     samp_rate=0.5   # This implies sampling every other frame
 
     # This is our general model, even though we may have different configurations (depending on what
-    model = Model(cfg.model_v1)
+    model = Model(cfg.model)
     
     # Send it to the desired device
     model = model.to(DEVICE)
