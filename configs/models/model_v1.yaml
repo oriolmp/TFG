@@ -1,11 +1,6 @@
-MODEL:
-  ATTENTION: 'vanilla_attention'
-  NUM_CLASSES: 97
-  FRAME_SIZE: 240
-  PATCH_SIZE: 16
-  IN_CHANNELS: 3
-  NUM_FRAMES: 5
-  BATCH_SIZE: 16
-  DEPTH: 2
-  HEADS: 4
-    
+# @package _group_
+ATTENTION: 'vanilla_attention'
+NUM_CLASSES: 97
+PATCH_SIZE: 16
+DEPTH: 2
+HEADS: 4

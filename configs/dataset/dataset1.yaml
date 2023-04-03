@@ -1,0 +1,6 @@
+# @package _group_
+NAME: 'epic_kitchens'
+FRAME_SIZE: 224
+NUM_FRAMES: 30
+IN_CHANNELS: 3
+BATCH_SIZE: 16
