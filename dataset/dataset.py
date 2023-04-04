@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.utils.data
 import torch.nn.functional as F
-import torchvision
+import torch.nn as nn
 import torchvision.transforms as T
 import glob
 from einops import rearrange
@@ -69,28 +69,36 @@ class Dataset(torch.utils.data.Dataset):
 
         # Load rgb image with shape (3, 1920, 1080). 
         # Resize it to FRAME_SIZE: (3, 224, 224)
-        # Unsqueeze it to add temporal dimension. Shape: (3, 1, 224, 224)
-        # Concat all frames. Shape: (3, frames, 1920, 1080)
-        frames = [resize(torch.load(x, map_location=torch.device('cpu'))).unsqueeze(1) for x in frame_paths]
-        video = torch.cat(frames)
+        # Unsqueeze it to add temporal dimension. Shape: (3, 224, 224, 1)
+        # Concat all frames. Shape: (3, 1920, 1080, frames)
+        frames = [resize(torch.load(x, map_location=torch.device('cpu'))).unsqueeze(-1) for x in frame_paths]
+        clip = torch.cat(frames, dim=-1)
 
+        # apply padding if total frames aren't enough
         if total_frames < self.num_frames:
             missing_frames = self.num_frames - total_frames
 
             # check if missing frames is odd in order to ensure that after padding, 
             # num_frames equals NUM_FRAMES
             if missing_frames % 2 == 0:
-                pad = (0, 0, 0, 0, missing_frames // 2, missing_frames // 2)
+                pad = (missing_frames // 2, missing_frames // 2)
             else:
-                pad = (0, 0, 0, 0, missing_frames // 2 + 1, missing_frames // 2)
+                pad = (missing_frames // 2 + 1, missing_frames // 2)
             
-            video = F.pad(video, pad, 'constant', 0)
-        elif total_frames > self.num_frames:
-            
-    
-        # Process the data if necessary
-        video_data = data['data'].squeeze(0)    # shape: T x C
-
-        labels = data['labels']
+            clip = F.pad(clip, pad, 'constant', 0)
         
-        return video_data, labels
+        # apply max pool if total frames are too much
+        elif total_frames > self.num_frames:
+
+            # check this link for dimensional calculus: 
+            # https://pytorch.org/docs/stable/generated/torch.nn.MaxPool1d.html#torch.nn.MaxPool1d
+            s = (total_frames - 1) / (self.num_frames - 1)
+            pool = nn.MaxPool1d(kernel_size=2, stride=s)
+
+            clip = rearrange(clip, 'c w h t1 -> c (w h) t1')
+            clip = pool(clip)
+            clip = rearrange(clip, 'c (w h) t2 -> c w h t2', h=self.frame_size)   
+
+        labels = clip_info['verb_class']
+        
+        return clip, labels
