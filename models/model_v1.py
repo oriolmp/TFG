@@ -33,10 +33,10 @@ class PatchTokenization(nn.Module):
 
     def forward(self, x):
         _, _, T, _, W = x.shape
-        x = rearrange(x, 'b c t w h -> (b t) c w h') # shape: (batch x frames, channels, img_w, img_h)
+        x = rearrange(x, 'b c f w h -> (b f) c w h') # shape: (batch x frames, channels, img_w, img_h)
         x = self.proj(x)    # shape: (batch x frame, frames, patches_w, patches_h
         W = x.size(-1)
-        x = rearrange(x, '(b t) c w h -> b (w h t) c', t=self.frames)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
+        x = rearrange(x, '(b f) d wp hp -> b (wp hp f) d', t=self.frames)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
         return x, T, W
 
 
@@ -57,10 +57,10 @@ class MultiHeadAttention(nn.Module):
         self.attn_drop = nn.Dropout(attn_drop)
 
     def forward(self, x):
-        _, _, C = x.shape
-        qkv = self.qkv(x) # shape: (B, N, C * 3)
-        qkv = rearrange(qkv, 'b n (c h1 c1) -> b n c h1 c1', h1=self.num_heads, c1=C//self.num_heads) # shape: (B, N, C, heads, C / heads)
-        qkv = rearrange(qkv, 'b n c h1 c1 -> c b h1 n c1') # shape: (C, B, heads, N, C / heads)
+        _, _, D = x.shape
+        qkv = self.qkv(x) # shape: (b, n, d * 3) = (b, n, d * a)
+        qkv = rearrange(qkv, 'b n (a H d1) -> b n a H d1', H=self.num_heads, d1=D//self.num_heads) # shape: (b, n, 3, heads, D / heads)
+        qkv = rearrange(qkv, 'b n a H d1 -> a b H n d1') # shape: (3, b, heads, n, D / heads)
         q, k, v = qkv[0], qkv[1], qkv[2]
 
         output = self.attention.apply_attention(Q=q, K=k, V=v)
