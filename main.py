@@ -72,7 +72,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     torch.set_default_tensor_type(torch.FloatTensor)
 
     # Subdirectory for the pretrained model (if needed)
-    pretrain_exp = os.path.join(working_directory, 'saved_models')
+    pretrain_exp = os.path.join(working_directory, 'weights')
     if not os.path.isdir(pretrain_exp):
         os.makedirs(pretrain_exp)
 
