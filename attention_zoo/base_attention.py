@@ -12,14 +12,13 @@ class BaseAttention(nn.Module):
         # This method takes as input a name of an attention mechanism, and if implemented,
         # returns an instance of the corresponding object.
         if att_name == 'vanilla_attention':
-            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
+            # sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.vanilla_attention.vanilla_attention import VanillaAttention
             att_mech = VanillaAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'rela_attention':
             from attentions.rela_attention.rela_attention import RelaAttention
             att_mech = RelaAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'skyformer':
-            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.skyformer.skyformer import SkyformerAttention
             att_mech = SkyformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'cosformer':
@@ -41,7 +40,6 @@ class BaseAttention(nn.Module):
             from attentions.performer.performer import PerformerAttention
             att_mech = PerformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'nystromformer':
-            sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
             from attentions.nystromformer.nystrom_attention import NystromformerAttention
             att_mech = NystromformerAttention(model_config, n, h, in_feat, out_feat)
         elif att_name == 'custom_full_attention':
