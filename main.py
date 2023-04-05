@@ -33,27 +33,6 @@ def load_ckp(checkpoint_fpath, model, optimizer):
     return model, optimizer, checkpoint['epoch']
 
 
-# def create_options():
-#     parser = argparse.ArgumentParser()
-
-#     ========================= Runtime Configs ==========================
-#     parser.add_argument('--seed', default=0, type=int,
-#                         help='manual seed')
-#     parser.add_argument('--data_threads', type=int, default=5,
-#                         help='number of data loading threads')
-
-#     # ========================= Model Configs ==========================
-#     parser.add_argument('--dropout_rate', default=0.5, type=float,
-#                         help='dropout ratio for frame-level feature (default: 0.5)')
-
-#     # ========================= Learning Configs ==========================
-#     parser.add_argument('--epochs', default=1000, type=int,
-#                         metavar='N', help='number of total epochs to run')
-#     parser.add_argument('--batch_size', default=128, type=int,
-#                         help='-batch size')
-
-#     opt = parser.parse_args()
-#     return opt
 
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_experiment(cfg: OmegaConf) -> None:
@@ -83,10 +62,6 @@ def run_experiment(cfg: OmegaConf) -> None:
         # Set the device
         torch.cuda.set_device(5) 
 
-
-    # Create the model with the given options
-    samp_rate=0.5   # This implies sampling every other frame
-
     # This is our general model, even though we may have different configurations (depending on what
     model = Model(cfg)
     
@@ -103,10 +78,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     # -------------------------------------------------
     print("Loading the data...")
 
-    # batch_size = opt.batch_size
-    # data_threads = opt.data_threads  # These are the number of workers to use for the data loader
-    # num_epochs = opt.epochs
-
     batch_size = cfg.dataset.BATCH_SIZE
     data_threads = cfg.dataset.DATA_THREADS  # These are the number of workers to use for the data loader
     
@@ -115,8 +86,9 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Load the source training domain
     print("Loading the training dataset")
 
-    train_path = os.path.join(DATA_PATH, 'train')
-    train_set = Dataset(data_dirs = [train_path])
+    train_path = os.path.join(DATA_PATH, 'train/')
+    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['train'])
+    train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
     train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size,
@@ -124,8 +96,9 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
-    val_path = os.path.join(DATA_PATH, 'val')
-    val_set =  Dataset(data_dirs = [val_path])
+    val_path = os.path.join(DATA_PATH, 'val/')
+    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['val'])
+    val_set =  Dataset(cfg, frames_dir=val_path, annotations_file=annotations_path)
 
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False,
                                              num_workers=data_threads, drop_last=True,
@@ -151,7 +124,6 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Stop the logging
     wandb.finish()
-
 
 
 if __name__ == '__main__':
