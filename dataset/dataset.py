@@ -52,7 +52,7 @@ class Dataset(torch.utils.data.Dataset):
         self.clips_df = info_df[['participant_id', 'video_id', 'start_frame', 'stop_frame', 'verb_class']]
 
     def __len__(self):
-        return len(self.clips_df.shape[0])
+        return self.clips_df.shape[0]
 
     def __getitem__(self, index):
         clip_info = self.clips_df.iloc[index]
