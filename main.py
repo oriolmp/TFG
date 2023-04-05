@@ -70,9 +70,9 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Load a pretrained model, if specified
     start_epoch = 1
-    if cfg.train.PRETRAINED_STATE_PATH is not None and os.path.isfile(cfg.PRETRAINED_STATE_PATH):
+    if cfg.training.PRETRAINED_STATE_PATH is not None and os.path.isfile(cfg.training.PRETRAINED_STATE_PATH):
         print('Loading the model and optimizer')
-        model, optimizer, start_epoch = load_ckp(cfg.PRETRAINED_STATE_PATH, model, optimizer)
+        model, optimizer, start_epoch = load_ckp(cfg.training.PRETRAINED_STATE_PATH, model, optimizer)
 
 
     # -------------------------------------------------
