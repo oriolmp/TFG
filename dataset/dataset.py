@@ -79,6 +79,8 @@ class Dataset(torch.utils.data.Dataset):
          # Concat all frames. Shape: (3, 224, 224, frames)
         clip = torch.cat(frames, dim=-1)
 
+        print(f'Clip shape: {clip.shape}')
+
         # apply padding if total frames aren't enough
         if total_frames < self.num_frames:
             missing_frames = self.num_frames - total_frames
@@ -101,7 +103,7 @@ class Dataset(torch.utils.data.Dataset):
             pool = nn.MaxPool1d(kernel_size=2, stride=s)
 
             clip = rearrange(clip, 'c w h t1 -> c (w h) t1')
-            clip = pool(clip)
+            clip = pool(clip.float())
             clip = rearrange(clip, 'c (w h) t2 -> c w h t2', h=self.frame_size)   
 
         # rearrange to fit model
