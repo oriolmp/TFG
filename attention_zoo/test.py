@@ -1,7 +1,8 @@
 # This script runs a simple intergration test to ensure that all the submodules work as expected
-from attention_zoo.base_attention import BaseAttention
+from base_attention import BaseAttention
 import hydra
 import torch
+import omegaconf
 
 # CONSTANTS
 # This constant includes all the supported attention mechanisms
@@ -27,9 +28,13 @@ for att_method in attention_names:
     in_feat = 128
     out_feat = 128
 
+    cfg = omegaconf.OmegaConf.create({
+        'ATTENTION': att_method
+    })
+
     # Initialize the model
     print('Initializing...', att_method)
-    model = BaseAttention.init_att_module(att_name=att_method, n=n, h=h, in_feat=in_feat, out_feat=out_feat)
+    model = BaseAttention.init_att_module(cfg, n=n, h=h, in_feat=in_feat, out_feat=out_feat)
 
     # Create some random input
     test_input = torch.rand(b, n, in_feat)
