@@ -42,7 +42,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)
 
-                    _, preds = torch.max((softmax(outputs), 1))
+                    _, preds = torch.max(softmax(outputs), 1)
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
