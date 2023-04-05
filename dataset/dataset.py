@@ -79,8 +79,6 @@ class Dataset(torch.utils.data.Dataset):
          # Concat all frames. Shape: (3, 224, 224, frames)
         clip = torch.cat(frames, dim=-1)
 
-        print(f'Clip shape: {clip.shape}')
-
         # apply padding if total frames aren't enough
         if total_frames < self.num_frames:
             missing_frames = self.num_frames - total_frames
