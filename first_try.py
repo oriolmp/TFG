@@ -11,6 +11,9 @@ from omegaconf import OmegaConf
 
 from dataset.dataset import Dataset
 
+# We set this variable since it raises an error if not
+os.environ["HYDRA_FULL_ERROR"] = "1"
+
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/'
 LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels'
@@ -35,10 +38,13 @@ def run_experiment(cfg: OmegaConf) -> None:
         # Set the device
         torch.cuda.set_device(5) 
 
+    print(f'Device: {DEVICE}')
+
     print("Loading the training dataset")
 
     train_path = os.path.join(DATA_PATH, 'train')
-    train_set = Dataset(data_dirs = [train_path])
+    annotations_path = os.path.join(DATA_PATH, 'EPIC_100_train.csv')
+    train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     idx = 0
     sample, label = train_set.__getitem__(idx)
