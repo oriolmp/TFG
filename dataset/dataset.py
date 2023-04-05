@@ -58,7 +58,7 @@ class Dataset(torch.utils.data.Dataset):
         clip_info = self.clips_df.iloc[index]
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
 
-        resize = T.Resize(size=(self.frame_size, self.frame_size))
+        resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
 
         # First idea: only load some frames to lighten computation
         # middel_frame = clip_info['start_frame'] + (clip_info['stop_frame'] - clip_info['start_frame']) // 2
