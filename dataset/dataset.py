@@ -56,7 +56,7 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         clip_info = self.clips_df.iloc[index]
-        clip_dir = clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
+        clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
 
         resize = T.Resize(size=(self.frame_size, self.frame_size))
 
@@ -65,7 +65,7 @@ class Dataset(torch.utils.data.Dataset):
         # clip_frames = (middel_frame - self.num_frames // 2, middel_frame + self.num_frames // 2)
         
         # Second idea: load all frames and do preprocessing
-        frame_paths = [clip_dir + 'frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
+        frame_paths = [clip_dir + '/frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
         total_frames = len(frame_paths)   
 
         #  frames = [resize(torch.tensor(np.asarray(Image.open(x))).to('cpu')).unsqueeze(-1) for x in frame_paths]

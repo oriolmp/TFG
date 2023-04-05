@@ -42,8 +42,8 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     print("Loading the training dataset")
 
-    train_path = os.path.join(DATA_PATH, 'train')
-    annotations_path = os.path.join(DATA_PATH, 'EPIC_100_train.csv')
+    train_path = os.path.join(DATA_PATH, 'train/')
+    annotations_path = os.path.join(LABEL_PATH, 'EPIC_100_train.csv')
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     idx = 0
