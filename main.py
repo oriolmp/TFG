@@ -23,6 +23,8 @@ ANNOTATIONS_NAMES = {'train': 'EPIC_100_train.csv',
                      'val': 'EPIC_100_validation.csv',
                      'test': 'EPIC_100_test_timestamps.csv'}
 
+# We set this variable since it raises an error if not
+os.environ["HYDRA_FULL_ERROR"] = "1"
 
 def load_ckp(checkpoint_fpath, model, optimizer):
     checkpoint = torch.load(checkpoint_fpath)
