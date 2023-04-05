@@ -45,9 +45,9 @@ def run_experiment(cfg: OmegaConf) -> None:
     # torch.manual_seed(opt.runtime.seed)
     # torch.cuda.manual_seed_all(opt.runtime.seed)
 
-    random.seed(cfg.train.seed)
-    torch.manual_seed(cfg.train.seed)
-    torch.cuda.manual_seed_all(cfg.train.seed)
+    random.seed(cfg.training.SEED)
+    torch.manual_seed(cfg.training.SEED)
+    torch.cuda.manual_seed_all(cfg.training.SEED)
     torch.set_default_tensor_type(torch.FloatTensor)
 
     # Subdirectory for the pretrained model (if needed)
@@ -110,8 +110,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     optimizer = optim.Adam(params_to_update)
     criterion = nn.CrossEntropyLoss()
 
-    num_epochs = cfg.train.EPOCHS
-    print_batch = cfg.train.PRINT_BATCH
+    num_epochs = cfg.training.EPOCHS
+    print_batch = cfg.training.PRINT_BATCH
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
     # Save model
