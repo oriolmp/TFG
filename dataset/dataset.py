@@ -97,7 +97,7 @@ class Dataset(torch.utils.data.Dataset):
 
             # check this link for dimensional calculus: 
             # https://pytorch.org/docs/stable/generated/torch.nn.MaxPool1d.html#torch.nn.MaxPool1d
-            s = (total_frames - 1) / (self.num_frames - 1)
+            s = (total_frames - 1) // (self.num_frames - 1)
             pool = nn.MaxPool1d(kernel_size=2, stride=s)
 
             clip = rearrange(clip, 'c w h t1 -> c (w h) t1')
