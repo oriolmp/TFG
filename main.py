@@ -17,11 +17,11 @@ from models.model_v1 import Model
 
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS'
-LABEL_PATH = '/data-local/data1-ssd/dpujolpe/EpicKitchens/EPIC-KITCHENS/annotations'
-FILE_NAMES = {'train': 'EPIC_100_train.pkl',
-              'val': 'EPIC_100_validation.pkl',
-              'test': 'EPIC_100_test_timestamps.pkl'}
+DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/'
+LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels'
+ANNOTATIONS_NAMES = {'train': 'EPIC_100_train.csv',
+                     'val': 'EPIC_100_validation.csv',
+                     'test': 'EPIC_100_test_timestamps.csv'}
 
 
 def load_ckp(checkpoint_fpath, model, optimizer):
