@@ -17,16 +17,18 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
         # Each epoch has a training and validation phase
         for phase in ['train', 'val']:
             if phase == 'train':
-                model.train()  
+                model.train()
+                dataloader = dataloaders[0]  
             else:
-                model.eval()   
+                model.eval()  
+                dataloader = dataloaders[1]   
 
             running_loss = 0.0
             running_corrects = 0
             total_videos = 0
 
             # Iterate over data.
-            for i, (inputs, labels) in enumerate(dataloaders[phase]):
+            for i, (inputs, labels) in enumerate(dataloader):
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
