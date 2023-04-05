@@ -1,5 +1,5 @@
 EPOCHS: 1
 SEED: 0
 BATCH_SIZE: 128
-PRINT_BATCH: 10000
+PRINT_BATCH: 20
 PRETRAINED_STATE_PATH: None # Missing value. Must be provided at command line
