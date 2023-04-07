@@ -72,6 +72,10 @@ class Dataset(torch.utils.data.Dataset):
 
         # Load rgb frames with shape (1920, 1080, 3). 
         frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths if os.path.isfile(x)]
+        
+        if len(frames) != clip_info['stop_frame'] - clip_info['start_frame']:
+            return None, None
+        
         # rearrange to allow resize
         frames = [rearrange(x, 'h w c -> c h w') for x in frames]
         # Resize it to FRAME_SIZE and add temporal dimension: (3, 224, 224, 1)
