@@ -4,7 +4,7 @@ import torch.utils.data
 import torch.nn.functional as F
 import torch.nn as nn
 import torchvision.transforms as T
-import glob
+import os
 from einops import rearrange
 import pandas as pd
 from PIL import Image
@@ -71,7 +71,7 @@ class Dataset(torch.utils.data.Dataset):
         #  frames = [resize(torch.tensor(np.asarray(Image.open(x))).to('cpu')).unsqueeze(-1) for x in frame_paths]
 
         # Load rgb frames with shape (1920, 1080, 3). 
-        frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths]
+        frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths if os.path.isfile(x)]
         # rearrange to allow resize
         frames = [rearrange(x, 'h w c -> c h w') for x in frames]
         # Resize it to FRAME_SIZE and add temporal dimension: (3, 224, 224, 1)
