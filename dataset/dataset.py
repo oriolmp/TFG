@@ -106,6 +106,6 @@ class Dataset(torch.utils.data.Dataset):
         # rearrange to fit model
         clip = rearrange(clip, 'c w h t -> c t w h')
 
-        labels = clip_info['verb_class']
+        label = clip_info['verb_class']
         
-        return clip, labels
+        return clip, label
