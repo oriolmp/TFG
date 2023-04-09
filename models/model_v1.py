@@ -36,7 +36,7 @@ class PatchTokenization(nn.Module):
         x = rearrange(x, 'b c f w h -> (b f) c w h') # shape: (batch x frames, channels, img_w, img_h)
         x = self.proj(x)    # shape: (batch x frame, frames, patches_w, patches_h
         W = x.size(-1)
-        x = rearrange(x, '(b f) d wp hp -> b (wp hp f) d', t=self.frames)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
+        x = rearrange(x, '(b f) d wp hp -> b (wp hp f) d', f=self.frames)     # shape: (batch, patches_w x patches_h x frames, channels) = (B, N, C)
         return x, T, W
 
 
