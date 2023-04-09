@@ -10,8 +10,8 @@ class BaseAttention(nn.Module):
         att_name = model_config.model.ATTENTION
 
         # Switch between paths in case you want to run it at the server/local
-        sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
-        # sys.path.append('/data-slow/hupba/omartinez/attention_zoo')
+        # sys.path.append(r'C:\Users\34609\VisualStudio\TFG\attention_zoo')
+        sys.path.append('/home-net/omartinez/TFG/attention_zoo')
 
         # This method takes as input a name of an attention mechanism, and if implemented,
         # returns an instance of the corresponding object.
