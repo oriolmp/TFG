@@ -51,7 +51,7 @@ class Dataset(torch.utils.data.Dataset):
         info_df = pd.read_csv(annotations_file)
         self.clips_df = info_df[['participant_id', 'video_id', 'start_frame', 'stop_frame', 'verb_class']]
         # drop video with missing frames
-        self.clips_df = self.clips_df.drop(self.clips_df['video_id'] == 'P23_04')
+        self.clips_df = self.clips_df.drop(self.clips_df[self.clips_df['video_id'] == 'P23_04'].index)
     
     def __len__(self):
         return self.clips_df.shape[0]
