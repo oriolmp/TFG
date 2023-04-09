@@ -50,7 +50,9 @@ class Dataset(torch.utils.data.Dataset):
         self.frames_dir = frames_dir
         info_df = pd.read_csv(annotations_file)
         self.clips_df = info_df[['participant_id', 'video_id', 'start_frame', 'stop_frame', 'verb_class']]
-
+        # drop video with missing frames
+        self.clips_df = self.clips_df.drop(self.clips_df['video_id'] == 'P23_04')
+    
     def __len__(self):
         return self.clips_df.shape[0]
 
@@ -74,7 +76,7 @@ class Dataset(torch.utils.data.Dataset):
         frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths if os.path.isfile(x)]
         
         if len(frames) != clip_info['stop_frame'] - clip_info['start_frame']:
-            return None, None
+            exit
         
         # rearrange to allow resize
         frames = [rearrange(x, 'h w c -> c h w') for x in frames]
