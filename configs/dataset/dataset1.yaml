@@ -1,6 +1,6 @@
 NAME: 'epic_kitchens'
-FRAME_SIZE: 224
-NUM_FRAMES: 30
+FRAME_SIZE: 112 # with size 112x112, 200 frames, and 16x16 patches we get around 10k tokens 
+NUM_FRAMES: 200
 IN_CHANNELS: 3
-BATCH_SIZE: 16
+BATCH_SIZE: 8
 DATA_THREADS: 5
