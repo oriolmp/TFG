@@ -74,8 +74,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     # -------------------------------------------------
     print("Loading the data...")
 
-    batch_size = cfg.dataset.BATCH_SIZE
-    data_threads = cfg.dataset.DATA_THREADS  # These are the number of workers to use for the data loader
+    batch_size = cfg.training.BATCH_SIZE
+    data_threads = cfg.training.DATA_THREADS  # These are the number of workers to use for the data loader
     
     # wandb.config.update(opt)
     
