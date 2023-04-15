@@ -1,0 +1,9 @@
+# It suits the follwoing ATTENTION models: 
+#   - performer (module performer_pytorch missing)
+
+ATTENTION: 'performer'
+kernel_type: 'relu'
+NUM_CLASSES: 97
+PATCH_SIZE: 16
+DEPTH: 2
+HEADS: 4
