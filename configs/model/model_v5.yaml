@@ -1,0 +1,9 @@
+# It suit the follwoing ATTENTION models: 
+#   - linformer
+
+ATTENTION: 'linformer'
+proj_feats: 64
+NUM_CLASSES: 97
+PATCH_SIZE: 16
+DEPTH: 2
+HEADS: 4
