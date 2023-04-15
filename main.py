@@ -41,10 +41,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     working_directory = wandb.run.dir
 
     # Set all the random seeds
-    # random.seed(opt.runtime.seed)
-    # torch.manual_seed(opt.runtime.seed)
-    # torch.cuda.manual_seed_all(opt.runtime.seed)
-
     random.seed(cfg.training.SEED)
     torch.manual_seed(cfg.training.SEED)
     torch.cuda.manual_seed_all(cfg.training.SEED)
