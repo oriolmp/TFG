@@ -27,14 +27,14 @@ class NystromformerAttention(AbstractAttention):
     # This is an optional function that if overwritten, it adds the necessary padding
     def pad_input(self, x: Tensor) -> Tensor:
         b, n, d, f, m = *x.shape, self.num_landmarks
-        remainder = n % m
+        remainder = d % m
 
-        self.original_dim = n
+        self.original_dim = d
         if remainder > 0:
-            padding = m - (n % m)
+            padding = m - (d % m)
             x = F.pad(x, (0, 0, padding, 0), value=0)
 
-        self.n_orig = n
+        self.n_orig = d
 
         return x
 
@@ -42,7 +42,7 @@ class NystromformerAttention(AbstractAttention):
         b, h, n, d_head, m, iters, eps = *Q.shape, self.num_landmarks, self.pinv_iterations, self.eps
 
         # If necessary, add padding to the embeddings to be divisible
-        # Q,K,V = map(lambda t: self.pad_input(t), (Q, K, V))
+        Q,K,V = map(lambda t: self.pad_input(t), (Q, K, V))
 
         # set masked positions to 0 in queries, keys, values
         if mask is not None:
