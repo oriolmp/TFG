@@ -1,3 +1,9 @@
+# It suit the follwoing ATTENTION models: 
+#   - vanilla_attention
+#   - linear_attention
+#   - galerkin
+#   - rela_attention
+
 ATTENTION: 'vanilla_attention'
 NUM_CLASSES: 97
 PATCH_SIZE: 16
