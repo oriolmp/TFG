@@ -1,0 +1,9 @@
+# It suit the follwoing ATTENTION models: 
+#   - fastformer
+
+ATTENTION: 'fastformer'
+use_rotary_emb: False
+NUM_CLASSES: 97
+PATCH_SIZE: 16
+DEPTH: 2
+HEADS: 4
