@@ -74,9 +74,9 @@ class Dataset(torch.utils.data.Dataset):
         
         # rearrange to allow resize
         frames = [rearrange(x, 'h w c -> c h w') for x in frames]
-        # Resize it to FRAME_SIZE and add temporal dimension: (3, 224, 224, 1)
+        # Resize it to FRAME_SIZE and add temporal dimension: (3, 112, 112, 1)
         frames = [resize(x).unsqueeze(-1) for x in frames]
-         # Concat all frames. Shape: (3, 224, 224, frames)
+         # Concat all frames. Shape: (3, 112, 112, frames)
         clip = torch.cat(frames, dim=-1)
 
         # apply padding if total frames aren't enough
