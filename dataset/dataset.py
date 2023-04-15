@@ -9,28 +9,6 @@ from einops import rearrange
 import pandas as pd
 from PIL import Image
 
-# class Dataset(torch.utils.data.Dataset):
-#     def __init__(self, data_dirs):
-#         super().__init__()
-
-#         self.data_dirs = data_dirs
-#         self.clip_paths =sum([glob.glob(dir + '/*.pt') for dir in data_dirs], [])
-
-#     def __len__(self):
-#         return len(self.clip_paths)
-
-#     def __getitem__(self, index):
-#         file_path = self.clip_paths[index]
-#         data = torch.load(file_path,map_location=torch.device('cpu'))
-#         # data = torch.load(self.data_dirs[index],map_location=torch.device('cpu'))
-    
-#         # Process the data if necessary
-#         video_data = data['data'].squeeze(0)    # shape: T x C
-
-#         labels = data['labels']
-        
-#         return video_data, labels
-
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, cfg, frames_dir, annotations_file):
         """
@@ -62,7 +40,7 @@ class Dataset(torch.utils.data.Dataset):
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
         
-        # oad all frames and do preprocessing
+        # Load all frames and do preprocessing
         frame_paths = [clip_dir + '/frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
         total_frames = len(frame_paths)   
 
