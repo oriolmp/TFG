@@ -61,16 +61,10 @@ class Dataset(torch.utils.data.Dataset):
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
-
-        # First idea: only load some frames to lighten computation
-        # middel_frame = clip_info['start_frame'] + (clip_info['stop_frame'] - clip_info['start_frame']) // 2
-        # clip_frames = (middel_frame - self.num_frames // 2, middel_frame + self.num_frames // 2)
         
-        # Second idea: load all frames and do preprocessing
+        # oad all frames and do preprocessing
         frame_paths = [clip_dir + '/frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
         total_frames = len(frame_paths)   
-
-        #  frames = [resize(torch.tensor(np.asarray(Image.open(x))).to('cpu')).unsqueeze(-1) for x in frame_paths]
 
         # Load rgb frames with shape (1920, 1080, 3). 
         frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths if os.path.isfile(x)]
@@ -98,12 +92,14 @@ class Dataset(torch.utils.data.Dataset):
             
             clip = F.pad(clip, pad, 'constant', 0)
         
-        # apply max pool if total frames are too much
+        # apply random sampling or uniform sampling
+        # uniform
         elif total_frames > self.num_frames:
-            pool = nn.AdaptiveMaxPool1d(self.num_frames)
-            clip = rearrange(clip, 'c w h t1 -> c (w h) t1')
-            clip = pool(clip.float())
-            clip = rearrange(clip, 'c (w h) t2 -> c w h t2', h=self.frame_size)   
+            range_frame = total_frames - 200
+            rand_frame = torch.randint(low=1, high=range_frame, size=(1,))
+            clip = rearrange(clip, 'c w h t1 -> t1 c w h')
+            clip = clip[rand_frame:rand_frame+200]
+            clip = rearrange(clip, 't2 c w h -> c w h t2')   
 
         # rearrange to fit model
         clip = rearrange(clip, 'c w h t -> c t w h')
