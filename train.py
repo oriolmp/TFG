@@ -7,7 +7,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
     since = time.time()
 
     softmax = torch.nn.Softmax(dim=0)
-    scaler = torch.GradScaler()
+    scaler = torch.cuda.amp.GradScaler()
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
