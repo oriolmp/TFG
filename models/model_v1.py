@@ -46,10 +46,10 @@ class MultiHeadAttention(nn.Module):
         To select which attention we want to apply, the cfg file must have the variable
         ATTENTION set to one of the available models in the library attention_zoo.
     """
-    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, proj_drop: float, attn_drop: float):
+    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, num_patches: int, proj_drop: float, attn_drop: float):
         super().__init__()
         self.num_heads = num_heads
-        self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=dim, h=dim)
+        self.attention = BaseAttention.init_att_module(cfg, in_feat=dim, out_feat=dim, n=num_patches, h=num_heads)
         # self.head_dim = dim // num_heads
         self.qkv = nn.Linear(dim, dim * 3)  
         self.proj = nn.Linear(dim, dim)
@@ -99,11 +99,11 @@ class Block(nn.Module):
     """
         Implements the NL + MultiheadAttention + NL + MLP block
     """
-    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, mlp_ratio: float, proj_drop: float,
+    def __init__(self, cfg: OmegaConf, dim: int, num_heads: int, num_patches: int, mlp_ratio: float, proj_drop: float,
                  attn_drop:float, act_layer: nn.Module = nn.GELU, norm_layer: nn.Module = nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
-        self.attn = MultiHeadAttention(cfg, dim, num_heads, proj_drop, attn_drop)
+        self.attn = MultiHeadAttention(cfg, dim, num_heads, num_patches, proj_drop, attn_drop)
         self.norm2 = norm_layer(dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = MLP(dim, mlp_hidden_dim, act_layer=act_layer, drop=proj_drop)
@@ -150,7 +150,7 @@ class Model(nn.Module):
 
         # Attention Blocks
         self.blocks = nn.ModuleList([
-            Block(cfg, self.embed_dim, self.num_heads, mlp_ratio, proj_drop, attn_drop, act_layer=nn.GELU, norm_layer=norm_layer)
+            Block(cfg, self.embed_dim, self.num_heads, self.num_patches, mlp_ratio, proj_drop, attn_drop, act_layer=nn.GELU, norm_layer=norm_layer)
             for i in range(self.depth)])
         self.norm = norm_layer(self.embed_dim)
 
