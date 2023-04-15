@@ -7,6 +7,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
     since = time.time()
 
     softmax = torch.nn.Softmax(dim=0)
+    scaler = torch.GradScaler()
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
@@ -38,26 +39,44 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 # forward
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
-                    # Get model outputs and calculate loss
-                    outputs = model(inputs)
-                    loss = criterion(outputs, labels)
+                    # Runs the forward pass with autocasting
+                    with torch.autocast(device_type='cuda', dtype=torch.float16):
+                        # Get model outputs and calculate loss
+                        outputs = model(inputs)
+                        loss = criterion(outputs, labels)
 
                     _, preds = torch.max(softmax(outputs), 1)
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
-                        loss.backward()
-                        optimizer.step()
+                        # Use gradient scaler
+                        scaler.scale(loss).backward()
+                        scaler.step(optimizer)
+                        scaler.update()
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
-                total_videos += len(outputs)
+                total_clips += len(outputs)
                 
-                if i % print_batch == 0 and phase == 'train':
-                    l = running_loss/total_videos
-                    acc = running_corrects.cpu().numpy()/total_videos
-                    print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i, l, acc))
+                if (i + 1) % print_batch == 0:
+                    l = running_loss/total_clips
+                    acc = running_corrects.cpu().numpy()/total_clips
+
+                    if phase == 'train':
+                        wandb.log({
+                            'train_batches/train_loss': l,
+                            'train_batches/train_acc': acc,
+                            'train_batches/batch': i + 1
+                        })
+                        # out some control prints
+                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i, l, acc))
+                    elif phase == 'val':
+                        wandb.log({
+                            'val_batches/val_loss': l,
+                            'val_batches/val_acc': acc,
+                            'val_batches/batch': i + 1
+                        })
 
             epoch_loss = running_loss / len(dataloaders[phase].dataset)
             epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
@@ -65,13 +84,13 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             if phase == 'train':
-                wandb.log({'train/train_loss': epoch_loss,
-                           'train/train_acc': epoch_acc,
-                           'train/epoch': epoch / (num_epochs-1)})
+                wandb.log({'train_epochs/train_loss': epoch_loss,
+                           'train_epochs/train_acc': epoch_acc,
+                           'train_epochs/epoch': epoch / (num_epochs-1)})
             elif phase == 'val':
-                wandb.log({'val/val_loss': epoch_loss,
-                           'val/val_acc': epoch_acc,
-                           'val/epoch': epoch / (num_epochs-1)})
+                wandb.log({'val_epochs/val_loss': epoch_loss,
+                           'val_epochs/val_acc': epoch_acc,
+                           'val_epochs/epoch': epoch / (num_epochs-1)})
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
