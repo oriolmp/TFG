@@ -1,7 +1,7 @@
 import os
 import random
 from typing import List
-import argparse
+from datetime import datetime
 
 import hydra
 import torch
@@ -127,5 +127,9 @@ def run_experiment(cfg: OmegaConf) -> None:
 
 if __name__ == '__main__':
 
+    time = datetime.now()
+    print('Training starting...')
+    print(f'Datetime: {time}')
+    
     # Create the experiment
     run_experiment()
