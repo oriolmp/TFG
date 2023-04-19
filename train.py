@@ -26,7 +26,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
             running_loss = 0.0
             running_corrects = 0
-            total_videos = 0
+            total_clips = 0
 
             # Iterate over data.
             for i, (inputs, labels) in enumerate(dataloader):
