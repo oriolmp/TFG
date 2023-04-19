@@ -57,9 +57,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Define the device
     DEVICE = torch.device('cpu')
     if torch.cuda.is_available:
-        DEVICE = torch.device('cuda')
-        # Set the device
-        torch.cuda.set_device(5) 
+        DEVICE = torch.device('cuda:0')
 
     # This is our general model, even though we may have different configurations (depending on what
     model = Model(cfg)
