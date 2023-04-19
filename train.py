@@ -70,7 +70,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                             'train_batches/batch': i + 1
                         })
                         # out some control prints
-                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i, l, acc))
+                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i+1, l, acc))
                     elif phase == 'val':
                         wandb.log({
                             'val_batches/val_loss': l,
