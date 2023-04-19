@@ -103,12 +103,14 @@ def run_experiment(cfg: OmegaConf) -> None:
     
     dataloaders = [train_loader, val_loader]
 
-    params_to_update = model.parameters()
-    optimizer = optim.Adam(params_to_update)
-    criterion = nn.CrossEntropyLoss()
-
     num_epochs = cfg.training.EPOCHS
     print_batch = cfg.training.PRINT_BATCH
+    lr = cfg.training.LEARNING_RATE 
+
+    params_to_update = model.parameters()
+    optimizer = optim.Adam(params=params_to_update, lr=lr)
+    criterion = nn.CrossEntropyLoss()
+
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
     # Save model
