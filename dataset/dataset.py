@@ -39,19 +39,18 @@ class Dataset(torch.utils.data.Dataset):
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
+        PIL_to_tensor = T.ToTensor()
         
         # Load all frames and do preprocessing
         frame_paths = [clip_dir + '/frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
         total_frames = len(frame_paths)   
 
-        # Load rgb frames with shape (1920, 1080, 3). 
-        frames = [torch.tensor(np.asarray(Image.open(x))).to('cpu') for x in frame_paths if os.path.isfile(x)]
-        
+        # Load rgb frames with shape (3, 1920, 1080). 
+        frames = [PIL_to_tensor(Image.open(x)).to('cpu') for x in frame_paths if os.path.isfile(x)]
+
         if len(frames) != clip_info['stop_frame'] - clip_info['start_frame']:
             exit
         
-        # rearrange to allow resize
-        frames = [rearrange(x, 'h w c -> c h w') for x in frames]
         # Resize it to FRAME_SIZE and add temporal dimension: (3, 112, 112, 1)
         frames = [resize(x).unsqueeze(-1) for x in frames]
          # Concat all frames. Shape: (3, 112, 112, frames)
