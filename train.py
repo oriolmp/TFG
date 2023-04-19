@@ -26,7 +26,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
             running_loss = 0.0
             running_corrects = 0
-            total_clips = 0
+            # total_clips = 0
 
             running_batch_loss = 0
             running_batch_corrects = 0
