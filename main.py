@@ -37,6 +37,9 @@ def load_ckp(checkpoint_fpath, model, optimizer):
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_experiment(cfg: OmegaConf) -> None:
 
+    # print cfg file
+    print(OmegaConf.to_yaml(cfg))
+
     wandb.init(project=cfg.NAME)
     working_directory = wandb.run.dir
 
