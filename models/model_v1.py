@@ -156,7 +156,7 @@ class Model(nn.Module):
         self.img_size = cfg.dataset.FRAME_SIZE
         self.in_chans = cfg.dataset.IN_CHANNELS
         self.num_frames = cfg.dataset.NUM_FRAMES
-        self.batch_size = cfg.dataset.BATCH_SIZE
+        self.batch_size = cfg.training.BATCH_SIZE
 
         self.num_features = self.embed_dim = (self.patch_size * self.patch_size) * self.in_chans
         self.dropout = nn.Dropout(dropout)
