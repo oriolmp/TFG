@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from einops import rearrange, reduce, repeat
 from attention_zoo.base_attention import BaseAttention
+import math
 
 from omegaconf import DictConfig, OmegaConf
 import hydra
@@ -112,6 +113,31 @@ class Block(nn.Module):
         x = x + self.attn(self.norm1(x))[0] # [out, scores]
         x = x + self.mlp(self.norm2(x))
         return x
+    
+class PositionalEncoding(nn.Module):
+    """
+        Implements sinuisoidal positional encodiing.
+        Source code can be found here: https://pytorch.org/tutorials/beginner/transformer_tutorial.html
+    """
+
+    def __init__(self, d_model: int, dropout: float = 0.1, max_len: int = 9801):
+        super().__init__()
+        self.dropout = nn.Dropout(p=dropout)
+
+        position = torch.arange(max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * (-math.log(10000.0) / d_model))
+        pe = torch.zeros(1, max_len, d_model)
+        pe[0, :, 0::2] = torch.sin(position * div_term)
+        pe[0, :, 1::2] = torch.cos(position * div_term)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Arguments:
+            x: Tensor, shape ``[batch_size, seq_length, embedding_dim]`` 
+        """
+        x = x + self.pe[:x.size(0)]
+        return self.dropout(x)
 
 
 class Model(nn.Module):
@@ -146,7 +172,12 @@ class Model(nn.Module):
 
         # Positional Embeddings
         self.cls_token = nn.Parameter(torch.zeros(1, 1, self.embed_dim))
-        self.pos_embed = nn.Parameter(torch.zeros(self.batch_size, self.num_patches+1, self.embed_dim))
+
+        # Learnable positional embedding
+        # self.pos_embed = nn.Parameter(torch.zeros(self.batch_size, self.num_patches+1, self.embed_dim))
+
+        # Sinusoidal positional embedding
+        self.pos_embed = PositionalEncoding(d_model=self.embed_dim, max_len=self.num_patches+1)
 
         # Attention Blocks
         self.blocks = nn.ModuleList([
@@ -164,7 +195,8 @@ class Model(nn.Module):
         x = torch.cat((cls_tokens, x), dim=1) # shape: (batch, frames * patches + 1, embed)
 
         # add positional/temporal embedding
-        x = x + self.pos_embed
+        # x = x + self.pos_embed # learnable
+        x = self.pos_embed.forward(x)
         for block in self.blocks:
             x = block.forward(x)
         
