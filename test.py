@@ -101,6 +101,8 @@ def run_inference(cfg: OmegaConf):
     print('Start inference...')
     _ = Test(model, test_loader)
 
+    print('Inference completed')
+
 
 if __name__ == '__main__':
     run_inference()
