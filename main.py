@@ -22,6 +22,7 @@ LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels'
 ANNOTATIONS_NAMES = {'train': 'EPIC_100_train.csv',
                      'val': 'EPIC_100_validation.csv',
                      'test': 'EPIC_100_test_timestamps.csv'}
+WEIGHTS_DIR = '/home-net/omartinez/TFG/weights/'
 
 # We set this variable since it raises an error if not
 os.environ["HYDRA_FULL_ERROR"] = "1"
@@ -50,9 +51,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     torch.set_default_tensor_type(torch.FloatTensor)
 
     # Subdirectory for the pretrained model (if needed)
-    pretrain_exp = os.path.join(working_directory, 'weights')
-    if not os.path.isdir(pretrain_exp):
-        os.makedirs(pretrain_exp)
+    if not os.path.isdir(WEIGHTS_DIR):
+        os.makedirs(WEIGHTS_DIR)
 
     # Define the device
     DEVICE = torch.device('cpu')
@@ -115,11 +115,12 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Save model
     i = 1
-    save_model_path = pretrain_exp + f'model_{i}'
+    save_model_path = WEIGHTS_DIR + f'model_{i}'
     while os.path.isdir(save_model_path):
         i += 1
-        save_model_path = pretrain_exp + f'model_{i}'
+        save_model_path = WEIGHTS_DIR + f'model_{i}'
     torch.save(trained_model.state_dict(), save_model_path)
+    print(f'Model saved at {save_model_path}')
 
     # Stop the logging
     wandb.finish()
