@@ -1,0 +1,750 @@
+Training starting...
+Datetime: 2023-04-19 17:28:26.675802
+wandb: Currently logged in as: oriolmartinez (tfg_oriol). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.14.2 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.14.0
+wandb: Run data is saved locally in /home-net/omartinez/TFG/wandb/run-20230419_172835-0ppnde1j
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run bumbling-dew-3
+wandb: ⭐️ View project at https://wandb.ai/tfg_oriol/action_classification
+wandb: 🚀 View run at https://wandb.ai/tfg_oriol/action_classification/runs/0ppnde1j
+NAME: action_classification
+dataset:
+  NAME: epic_kitchens
+  FRAME_SIZE: 112
+  NUM_FRAMES: 200
+  IN_CHANNELS: 3
+model:
+  ATTENTION: vanilla_attention
+  NUM_CLASSES: 97
+  PATCH_SIZE: 16
+  DEPTH: 2
+  HEADS: 4
+training:
+  EPOCHS: 1
+  SEED: 0
+  BATCH_SIZE: 1
+  DATA_THREADS: 5
+  PRINT_BATCH: 100
+  LEARNING_RATE: 0.0001
+  PRETRAINED_STATE_PATH: None
+
+Loading the data...
+Loading the training dataset
+Loading the validation dataset
+Epoch 0/0
+----------
+wandb: Network error (ReadTimeout), entering retry loop.
+ - Batch Number 100 -> Loss: 3.876 Accuracy: 0.170
+ - Batch Number 200 -> Loss: 1.921 Accuracy: 0.160
+ - Batch Number 300 -> Loss: 1.083 Accuracy: 0.150
+ - Batch Number 400 -> Loss: 0.815 Accuracy: 0.170
+ - Batch Number 500 -> Loss: 0.630 Accuracy: 0.178
+ - Batch Number 600 -> Loss: 0.489 Accuracy: 0.192
+ - Batch Number 700 -> Loss: 0.463 Accuracy: 0.189
+ - Batch Number 800 -> Loss: 0.393 Accuracy: 0.191
+ - Batch Number 900 -> Loss: 0.316 Accuracy: 0.202
+ - Batch Number 1000 -> Loss: 0.326 Accuracy: 0.202
+ - Batch Number 1100 -> Loss: 0.284 Accuracy: 0.199
+ - Batch Number 1200 -> Loss: 0.250 Accuracy: 0.199
+ - Batch Number 1300 -> Loss: 0.245 Accuracy: 0.200
+ - Batch Number 1400 -> Loss: 0.238 Accuracy: 0.199
+ - Batch Number 1500 -> Loss: 0.204 Accuracy: 0.199
+ - Batch Number 1600 -> Loss: 0.179 Accuracy: 0.197
+ - Batch Number 1700 -> Loss: 0.184 Accuracy: 0.201
+ - Batch Number 1800 -> Loss: 0.163 Accuracy: 0.202
+ - Batch Number 1900 -> Loss: 0.153 Accuracy: 0.201
+ - Batch Number 2000 -> Loss: 0.153 Accuracy: 0.202
+ - Batch Number 2100 -> Loss: 0.140 Accuracy: 0.202
+ - Batch Number 2200 -> Loss: 0.134 Accuracy: 0.203
+ - Batch Number 2300 -> Loss: 0.130 Accuracy: 0.203
+ - Batch Number 2400 -> Loss: 0.119 Accuracy: 0.202
+ - Batch Number 2500 -> Loss: 0.118 Accuracy: 0.202
+ - Batch Number 2600 -> Loss: 0.112 Accuracy: 0.202
+ - Batch Number 2700 -> Loss: 0.101 Accuracy: 0.202
+ - Batch Number 2800 -> Loss: 0.101 Accuracy: 0.205
+ - Batch Number 2900 -> Loss: 0.099 Accuracy: 0.205
+ - Batch Number 3000 -> Loss: 0.103 Accuracy: 0.204
+ - Batch Number 3100 -> Loss: 0.109 Accuracy: 0.204
+ - Batch Number 3200 -> Loss: 0.092 Accuracy: 0.206
+ - Batch Number 3300 -> Loss: 0.100 Accuracy: 0.205
+ - Batch Number 3400 -> Loss: 0.090 Accuracy: 0.206
+ - Batch Number 3500 -> Loss: 0.080 Accuracy: 0.209
+ - Batch Number 3600 -> Loss: 0.079 Accuracy: 0.210
+ - Batch Number 3700 -> Loss: 0.075 Accuracy: 0.211
+ - Batch Number 3800 -> Loss: 0.077 Accuracy: 0.212
+ - Batch Number 3900 -> Loss: 0.075 Accuracy: 0.211
+ - Batch Number 4000 -> Loss: 0.074 Accuracy: 0.210
+ - Batch Number 4100 -> Loss: 0.070 Accuracy: 0.208
+ - Batch Number 4200 -> Loss: 0.066 Accuracy: 0.209
+ - Batch Number 4300 -> Loss: 0.078 Accuracy: 0.207
+ - Batch Number 4400 -> Loss: 0.068 Accuracy: 0.208
+ - Batch Number 4500 -> Loss: 0.066 Accuracy: 0.207
+ - Batch Number 4600 -> Loss: 0.067 Accuracy: 0.207
+ - Batch Number 4700 -> Loss: 0.061 Accuracy: 0.207
+ - Batch Number 4800 -> Loss: 0.058 Accuracy: 0.208
+ - Batch Number 4900 -> Loss: 0.061 Accuracy: 0.208
+ - Batch Number 5000 -> Loss: 0.059 Accuracy: 0.209
+ - Batch Number 5100 -> Loss: 0.061 Accuracy: 0.210
+ - Batch Number 5200 -> Loss: 0.059 Accuracy: 0.210
+ - Batch Number 5300 -> Loss: 0.061 Accuracy: 0.209
+ - Batch Number 5400 -> Loss: 0.055 Accuracy: 0.209
+ - Batch Number 5500 -> Loss: 0.053 Accuracy: 0.210
+ - Batch Number 5600 -> Loss: 0.054 Accuracy: 0.210
+ - Batch Number 5700 -> Loss: 0.054 Accuracy: 0.209
+ - Batch Number 5800 -> Loss: 0.050 Accuracy: 0.209
+ - Batch Number 5900 -> Loss: 0.053 Accuracy: 0.208
+ - Batch Number 6000 -> Loss: 0.050 Accuracy: 0.208
+ - Batch Number 6100 -> Loss: 0.045 Accuracy: 0.208
+ - Batch Number 6200 -> Loss: 0.045 Accuracy: 0.210
+ - Batch Number 6300 -> Loss: 0.047 Accuracy: 0.210
+ - Batch Number 6400 -> Loss: 0.045 Accuracy: 0.211
+ - Batch Number 6500 -> Loss: 0.042 Accuracy: 0.211
+ - Batch Number 6600 -> Loss: 0.049 Accuracy: 0.211
+ - Batch Number 6700 -> Loss: 0.040 Accuracy: 0.211
+ - Batch Number 6800 -> Loss: 0.043 Accuracy: 0.210
+ - Batch Number 6900 -> Loss: 0.039 Accuracy: 0.211
+ - Batch Number 7000 -> Loss: 0.058 Accuracy: 0.211
+ - Batch Number 7100 -> Loss: 0.045 Accuracy: 0.211
+ - Batch Number 7200 -> Loss: 0.041 Accuracy: 0.210
+ - Batch Number 7300 -> Loss: 0.045 Accuracy: 0.210
+ - Batch Number 7400 -> Loss: 0.037 Accuracy: 0.211
+ - Batch Number 7500 -> Loss: 0.040 Accuracy: 0.211
+ - Batch Number 7600 -> Loss: 0.036 Accuracy: 0.210
+ - Batch Number 7700 -> Loss: 0.037 Accuracy: 0.210
+ - Batch Number 7800 -> Loss: 0.037 Accuracy: 0.210
+ - Batch Number 7900 -> Loss: 0.037 Accuracy: 0.210
+ - Batch Number 8000 -> Loss: 0.040 Accuracy: 0.209
+ - Batch Number 8100 -> Loss: 0.037 Accuracy: 0.209
+ - Batch Number 8200 -> Loss: 0.036 Accuracy: 0.209
+ - Batch Number 8300 -> Loss: 0.033 Accuracy: 0.210
+ - Batch Number 8400 -> Loss: 0.033 Accuracy: 0.210
+ - Batch Number 8500 -> Loss: 0.034 Accuracy: 0.210
+ - Batch Number 8600 -> Loss: 0.033 Accuracy: 0.210
+ - Batch Number 8700 -> Loss: 0.036 Accuracy: 0.210
+ - Batch Number 8800 -> Loss: 0.034 Accuracy: 0.210
+ - Batch Number 8900 -> Loss: 0.030 Accuracy: 0.210
+ - Batch Number 9000 -> Loss: 0.033 Accuracy: 0.209
+ - Batch Number 9100 -> Loss: 0.033 Accuracy: 0.209
+ - Batch Number 9200 -> Loss: 0.032 Accuracy: 0.209
+ - Batch Number 9300 -> Loss: 0.032 Accuracy: 0.208
+ - Batch Number 9400 -> Loss: 0.031 Accuracy: 0.208
+ - Batch Number 9500 -> Loss: 0.028 Accuracy: 0.208
+ - Batch Number 9600 -> Loss: 0.032 Accuracy: 0.208
+ - Batch Number 9700 -> Loss: 0.031 Accuracy: 0.208
+ - Batch Number 9800 -> Loss: 0.029 Accuracy: 0.208
+ - Batch Number 9900 -> Loss: 0.027 Accuracy: 0.209
+ - Batch Number 10000 -> Loss: 0.030 Accuracy: 0.208
+ - Batch Number 10100 -> Loss: 0.026 Accuracy: 0.209
+ - Batch Number 10200 -> Loss: 0.027 Accuracy: 0.210
+ - Batch Number 10300 -> Loss: 0.030 Accuracy: 0.209
+ - Batch Number 10400 -> Loss: 0.029 Accuracy: 0.209
+ - Batch Number 10500 -> Loss: 0.029 Accuracy: 0.209
+ - Batch Number 10600 -> Loss: 0.026 Accuracy: 0.209
+ - Batch Number 10700 -> Loss: 0.026 Accuracy: 0.210
+ - Batch Number 10800 -> Loss: 0.026 Accuracy: 0.210
+ - Batch Number 10900 -> Loss: 0.024 Accuracy: 0.209
+ - Batch Number 11000 -> Loss: 0.028 Accuracy: 0.210
+ - Batch Number 11100 -> Loss: 0.027 Accuracy: 0.209
+ - Batch Number 11200 -> Loss: 0.026 Accuracy: 0.209
+ - Batch Number 11300 -> Loss: 0.024 Accuracy: 0.209
+ - Batch Number 11400 -> Loss: 0.023 Accuracy: 0.210
+ - Batch Number 11500 -> Loss: 0.023 Accuracy: 0.210
+ - Batch Number 11600 -> Loss: 0.024 Accuracy: 0.209
+ - Batch Number 11700 -> Loss: 0.022 Accuracy: 0.209
+ - Batch Number 11800 -> Loss: 0.027 Accuracy: 0.209
+ - Batch Number 11900 -> Loss: 0.024 Accuracy: 0.210
+ - Batch Number 12000 -> Loss: 0.026 Accuracy: 0.210
+ - Batch Number 12100 -> Loss: 0.025 Accuracy: 0.209
+ - Batch Number 12200 -> Loss: 0.023 Accuracy: 0.209
+ - Batch Number 12300 -> Loss: 0.022 Accuracy: 0.209
+ - Batch Number 12400 -> Loss: 0.020 Accuracy: 0.209
+ - Batch Number 12500 -> Loss: 0.022 Accuracy: 0.209
+ - Batch Number 12600 -> Loss: 0.024 Accuracy: 0.210
+ - Batch Number 12700 -> Loss: 0.022 Accuracy: 0.210
+ - Batch Number 12800 -> Loss: 0.026 Accuracy: 0.210
+ - Batch Number 12900 -> Loss: 0.024 Accuracy: 0.210
+ - Batch Number 13000 -> Loss: 0.022 Accuracy: 0.210
+ - Batch Number 13100 -> Loss: 0.021 Accuracy: 0.211
+ - Batch Number 13200 -> Loss: 0.023 Accuracy: 0.211
+ - Batch Number 13300 -> Loss: 0.019 Accuracy: 0.211
+ - Batch Number 13400 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 13500 -> Loss: 0.021 Accuracy: 0.211
+ - Batch Number 13600 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 13700 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 13800 -> Loss: 0.019 Accuracy: 0.211
+ - Batch Number 13900 -> Loss: 0.019 Accuracy: 0.212
+ - Batch Number 14000 -> Loss: 0.019 Accuracy: 0.211
+ - Batch Number 14100 -> Loss: 0.021 Accuracy: 0.211
+ - Batch Number 14200 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 14300 -> Loss: 0.021 Accuracy: 0.211
+ - Batch Number 14400 -> Loss: 0.020 Accuracy: 0.212
+ - Batch Number 14500 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 14600 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 14700 -> Loss: 0.018 Accuracy: 0.212
+ - Batch Number 14800 -> Loss: 0.018 Accuracy: 0.212
+ - Batch Number 14900 -> Loss: 0.020 Accuracy: 0.212
+ - Batch Number 15000 -> Loss: 0.020 Accuracy: 0.211
+ - Batch Number 15100 -> Loss: 0.016 Accuracy: 0.212
+ - Batch Number 15200 -> Loss: 0.020 Accuracy: 0.212
+ - Batch Number 15300 -> Loss: 0.019 Accuracy: 0.212
+ - Batch Number 15400 -> Loss: 0.017 Accuracy: 0.212
+ - Batch Number 15500 -> Loss: 0.017 Accuracy: 0.212
+ - Batch Number 15600 -> Loss: 0.019 Accuracy: 0.212
+ - Batch Number 15700 -> Loss: 0.018 Accuracy: 0.212
+ - Batch Number 15800 -> Loss: 0.017 Accuracy: 0.212
+ - Batch Number 15900 -> Loss: 0.016 Accuracy: 0.213
+ - Batch Number 16000 -> Loss: 0.018 Accuracy: 0.213
+ - Batch Number 16100 -> Loss: 0.018 Accuracy: 0.213
+ - Batch Number 16200 -> Loss: 0.018 Accuracy: 0.213
+ - Batch Number 16300 -> Loss: 0.018 Accuracy: 0.213
+ - Batch Number 16400 -> Loss: 0.017 Accuracy: 0.213
+ - Batch Number 16500 -> Loss: 0.017 Accuracy: 0.213
+ - Batch Number 16600 -> Loss: 0.017 Accuracy: 0.213
+ - Batch Number 16700 -> Loss: 0.018 Accuracy: 0.213
+ - Batch Number 16800 -> Loss: 0.017 Accuracy: 0.213
+ - Batch Number 16900 -> Loss: 0.017 Accuracy: 0.213
+ - Batch Number 17000 -> Loss: 0.016 Accuracy: 0.213
+ - Batch Number 17100 -> Loss: 0.017 Accuracy: 0.214
+ - Batch Number 17200 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 17300 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 17400 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 17500 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 17600 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 17700 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 17800 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 17900 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 18000 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 18100 -> Loss: 0.017 Accuracy: 0.214
+ - Batch Number 18200 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 18300 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 18400 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 18500 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 18600 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 18700 -> Loss: 0.014 Accuracy: 0.214
+ - Batch Number 18800 -> Loss: 0.016 Accuracy: 0.214
+ - Batch Number 18900 -> Loss: 0.015 Accuracy: 0.214
+ - Batch Number 19000 -> Loss: 0.014 Accuracy: 0.214
+ - Batch Number 19100 -> Loss: 0.014 Accuracy: 0.214
+ - Batch Number 19200 -> Loss: 0.014 Accuracy: 0.214
+ - Batch Number 19300 -> Loss: 0.013 Accuracy: 0.214
+ - Batch Number 19400 -> Loss: 0.015 Accuracy: 0.215
+ - Batch Number 19500 -> Loss: 0.014 Accuracy: 0.215
+ - Batch Number 19600 -> Loss: 0.016 Accuracy: 0.215
+ - Batch Number 19700 -> Loss: 0.013 Accuracy: 0.215
+ - Batch Number 19800 -> Loss: 0.015 Accuracy: 0.215
+ - Batch Number 19900 -> Loss: 0.014 Accuracy: 0.215
+ - Batch Number 20000 -> Loss: 0.013 Accuracy: 0.215
+ - Batch Number 20100 -> Loss: 0.013 Accuracy: 0.215
+ - Batch Number 20200 -> Loss: 0.014 Accuracy: 0.215
+ - Batch Number 20300 -> Loss: 0.014 Accuracy: 0.215
+ - Batch Number 20400 -> Loss: 0.014 Accuracy: 0.215
+ - Batch Number 20500 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 20600 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 20700 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 20800 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 20900 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 21000 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 21100 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 21200 -> Loss: 0.014 Accuracy: 0.216
+ - Batch Number 21300 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 21400 -> Loss: 0.013 Accuracy: 0.217
+ - Batch Number 21500 -> Loss: 0.012 Accuracy: 0.217
+ - Batch Number 21600 -> Loss: 0.013 Accuracy: 0.217
+ - Batch Number 21700 -> Loss: 0.013 Accuracy: 0.217
+ - Batch Number 21800 -> Loss: 0.014 Accuracy: 0.217
+ - Batch Number 21900 -> Loss: 0.012 Accuracy: 0.217
+ - Batch Number 22000 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 22100 -> Loss: 0.014 Accuracy: 0.216
+ - Batch Number 22200 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 22300 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 22400 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 22500 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 22600 -> Loss: 0.014 Accuracy: 0.216
+ - Batch Number 22700 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 22800 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 22900 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 23000 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 23100 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 23200 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 23300 -> Loss: 0.011 Accuracy: 0.215
+ - Batch Number 23400 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 23500 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 23600 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 23700 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 23800 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 23900 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 24000 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 24100 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 24200 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 24300 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 24400 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 24500 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 24600 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 24700 -> Loss: 0.013 Accuracy: 0.216
+ - Batch Number 24800 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 24900 -> Loss: 0.011 Accuracy: 0.215
+ - Batch Number 25000 -> Loss: 0.011 Accuracy: 0.215
+ - Batch Number 25100 -> Loss: 0.012 Accuracy: 0.215
+ - Batch Number 25200 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 25300 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25400 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25500 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25600 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25700 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25800 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 25900 -> Loss: 0.009 Accuracy: 0.217
+ - Batch Number 26000 -> Loss: 0.011 Accuracy: 0.217
+ - Batch Number 26100 -> Loss: 0.011 Accuracy: 0.217
+ - Batch Number 26200 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 26300 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 26400 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 26500 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 26600 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 26700 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 26800 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 26900 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 27000 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 27100 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 27200 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 27300 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 27400 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 27500 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 27600 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 27700 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 27800 -> Loss: 0.012 Accuracy: 0.216
+ - Batch Number 27900 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 28000 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 28100 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 28200 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 28300 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 28400 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 28500 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 28600 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 28700 -> Loss: 0.011 Accuracy: 0.216
+ - Batch Number 28800 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 28900 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 29000 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 29100 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 29200 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 29300 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 29400 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 29500 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 29600 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 29700 -> Loss: 0.010 Accuracy: 0.215
+ - Batch Number 29800 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 29900 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 30000 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30100 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 30200 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 30300 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30400 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 30500 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30600 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30700 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30800 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 30900 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 31000 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 31100 -> Loss: 0.010 Accuracy: 0.216
+ - Batch Number 31200 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 31300 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 31400 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 31500 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 31600 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 31700 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 31800 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 31900 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 32000 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 32100 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 32200 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 32300 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 32400 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 32500 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 32600 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 32700 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 32800 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 32900 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 33000 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 33100 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 33200 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 33300 -> Loss: 0.009 Accuracy: 0.215
+ - Batch Number 33400 -> Loss: 0.008 Accuracy: 0.215
+ - Batch Number 33500 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 33600 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 33700 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 33800 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 33900 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 34000 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 34100 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 34200 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 34300 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 34400 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 34500 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 34600 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 34700 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 34800 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 34900 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35000 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35100 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 35200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 35300 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35400 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35500 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35600 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 35700 -> Loss: 0.009 Accuracy: 0.216
+ - Batch Number 35800 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 35900 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 36000 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 36100 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 36200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 36300 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 36400 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 36500 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 36600 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 36700 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 36800 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 36900 -> Loss: 0.008 Accuracy: 0.217
+ - Batch Number 37000 -> Loss: 0.008 Accuracy: 0.217
+ - Batch Number 37100 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 37200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 37300 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 37400 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 37500 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 37600 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 37700 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 37800 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 37900 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38000 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 38100 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38300 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38400 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38500 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38600 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 38700 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38800 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 38900 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39000 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39100 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39300 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 39400 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39500 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39600 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39700 -> Loss: 0.008 Accuracy: 0.216
+ - Batch Number 39800 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 39900 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40000 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40100 -> Loss: 0.006 Accuracy: 0.216
+ - Batch Number 40200 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40300 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40400 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40500 -> Loss: 0.007 Accuracy: 0.216
+ - Batch Number 40600 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 40700 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 40800 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 40900 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41000 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 41100 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 41200 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41300 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41400 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41500 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 41600 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41700 -> Loss: 0.006 Accuracy: 0.217
+ - Batch Number 41800 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 41900 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 42000 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 42100 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 42200 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 42300 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 42400 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 42500 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 42600 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 42700 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 42800 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 42900 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 43000 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 43100 -> Loss: 0.007 Accuracy: 0.217
+ - Batch Number 43200 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43300 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43400 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 43500 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43600 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43700 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43800 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 43900 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 44000 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44100 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 44200 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44300 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44400 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44500 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 44600 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44700 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 44800 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 44900 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45000 -> Loss: 0.007 Accuracy: 0.218
+ - Batch Number 45100 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45200 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45300 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45400 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45500 -> Loss: 0.005 Accuracy: 0.218
+ - Batch Number 45600 -> Loss: 0.005 Accuracy: 0.218
+ - Batch Number 45700 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45800 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 45900 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 46000 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 46100 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 46200 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46300 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46400 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46500 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46600 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46700 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46800 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 46900 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 47000 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 47100 -> Loss: 0.007 Accuracy: 0.219
+ - Batch Number 47200 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 47300 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 47400 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 47500 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 47600 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 47700 -> Loss: 0.006 Accuracy: 0.218
+ - Batch Number 47800 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 47900 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48000 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48100 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 48200 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48300 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 48400 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 48500 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48600 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48700 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 48800 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 48900 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 49000 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49100 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49200 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49300 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49400 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 49500 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49600 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 49700 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 49800 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 49900 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50000 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50100 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50200 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50300 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50400 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50500 -> Loss: 0.006 Accuracy: 0.219
+ - Batch Number 50600 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50700 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50800 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 50900 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 51400 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 51500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 51800 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 51900 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 52000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52100 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 52200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52400 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 52500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 52800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 52900 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53100 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 53200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53400 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53500 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 53600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53800 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 53900 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 54000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54400 -> Loss: 0.006 Accuracy: 0.220
+ - Batch Number 54500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54800 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 54900 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55400 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55600 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 55700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55800 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 55900 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 56000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 56100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 56200 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56300 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56400 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56500 -> Loss: 0.004 Accuracy: 0.219
+ - Batch Number 56600 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56700 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56800 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 56900 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57000 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57100 -> Loss: 0.004 Accuracy: 0.219
+ - Batch Number 57200 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57300 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57400 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57500 -> Loss: 0.004 Accuracy: 0.219
+ - Batch Number 57600 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57700 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57800 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 57900 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 58000 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 58100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58400 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 58700 -> Loss: 0.005 Accuracy: 0.219
+ - Batch Number 58800 -> Loss: 0.004 Accuracy: 0.219
+ - Batch Number 58900 -> Loss: 0.004 Accuracy: 0.219
+ - Batch Number 59000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59200 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 59300 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59400 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 59600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 59800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 59900 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 60000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 60100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 60200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 60300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 60400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 60500 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 60600 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 60700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 60800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 60900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61000 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 61100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 61300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 61700 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 61900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62000 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62200 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 62300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62600 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 62700 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 62900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63000 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63100 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 63200 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63600 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63700 -> Loss: 0.005 Accuracy: 0.220
+ - Batch Number 63800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 63900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64000 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64200 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64600 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64700 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 64900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65000 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65200 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65400 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65500 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65600 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65700 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65800 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 65900 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 66000 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 66100 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 66200 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 66300 -> Loss: 0.004 Accuracy: 0.220
+ - Batch Number 66400 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 66500 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 66600 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 66700 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 66800 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 66900 -> Loss: 0.004 Accuracy: 0.221
+ - Batch Number 67000 -> Loss: 0.004 Accuracy: 0.221
+Error executing job with overrides: ['training.BATCH_SIZE=1']
+wandb: Waiting for W&B process to finish... (failed 1). Press Control-C to abort syncing.
+wandb: 
+wandb: Run history:
+wandb:      train_batches/batch ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:  train_batches/train_acc ▁▃▅▅▆▅▅▅▆▆▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇████████████
+wandb: train_batches/train_loss █▃▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:      train_batches/batch 67000
+wandb:  train_batches/train_acc 0.22081
+wandb: train_batches/train_loss 0.00382
+wandb: 
+wandb: 🚀 View run bumbling-dew-3 at: https://wandb.ai/tfg_oriol/action_classification/runs/0ppnde1j
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230419_172835-0ppnde1j/logs
+Traceback (most recent call last):
+  File "main.py", line 135, in <module>
+    run_experiment()
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "main.py", line 114, in run_experiment
+    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
+  File "/home-net/omartinez/TFG/train.py", line 91, in train_model
+    epoch_loss = running_loss / len(dataloaders[phase].dataset)
+TypeError: list indices must be integers or slices, not str
