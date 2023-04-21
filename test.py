@@ -106,7 +106,7 @@ def Test(model, dataloader, criterion, file):
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_inference(cfg: OmegaConf):
 
-    model_path = cfg.inference.MODEL_PATH
+    model_path = cfg.inference.WEIGHTS_PATH + cfg.inference.MODEL
 
     # Create file to save results
     i = 1
