@@ -1,2 +1,2 @@
 WEIGHTS_PATH: '/home-net/omartinez/TFG/weights/'
-MODEL_WEIGHTS: 'vanilla_attention_1'
+MODEL: 'vanilla_attention_1'
