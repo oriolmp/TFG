@@ -114,10 +114,10 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     # Save model
     i = 1
-    save_model_path = WEIGHTS_DIR + f'model_{i}'
+    save_model_path = WEIGHTS_DIR + cfg.model.ATTENTION + f'_{i}'
     while os.path.isdir(save_model_path):
         i += 1
-        save_model_path = WEIGHTS_DIR + f'model_{i}'
+        save_model_path = WEIGHTS_DIR + cfg.model.ATTENTION + f'_{i}'
     torch.save(trained_model.state_dict(), save_model_path)
     print(f'Model saved at {save_model_path}')
 
