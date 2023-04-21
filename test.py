@@ -110,10 +110,10 @@ def run_inference(cfg: OmegaConf):
 
     # Create file to save results
     i = 1
-    f_path = RESULTS_PATH + f'results_{i}.txt'
-    while os.path.isdir(f):
+    f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + f'_{i}.txt'
+    while os.path.isdir(f_path):
         i += 1
-        f_path = RESULTS_PATH + f'results_{i}.txt'
+        f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + f'_{i}.txt'
     f = open(f_path, 'w')
 
     print(f'Testing model saved at path {model_path}')
