@@ -2,26 +2,30 @@ import torch
 import torch.nn as nn
 import numpy as np
 import hydra
+import os
 from omegaconf import OmegaConf
 from datetime import datetime
-import wandb
+# import wandb
 
 from models.model_v1 import Model
 from dataset.dataset import Dataset
-from sklearn.metrics import f1_score, recall_score, precision_score
+from sklearn.metrics import f1_score, recall_score, precision_score, top_k_accuracy_score, accuracy_score
 
-DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/test/'
-LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels/EPIC_100_test_timestamps.csv'
+DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/val/'
+LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels/EPIC_100_validation.csv'
 DEVICE = torch.device('cpu')
+RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
-def Test(model, dataloader, criterion):
+def Test(model, dataloader, criterion, file):
     model.eval()
 
     # initialize metrics
     test_loss = 0
-    fscore = []
-    precision= []
-    recall = []
+    acc_lst = []
+    top_k_acc_lst = []
+    f1_lst = []
+    prec_lst = []
+    recall_lst = []
     all_labels = []
     all_pred = []
     corrects = 0
@@ -29,7 +33,8 @@ def Test(model, dataloader, criterion):
     
     for clips, labels in dataloader:
 
-        all_labels = np.append(all_labels, labels.numpy())
+        # all_labels = np.append(all_labels, labels.numpy())
+        all_labels.append(labels.numpy())
         clips = clips.to(DEVICE)
         labels = labels.to(DEVICE)
 
@@ -39,38 +44,59 @@ def Test(model, dataloader, criterion):
             
             test_loss += criterion(output, labels).item()
             
-            label_pred = torch.max(output, 1)[1]
+            print(f'labels: {labels.shape}')
+            label_pred = torch.max(output, dim=1)[1]
             all_pred = np.append(all_pred, label_pred.cpu().numpy())
             corrects += torch.sum(label_pred == labels)
 
             labels_cpu = labels.cpu().numpy()
             label_pred_cpu = label_pred.cpu().numpy()
 
-            Fscore = f1_score(labels_cpu, label_pred_cpu, 
-                              zero_division=0)
-            fscore.append(Fscore)
-            Recall = recall_score(labels_cpu, label_pred_cpu, 
-                                  zero_division=0)
-            recall.append(Recall)
-            Precision = precision_score(labels_cpu, label_pred_cpu, 
-                                        zero_division=0)
-            precision.append(Precision)
+            acc = accuracy_score(labels_cpu, label_pred_cpu)
+            acc_lst.append(acc)
+
+            top_k_acc = top_k_accuracy_score(labels_cpu, output, k=5, labels=[x for x in range(97)])
+            top_k_acc_lst.append(top_k_acc)
+
+            f1 = f1_score(labels_cpu, label_pred_cpu, 
+                              zero_division=0, average='micro')
+            f1_lst.append(f1)
+
+            recall = recall_score(labels_cpu, label_pred_cpu, 
+                                  zero_division=0, average='micro')
+            recall_lst.append(recall)
+
+            precision = precision_score(labels_cpu, label_pred_cpu, 
+                                        zero_division=0, average='micro')
+            prec_lst.append(precision)
             
             total_clips += len(output)
         pass
 
     accuracy = int(corrects)/int(total_clips)
 
-    test_fscore = np.average(np.array(fscore))
-    test_precision = np.average(np.array(precision))
-    test_recall = np.average(np.array(recall))
+    test_acc = np.average(acc_lst)
+    test_top_k_acc = np.average(top_k_acc_lst)
+    test_f1 = np.average(np.array(f1_lst))
+    test_precision = np.average(np.array(prec_lst))
+    test_recall = np.average(np.array(recall_lst))
 
     print(f'Corrects/Total: {corrects}/{total_clips}')
     print(f'Test loss: {test_loss}')
-    print(f'Accuracy: {accuracy}')
-    print(f'F1 score: {test_fscore}')
+    print(f'Accuracy:\n\t manual computation: {accuracy} \n\tsklearn mean: {test_acc}')
+    print(f'Top 5 Acc: {test_top_k_acc}')
+    print(f'F1 score: {test_f1}')
     print(f'Precision: {test_precision}')
     print(f'Recall: {test_recall}')
+
+    # write to results file
+    file.write(f'Corrects/Total: {corrects}/{total_clips}')
+    file.write(f'Test loss: {test_loss}')
+    file.write(f'Accuracy:\n\t manual computation: {accuracy} \n\tsklearn mean: {test_acc}')
+    file.write(f'Top 5 Acc: {test_top_k_acc}')
+    file.write(f'F1 score: {test_f1}')
+    file.write(f'Precision: {test_precision}')
+    file.write(f'Recall: {test_recall}')
     pass
 
     return all_pred, all_labels
@@ -78,11 +104,18 @@ def Test(model, dataloader, criterion):
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_inference(cfg: OmegaConf):
 
-    wandb.init(project=cfg.NAME)
-    working_directory = wandb.run.dir
     model_path = cfg.inference.MODEL_PATH
 
+    # Create file to save results
+    i = 1
+    f_path = RESULTS_PATH + f'results_{i}.txt'
+    while os.path.isdir(f):
+        i += 1
+        f_path = RESULTS_PATH + f'results_{i}.txt'
+    f = open(f_path)
+
     print(f'Testing model saved at path {model_path}')
+    f.write(f'Testing model saved at path {model_path}')
 
     model = Model(cfg)
     model = model.to(DEVICE)
@@ -99,9 +132,10 @@ def run_inference(cfg: OmegaConf):
                                                 num_workers=data_threads, drop_last=True, pin_memory=True)
 
     print('Start inference...')
-    _ = Test(model, test_loader)
+    _ = Test(model, test_loader, criterion, f)
 
     print('Inference completed')
+    f.close()
 
 
 if __name__ == '__main__':
