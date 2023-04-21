@@ -42,7 +42,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     print(OmegaConf.to_yaml(cfg))
 
     wandb.init(project=cfg.NAME)
-    working_directory = wandb.run.dir
+    # working_directory = wandb.run.dir
 
     # Set all the random seeds
     random.seed(cfg.training.SEED)
@@ -57,7 +57,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Define the device
     DEVICE = torch.device('cpu')
     if torch.cuda.is_available:
-        DEVICE = torch.device('cuda:0')
+        DEVICE = torch.device('cuda')
+        torch.cuda.set_device(cfg.training.GPU) 
 
     # This is our general model, even though we may have different configurations (depending on what
     model = Model(cfg)
@@ -77,8 +78,6 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     batch_size = cfg.training.BATCH_SIZE
     data_threads = cfg.training.DATA_THREADS  # These are the number of workers to use for the data loader
-    
-    # wandb.config.update(opt)
     
     # Load the source training domain
     print("Loading the training dataset")
