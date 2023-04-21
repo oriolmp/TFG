@@ -26,7 +26,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
             running_loss = 0.0
             running_corrects = 0
-            # total_clips = 0
+            total_clips = 0
 
             running_batch_loss = 0
             running_batch_corrects = 0
@@ -61,7 +61,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 # statistics
                 running_loss += loss.item() 
                 running_corrects += torch.sum(preds == labels.data)
-                # total_clips += len(outputs)
+                total_clips += len(outputs)
                 running_batch_loss += loss.item()
                 running_batch_corrects += torch.sum(preds == labels.data)
                 total_batch_clips += len(outputs)
@@ -87,20 +87,21 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
                     running_batch_loss = 0
                     running_batch_corrects = 0
+                    break
 
-            epoch_loss = running_loss / len(dataloaders[phase].dataset)
-            epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
+            epoch_loss = running_loss / total_clips
+            epoch_acc = running_corrects.double() / total_clips
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             if phase == 'train':
                 wandb.log({'train_epochs/train_loss': epoch_loss,
                            'train_epochs/train_acc': epoch_acc,
-                           'train_epochs/epoch': epoch / (num_epochs-1)})
+                           'train_epochs/epoch': epoch})
             elif phase == 'val':
                 wandb.log({'val_epochs/val_loss': epoch_loss,
                            'val_epochs/val_acc': epoch_acc,
-                           'val_epochs/epoch': epoch / (num_epochs-1)})
+                           'val_epochs/epoch': epoch})
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
