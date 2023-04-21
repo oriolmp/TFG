@@ -6,3 +6,4 @@ defaults:
   - dataset: dataset1
   - model: model_v1
   - training: train1
+  - inference: inference1
