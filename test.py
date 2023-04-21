@@ -16,6 +16,8 @@ LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels/EPIC_10
 DEVICE = torch.device('cpu')
 RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
+os.environ["HYDRA_FULL_ERROR"] = "1"
+
 def Test(model, dataloader, criterion, file):
     model.eval()
 
