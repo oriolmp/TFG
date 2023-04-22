@@ -87,7 +87,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
                     running_batch_loss = 0
                     running_batch_corrects = 0
-                    break
 
             epoch_loss = running_loss / total_clips
             epoch_acc = running_corrects.double() / total_clips
