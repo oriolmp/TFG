@@ -75,8 +75,6 @@ def Test(model, dataloader, criterion, file):
             total_clips += len(output)
         pass
 
-    accuracy = int(corrects)/int(total_clips)
-
     test_acc = np.average(acc_lst)
     test_top_k_acc = np.average(top_k_acc_lst)
     test_f1 = np.average(np.array(f1_lst))
@@ -85,20 +83,20 @@ def Test(model, dataloader, criterion, file):
 
     print(f'Corrects/Total: {corrects}/{total_clips}')
     print(f'Test loss: {test_loss}')
-    print(f'Accuracy:\n\t manual computation: {accuracy} \n\tsklearn mean: {test_acc}')
+    print(f'Accuracy: {test_acc}')
     print(f'Top 5 Acc: {test_top_k_acc}')
     print(f'F1 score: {test_f1}')
     print(f'Precision: {test_precision}')
     print(f'Recall: {test_recall}')
 
     # write to results file
-    file.write(f'Corrects/Total: {corrects}/{total_clips}')
-    file.write(f'Test loss: {test_loss}')
-    file.write(f'Accuracy:\n\t manual computation: {accuracy} \n\tsklearn mean: {test_acc}')
-    file.write(f'Top 5 Acc: {test_top_k_acc}')
-    file.write(f'F1 score: {test_f1}')
-    file.write(f'Precision: {test_precision}')
-    file.write(f'Recall: {test_recall}')
+    file.write(f'Corrects/Total: {corrects}/{total_clips}\n')
+    file.write(f'Test loss: {test_loss}\n')
+    file.write(f'Accuracy: {test_acc}\n')
+    file.write(f'Top 5 Acc: {test_top_k_acc}\n')
+    file.write(f'F1 score: {test_f1}\n')
+    file.write(f'Precision: {test_precision}\n')
+    file.write(f'Recall: {test_recall}\n')
     pass
 
     return all_pred, all_labels
@@ -110,10 +108,10 @@ def run_inference(cfg: OmegaConf):
 
     # Create file to save results
     i = 1
-    f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + f'_{i}.txt'
+    f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + '.txt'
     while os.path.isdir(f_path):
         i += 1
-        f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + f'_{i}.txt'
+        f_path = RESULTS_PATH + 'results_' + cfg.inference.MODEL + 'txt'
     f = open(f_path, 'w')
 
     print(f'Testing model saved at path {model_path}')
