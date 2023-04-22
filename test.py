@@ -131,9 +131,10 @@ def run_inference(cfg: OmegaConf):
                                                 num_workers=data_threads, drop_last=True, pin_memory=True)
 
     print('Start inference...')
+    print(f'Datetime: {datetime.now()}')
     _ = Test(model, test_loader, criterion, f)
 
-    print('Inference completed')
+    print(f'Inference completed at {datetime.now()}')
     f.close()
 
 
