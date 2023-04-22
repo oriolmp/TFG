@@ -45,8 +45,7 @@ def Test(model, dataloader, criterion, file):
             output = model(clips)
             
             test_loss += criterion(output, labels).item()
-            
-            print(f'labels: {labels.shape}')
+       
             label_pred = torch.max(output, dim=1)[1]
             all_pred = np.append(all_pred, label_pred.cpu().numpy())
             corrects += torch.sum(label_pred == labels)
