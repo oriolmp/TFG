@@ -73,7 +73,8 @@ def Test(model, dataloader, criterion, file):
             prec_lst.append(precision)
             
             total_clips += len(output)
-        pass
+        # pass
+        break
 
     test_acc = np.average(acc_lst)
     test_top_k_acc = np.average(top_k_acc_lst)
