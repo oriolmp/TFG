@@ -5,6 +5,7 @@ import hydra
 import os
 from omegaconf import OmegaConf
 from datetime import datetime
+import csv
 # import wandb
 
 from models.model_v1 import Model
@@ -132,7 +133,16 @@ def run_inference(cfg: OmegaConf):
 
     print('Start inference...')
     print(f'Datetime: {datetime.now()}')
-    _ = Test(model, test_loader, criterion, f)
+    predicted, labels = Test(model, test_loader, criterion, f)
+
+     # Create file to save labels and predicted labels
+    i = 1
+    f_labels = RESULTS_PATH + 'labels_' + cfg.inference.MODEL + '.csv'
+    with open(f_labels, 'w') as csvfile: 
+        csvwriter = csv.writer(csvfile) 
+        rows = [predicted, labels]
+        csvwriter.writerows(rows)
+    csvfile.close()
 
     print(f'Inference completed at {datetime.now()}')
     f.close()
