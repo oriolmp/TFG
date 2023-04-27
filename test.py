@@ -36,8 +36,8 @@ def Test(model, dataloader, criterion, file):
     
     for clips, labels in dataloader:
 
-        # all_labels = np.append(all_labels, labels.numpy())
-        all_labels.append(labels.numpy())
+        # all_labels.append(labels.numpy())
+        all_labels += labels.tolist()
         clips = clips.to(DEVICE)
         labels = labels.to(DEVICE)
 
@@ -48,7 +48,7 @@ def Test(model, dataloader, criterion, file):
             test_loss += criterion(output, labels).item()
        
             label_pred = torch.max(output, dim=1)[1]
-            all_pred = np.append(all_pred, label_pred.cpu().numpy())
+            all_pred += label_pred.tolist()
             corrects += torch.sum(label_pred == labels)
 
             labels_cpu = labels.cpu().numpy()
@@ -141,7 +141,7 @@ def run_inference(cfg: OmegaConf):
     f_labels = RESULTS_PATH + 'labels_' + cfg.inference.MODEL + '.csv'
     with open(f_labels, 'w') as csvfile: 
         csvwriter = csv.writer(csvfile) 
-        rows = [predicted, labels]
+        rows = [predicted, labels] 
         csvwriter.writerows(rows)
     csvfile.close()
 
