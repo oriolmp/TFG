@@ -3,7 +3,7 @@
 
 ATTENTION: 'performer'
 kernel_type: 'relu'
-NUM_CLASSES: 97
+NUM_CLASSES: 96
 PATCH_SIZE: 16
 DEPTH: 2
 HEADS: 4

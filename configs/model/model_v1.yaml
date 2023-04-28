@@ -5,7 +5,7 @@
 #   - rela_attention
 
 ATTENTION: 'vanilla_attention'
-NUM_CLASSES: 97
+NUM_CLASSES: 96
 PATCH_SIZE: 16
 DEPTH: 2
 HEADS: 4
