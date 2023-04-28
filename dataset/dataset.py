@@ -75,7 +75,7 @@ class Dataset(torch.utils.data.Dataset):
             range_frame = total_frames - 200
             rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1 # we add + 1 since frame_0000000 does not exists
             clip = rearrange(clip, 'c w h t1 -> t1 c w h')
-            clip = clip[rand_frame:rand_frame+200]
+            clip = clip[rand_frame:rand_frame+200:2] # take 1 for every 2 frames
             clip = rearrange(clip, 't2 c w h -> c w h t2')   
 
         # rearrange to fit model
