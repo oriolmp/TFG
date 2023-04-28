@@ -38,7 +38,6 @@ class Dataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         clip_info = self.clips_df.iloc[index]
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
-        print(f'clip dir: {clip_dir}')
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
         PIL_to_tensor = T.ToTensor()
