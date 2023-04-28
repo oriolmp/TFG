@@ -90,9 +90,9 @@ def run_experiment(cfg: OmegaConf) -> None:
     annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['train'])
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
-    train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
-    train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size, shuffle=True, 
-                                                num_workers=data_threads, drop_last=True, pin_memory=True)
+    # train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
+    train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True, 
+                                                num_workers=data_threads, drop_last=True, pin_memory=True) # sampler=train_sampler, 
 
 
     # Compute class weights
@@ -121,7 +121,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     params_to_update = model.parameters()
     optimizer = optim.Adam(params=params_to_update, lr=lr)
-    criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights))
+    criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights).to(DEVICE))
 
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
