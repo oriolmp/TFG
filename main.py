@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import pandas as pd
+import numpy as np
 from sklearn.utils.class_weight import compute_class_weight
 
 from omegaconf import OmegaConf
@@ -93,6 +94,15 @@ def run_experiment(cfg: OmegaConf) -> None:
     train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size, shuffle=True, 
                                                 num_workers=data_threads, drop_last=True, pin_memory=True)
 
+
+    # Compute class weights
+    df = pd.read_csv(annotations_path)
+    unique_labels = np.array(df['verb_class'].unique())
+    unique_labels.sort()
+    all_labels = np.array(df['verb_class'])
+    class_weights = compute_class_weight(class_weight='balanced', classes=unique_labels, y=all_labels)
+    del df
+    
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
     val_path = os.path.join(DATA_PATH, 'val/')
@@ -111,8 +121,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     params_to_update = model.parameters()
     optimizer = optim.Adam(params=params_to_update, lr=lr)
-
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights))
 
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
 
