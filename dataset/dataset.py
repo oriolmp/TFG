@@ -29,7 +29,8 @@ class Dataset(torch.utils.data.Dataset):
         info_df = pd.read_csv(annotations_file)
         self.clips_df = info_df[['participant_id', 'video_id', 'start_frame', 'stop_frame', 'verb_class']]
         # drop video with missing frames
-        self.clips_df = self.clips_df.drop(self.clips_df[self.clips_df['video_id'] == 'P23_04'].index)
+        # if using cutsom sets, this video is directly removed
+        # self.clips_df = self.clips_df.drop(self.clips_df[self.clips_df['video_id'] == 'P23_04'].index)
     
     def __len__(self):
         return self.clips_df.shape[0]
@@ -37,6 +38,7 @@ class Dataset(torch.utils.data.Dataset):
     def __getitem__(self, index):
         clip_info = self.clips_df.iloc[index]
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
+        print(f'clip dir: {clip_dir}')
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
         PIL_to_tensor = T.ToTensor()
@@ -69,14 +71,26 @@ class Dataset(torch.utils.data.Dataset):
             
             clip = F.pad(clip, pad, 'constant', 0)
         
-        # apply random sampling or uniform sampling
-        # uniform
+        # apply  uniform sampling      
         elif total_frames > self.num_frames:
-            range_frame = total_frames - 200
+            range_frame = total_frames - self.num_frames
             rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1 # we add + 1 since frame_0000000 does not exists
             clip = rearrange(clip, 'c w h t1 -> t1 c w h')
-            clip = clip[rand_frame:rand_frame+200:2] # take 1 for every 2 frames
+            clip = clip[rand_frame:rand_frame+self.num_frames] # take 1 for every 2 frames
             clip = rearrange(clip, 't2 c w h -> c w h t2')   
+        # this implementation is quite poor to suprass the problem. However it should be checked
+        # it works for num_frames = 100 or 200
+        # elif total_frames > self.num_frames:
+        #     if total_frames < 200:
+        #         range_frame = total_frames - 100
+        #         rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1
+        #         clip = clip[rand_frame:rand_frame+100] 
+        #     else:
+        #         range_frame = total_frames - 200
+        #         rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1 # we add + 1 since frame_0000000 does not exists
+        #         clip = rearrange(clip, 'c w h t1 -> t1 c w h')
+        #         clip = clip[rand_frame:rand_frame+200:2]
+        #     clip = rearrange(clip, 't2 c w h -> c w h t2')   
 
         # rearrange to fit model
         clip = rearrange(clip, 'c w h t -> c t w h')
