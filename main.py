@@ -105,7 +105,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
-    val_path = os.path.join(DATA_PATH, 'val/')
+    val_path = os.path.join(DATA_PATH, 'train/') # we splitted train to create val. Val clips are on train folder
     annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['val'])
     val_set =  Dataset(cfg, frames_dir=val_path, annotations_file=annotations_path)
 
