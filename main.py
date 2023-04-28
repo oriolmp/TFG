@@ -87,7 +87,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
-    train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size,
+    train_loader = torch.utils.data.DataLoader(train_set, sampler=train_sampler, batch_size=batch_size, shuffle=True, 
                                                 num_workers=data_threads, drop_last=True, pin_memory=True)
 
     # Load the validation clips (this is the data that we test it with)
