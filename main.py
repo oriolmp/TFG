@@ -7,6 +7,8 @@ import hydra
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import pandas as pd
+from sklearn.utils.class_weight import compute_class_weight
 
 from omegaconf import OmegaConf
 import wandb
@@ -84,7 +86,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     print("Loading the training dataset")
 
     train_path = os.path.join(DATA_PATH, 'train/')
-    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['train'])
+    annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['train'])
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
@@ -94,7 +96,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
     val_path = os.path.join(DATA_PATH, 'val/')
-    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['val'])
+    annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['val'])
     val_set =  Dataset(cfg, frames_dir=val_path, annotations_file=annotations_path)
 
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False,
@@ -109,6 +111,7 @@ def run_experiment(cfg: OmegaConf) -> None:
 
     params_to_update = model.parameters()
     optimizer = optim.Adam(params=params_to_update, lr=lr)
+
     criterion = nn.CrossEntropyLoss()
 
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
