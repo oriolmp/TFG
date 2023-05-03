@@ -101,7 +101,6 @@ def run_experiment(cfg: OmegaConf) -> None:
     unique_labels.sort()
     all_labels = np.array(df['verb_class'])
     class_weights = compute_class_weight(class_weight='balanced', classes=unique_labels, y=all_labels)
-    del df
     
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
@@ -128,7 +127,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Save model
     i = 1
     save_model_path = WEIGHTS_DIR + cfg.model.ATTENTION + f'_{i}'
-    while os.path.isdir(save_model_path):
+    while os.path.exists(save_model_path):
         i += 1
         save_model_path = WEIGHTS_DIR + cfg.model.ATTENTION + f'_{i}'
     torch.save(trained_model.state_dict(), save_model_path)
