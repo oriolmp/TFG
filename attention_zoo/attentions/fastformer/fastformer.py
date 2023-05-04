@@ -10,7 +10,7 @@ from omegaconf import DictConfig
 class FastFormerAttention(AbstractAttention):
     def __init__(self, hpars:DictConfig, n:int, h:int, in_feat:int, out_feat:int) -> None:
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat = out_feat)
-        self.model_params = hpars
+        self.model_params = hpars.model
         self.dim_head = in_feat // h
 
         self.to_q_attn_logits = nn.Linear(self.dim_head, 1,

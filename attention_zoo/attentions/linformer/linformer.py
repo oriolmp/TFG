@@ -9,7 +9,7 @@ from omegaconf import DictConfig
 class LinformerAttention(AbstractAttention):
     def __init__(self, hpars:DictConfig, n:int, h:int, in_feat:int, out_feat:int) -> None:
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat = out_feat)
-        self.model_params = hpars
+        self.model_params = hpars.model
 
         self.to_k = nn.Linear(n, self.model_params.proj_feats, bias=False)
         self.to_v = nn.Linear(n, self.model_params.proj_feats, bias=False)

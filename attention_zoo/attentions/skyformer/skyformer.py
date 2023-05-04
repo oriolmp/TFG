@@ -136,7 +136,7 @@ class Kernel(nn.Module):
 class SkyformerAttention(AbstractAttention):
     def __init__(self, hpars: DictConfig, n: int, h: int, in_feat: int, out_feat: int) -> None:
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat=out_feat)
-        self.model_params = hpars
+        self.model_params = hpars.model
         self.accumulation = self.model_params.accumulation
         self.nb_features = self.model_params.num_feats
         self.kernel = Kernel('RBF')

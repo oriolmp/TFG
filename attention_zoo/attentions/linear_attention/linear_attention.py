@@ -11,7 +11,7 @@ from omegaconf import DictConfig
 class LinearAttention(AbstractAttention):
     def __init__(self, hpars:DictConfig, n:int, h:int, in_feat:int, out_feat:int) -> None:
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat = out_feat)
-        self.model_params = hpars
+        self.model_params = hpars.model
 
     def apply_attention(self, Q: Tensor, K: Tensor, V: Tensor, debug: bool = False, mask=None) -> Tuple[Tensor, Tensor]:
         dim = Q.shape[-1]

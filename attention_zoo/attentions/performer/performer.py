@@ -12,7 +12,7 @@ from omegaconf import DictConfig
 class PerformerAttention(AbstractAttention):
     def __init__(self, hpars: DictConfig, n: int, h: int, in_feat: int, out_feat: int) -> None:
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat=out_feat)
-        self.model_params = hpars
+        self.model_params = hpars.model
         self.kernel_type = self.model_params.kernel_type
         self.dim_head = out_feat // h
 
