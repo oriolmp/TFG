@@ -1,0 +1,7 @@
+Testing model saved at path /home-net/omartinez/TFG/weights/vanilla_attention_3Corrects/Total: 1349/9668
+Test loss: 25405.410920143127
+Accuracy: 0.1395324782788581
+Top 5 Acc: 0.4609019445593711
+F1 score: 0.1395324782788581
+Precision: 0.1395324782788581
+Recall: 0.1395324782788581
