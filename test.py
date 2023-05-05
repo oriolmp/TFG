@@ -111,7 +111,7 @@ def run_inference(cfg: OmegaConf):
     f = open(f_path, 'w')
 
     print(f'Testing model saved at path {model_path}')
-    f.write(f'Testing model saved at path {model_path}')
+    f.write(f'Testing model saved at path {model_path}\n')
 
     model = Model(cfg)
     model = model.to(DEVICE)
