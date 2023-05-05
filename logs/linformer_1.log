@@ -1,0 +1,118 @@
+Training starting...
+Datetime: 2023-05-04 11:07:47.027108
+wandb: Currently logged in as: oriolmartinez (tfg_oriol). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.1 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.14.0
+wandb: Run data is saved locally in /home-net/omartinez/TFG/wandb/run-20230504_110749-0d33cinx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run ancient-carrier-52
+wandb: ⭐️ View project at https://wandb.ai/tfg_oriol/action_classification
+wandb: 🚀 View run at https://wandb.ai/tfg_oriol/action_classification/runs/0d33cinx
+NAME: action_classification
+dataset:
+  NAME: epic_kitchens
+  FRAME_SIZE: 112
+  NUM_FRAMES: 100
+  IN_CHANNELS: 3
+model:
+  ATTENTION: linformer
+  proj_feats: 64
+  NUM_CLASSES: 96
+  PATCH_SIZE: 16
+  DEPTH: 2
+  HEADS: 4
+training:
+  EPOCHS: 4
+  SEED: 0
+  BATCH_SIZE: 2
+  DATA_THREADS: 5
+  PRINT_BATCH: 100
+  LEARNING_RATE: 1.0e-06
+  PRETRAINED_STATE_PATH: None
+  GPU: 5
+inference:
+  WEIGHTS_PATH: /home-net/omartinez/TFG/weights/
+  MODEL: vanilla_attention_1
+
+Loading the data...
+Loading the training dataset
+Loading the validation dataset
+Epoch 0/3
+----------
+Error executing job with overrides: ['model=model_v5', 'training.EPOCHS=4', 'training.GPU=5']
+wandb: Waiting for W&B process to finish... (failed 1). Press Control-C to abort syncing.
+wandb: - 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: \ 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: / 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: - 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: 🚀 View run ancient-carrier-52 at: https://wandb.ai/tfg_oriol/action_classification/runs/0d33cinx
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230504_110749-0d33cinx/logs
+Traceback (most recent call last):
+  File "main.py", line 147, in <module>
+    run_experiment()
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+    raise ex
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/hydra.py", line 132, in run
+    _ = ret.return_value
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 260, in return_value
+    raise self._return_value
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+  File "main.py", line 125, in run_experiment
+    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
+  File "/home-net/omartinez/TFG/train.py", line 49, in train_model
+    outputs = model(inputs)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home-net/omartinez/TFG/models/model_v1.py", line 201, in forward
+    x = block.forward(x)
+  File "/home-net/omartinez/TFG/models/model_v1.py", line 113, in forward
+    x = x + self.attn(self.norm1(x))[0] # [out, scores]
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home-net/omartinez/TFG/models/model_v1.py", line 67, in forward
+    output = self.attention.apply_attention(Q=q, K=k, V=v)
+  File "/home-net/omartinez/TFG/attention_zoo/attentions/linformer/linformer.py", line 26, in apply_attention
+    K = self.to_k(K)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (1536x4901 and 4900x64)
+Exception in thread ChkStopThr:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 276, in check_stop_status
+    self._loop_check_status(
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 214, in _loop_check_status
+    local_handle = request()
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface.py", line 787, in deliver_stop_status
+    return self._deliver_stop_status(status)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_shared.py", line 585, in _deliver_stop_status
+    return self._deliver_record(record)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_shared.py", line 560, in _deliver_record
+    handle = mailbox._deliver_record(record, interface=self)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/mailbox.py", line 455, in _deliver_record
+    interface._publish(record)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_sock.py", line 51, in _publish
+    self._sock_client.send_record_publish(record)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 221, in send_record_publish
+    self.send_server_request(server_req)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 155, in send_server_request
+    self._send_message(msg)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 152, in _send_message
+    self._sendall_with_error_handle(header + data)
+  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 130, in _sendall_with_error_handle
+    sent = self._sock.send(data)
+BrokenPipeError: [Errno 32] Broken pipe
