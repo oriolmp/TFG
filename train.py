@@ -59,34 +59,35 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                         scaler.update()
 
                 # statistics
-                running_loss += loss.item() 
+                running_loss += loss.item() * inputs.size(0) # loss.item = loss divided by number of batch elements
                 running_corrects += torch.sum(preds == labels.data)
                 total_clips += len(outputs)
-                running_batch_loss += loss.item()
-                running_batch_corrects += torch.sum(preds == labels.data)
+                # running_batch_loss += loss.item()
+                # running_batch_corrects += torch.sum(preds == labels.data)
                 total_batch_clips += len(outputs)
                 
                 if (i + 1) % print_batch == 0:
-                    batch_loss = running_batch_loss/total_batch_clips
-                    batch_acc = running_corrects.cpu().numpy()/total_batch_clips
+                    # batch_loss = running_batch_loss/total_batch_clips
+                    # batch_acc = running_corrects.cpu().numpy()/total_batch_clips
+                    batch_acc = torch.sum(preds == labels.data) / inputs.size(0)
 
                     if phase == 'train':
                         wandb.log({
-                            'train_batches/train_loss': batch_loss,
+                            'train_batches/train_loss': loss.item(),
                             'train_batches/train_acc': batch_acc,
                             'train_batches/batch': i + 1
                         })
                         # out some control prints
-                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i+1, batch_loss, batch_acc))
+                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i+1, loss.item(), batch_acc))
                     elif phase == 'val':
                         wandb.log({
-                            'val_batches/val_loss': batch_loss,
+                            'val_batches/val_loss': loss.item(),
                             'val_batches/val_acc': batch_acc,
                             'val_batches/batch': i + 1
                         })
 
-                    running_batch_loss = 0
-                    running_batch_corrects = 0
+                    # running_batch_loss = 0
+                    # running_batch_corrects = 0
 
             epoch_loss = running_loss / total_clips
             epoch_acc = running_corrects.double() / total_clips
