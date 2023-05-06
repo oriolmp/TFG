@@ -25,6 +25,8 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 model.eval()  
                 dataloader = dataloaders[1]   
 
+            num_batches = len(dataloader)
+
             running_loss = 0.0
             total_clips = 0
 
@@ -68,7 +70,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 # statistics
                 running_loss += loss.item() * inputs.size(0) # loss.item = loss divided by number of batch elements
                 total_clips += len(outputs)
-                
+
                 # running_corrects += torch.sum(preds == labels.data)
                 # running_batch_loss += loss.item()
                 # running_batch_corrects += torch.sum(preds == labels.data)
@@ -79,7 +81,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 epoch_pred += preds
                 epoch_labels += labels.data
                 
-                if (i + 1) % print_batch == 0:
+                if (i + 1) % print_batch == 0 or i == num_batches:
                     # batch_loss = running_batch_loss/total_batch_clips
                     # batch_acc = running_corrects.cpu().numpy()/total_batch_clips
                     # batch_acc = torch.sum(preds == labels.data) / inputs.size(0)
