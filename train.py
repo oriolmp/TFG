@@ -47,7 +47,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                     with torch.autocast(device_type='cuda', dtype=torch.float16):
                         # Get model outputs and calculate loss
                         outputs = model(inputs)
-                        loss = criterion(outputs, labels)
+                        loss = criterion(softmax(outputs), labels) # By CorrsEntropy docs, it shoul be used with normalization. However, Pythorch tutorial doesn't
 
                     _, preds = torch.max(softmax(outputs), 1)
 
