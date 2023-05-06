@@ -2,6 +2,7 @@ import time
 import copy
 import torch
 import wandb
+from sklearn.metrics import balanced_accuracy_score
 
 def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50):
     since = time.time()
@@ -25,12 +26,18 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 dataloader = dataloaders[1]   
 
             running_loss = 0.0
-            running_corrects = 0
             total_clips = 0
 
-            running_batch_loss = 0
-            running_batch_corrects = 0
-            total_batch_clips = 0
+            # running_corrects = 0
+            # running_batch_loss = 0
+            # running_batch_corrects = 0
+            # total_batch_clips = 0
+            
+            step_pred = []
+            step_labels = []
+            epoch_pred = []
+            epoch_labels = []
+            
 
             # Iterate over data.
             for i, (inputs, labels) in enumerate(dataloader):
@@ -60,37 +67,47 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
 
                 # statistics
                 running_loss += loss.item() * inputs.size(0) # loss.item = loss divided by number of batch elements
-                running_corrects += torch.sum(preds == labels.data)
                 total_clips += len(outputs)
+                
+                # running_corrects += torch.sum(preds == labels.data)
                 # running_batch_loss += loss.item()
                 # running_batch_corrects += torch.sum(preds == labels.data)
-                total_batch_clips += len(outputs)
+                # total_batch_clips += len(outputs)
+
+                step_pred += preds
+                step_labels += labels.data
+                epoch_pred += preds
+                epoch_labels += labels.data
                 
                 if (i + 1) % print_batch == 0:
                     # batch_loss = running_batch_loss/total_batch_clips
                     # batch_acc = running_corrects.cpu().numpy()/total_batch_clips
-                    batch_acc = torch.sum(preds == labels.data) / inputs.size(0)
+                    # batch_acc = torch.sum(preds == labels.data) / inputs.size(0)
+                    step_acc = balanced_accuracy_score(step_labels, step_pred)
 
                     if phase == 'train':
                         wandb.log({
                             'train_batches/train_loss': loss.item(),
-                            'train_batches/train_acc': batch_acc,
+                            'train_batches/train_acc': step_acc,
                             'train_batches/batch': i + 1
                         })
                         # out some control prints
-                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i+1, loss.item(), batch_acc))
+                        print(' - Batch Number {} -> Loss: {:.3f} Accuracy: {:.3f}'.format(i+1, loss.item(), step_acc))
                     elif phase == 'val':
                         wandb.log({
                             'val_batches/val_loss': loss.item(),
-                            'val_batches/val_acc': batch_acc,
+                            'val_batches/val_acc': step_acc,
                             'val_batches/batch': i + 1
                         })
 
                     # running_batch_loss = 0
                     # running_batch_corrects = 0
+                    step_pred = []
+                    step_labels = []
 
             epoch_loss = running_loss / total_clips
-            epoch_acc = running_corrects.double() / total_clips
+            # epoch_acc = running_corrects.double() / total_clips
+            epoch_acc = balanced_accuracy_score(epoch_labels, epoch_pred)
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
