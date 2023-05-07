@@ -58,7 +58,7 @@ class Dataset(torch.utils.data.Dataset):
         clip = torch.cat(frames, dim=-1)
 
         # apply padding if total frames aren't enough
-        if total_frames < self.num_frames:
+        if total_frames < 2 * self.num_frames:
             missing_frames = self.num_frames - total_frames
 
             # check if missing frames is odd in order to ensure that after padding, 
@@ -71,25 +71,12 @@ class Dataset(torch.utils.data.Dataset):
             clip = F.pad(clip, pad, 'constant', 0)
         
         # apply  uniform sampling      
-        elif total_frames > self.num_frames:
-            range_frame = total_frames - self.num_frames
+        elif total_frames > 2 * self.num_frames:
+            range_frame = total_frames - 2 * self.num_frames
             rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1 # we add + 1 since frame_0000000 does not exists
             clip = rearrange(clip, 'c w h t1 -> t1 c w h')
-            clip = clip[rand_frame:rand_frame+self.num_frames] # take 1 for every 2 frames
+            clip = clip[rand_frame:rand_frame+2*self.num_frames:2] # take 1 for every 2 frames
             clip = rearrange(clip, 't2 c w h -> c w h t2')   
-        # this implementation is quite poor to suprass the problem. However it should be checked
-        # it works for num_frames = 100 or 200
-        # elif total_frames > self.num_frames:
-        #     if total_frames < 200:
-        #         range_frame = total_frames - 100
-        #         rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1
-        #         clip = clip[rand_frame:rand_frame+100] 
-        #     else:
-        #         range_frame = total_frames - 200
-        #         rand_frame = torch.randint(low=0, high=range_frame, size=(1,)) + 1 # we add + 1 since frame_0000000 does not exists
-        #         clip = rearrange(clip, 'c w h t1 -> t1 c w h')
-        #         clip = clip[rand_frame:rand_frame+200:2]
-        #     clip = rearrange(clip, 't2 c w h -> c w h t2')   
 
         # rearrange to fit model
         clip = rearrange(clip, 'c w h t -> c t w h')
