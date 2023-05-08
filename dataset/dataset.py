@@ -61,7 +61,7 @@ class Dataset(torch.utils.data.Dataset):
         clip = torch.cat(frames, dim=-1)
 
         # apply padding if total frames aren't enough
-        if total_frames < 2 * self.num_frames:
+        if total_frames <= 2 * self.num_frames:
             missing_frames = self.num_frames - total_frames
 
             # check if missing frames is odd in order to ensure that after padding, 
