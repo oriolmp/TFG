@@ -20,8 +20,8 @@ from models.model_v1 import Model
 
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS/'
-LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS/labels'
+DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
+LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels'
 CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
 ANNOTATIONS_NAMES = {'train': 'train.csv',
                      'val': 'val.csv',
