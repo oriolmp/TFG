@@ -18,6 +18,11 @@ from dataset.dataset import Dataset
 from train import train_model
 from models.model_v1 import Model
 
+# Ignore UserWarning for sklearn.metrics.balanced_accuracy (it raises warning since pred label not in true label)
+import warnings
+from sklearn.exceptions import UserWarning
+warnings.filterwarnings(action='ignore', category=UserWarning)
+
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
