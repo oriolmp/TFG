@@ -9,6 +9,7 @@ from einops import rearrange
 import pandas as pd
 from PIL import Image
 
+
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, cfg, frames_dir, annotations_file):
         """
@@ -47,7 +48,7 @@ class Dataset(torch.utils.data.Dataset):
         total_frames = len(frame_paths)   
 
         # Load rgb frames with shape (3, 1920, 1080). 
-        frames = [PIL_to_tensor(Image.open(x)).to('cpu') for x in frame_paths if os.path.isfile(x)]
+        frames = [PIL_to_tensor(Image.open(x)) for x in frame_paths if os.path.isfile(x)]
 
         if len(frames) != clip_info['stop_frame'] - clip_info['start_frame']:
             exit
