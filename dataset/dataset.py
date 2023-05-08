@@ -62,7 +62,7 @@ class Dataset(torch.utils.data.Dataset):
 
         # apply padding if total frames aren't enough
         if total_frames <= 2 * self.num_frames:
-            missing_frames = self.num_frames - total_frames
+            missing_frames = 2 * self.num_frames - total_frames
 
             # check if missing frames is odd in order to ensure that after padding, 
             # num_frames equals NUM_FRAMES
