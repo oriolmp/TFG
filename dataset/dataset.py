@@ -7,7 +7,8 @@ import torchvision.transforms as T
 import os
 from einops import rearrange
 import pandas as pd
-from PIL import Image
+# from PIL import Image
+import cv2
 
 
 class Dataset(torch.utils.data.Dataset):
@@ -41,14 +42,15 @@ class Dataset(torch.utils.data.Dataset):
         clip_dir = self.frames_dir + clip_info['participant_id'] + '/rgb_frames/' + clip_info['video_id']
 
         resize = T.Resize(size=(self.frame_size, self.frame_size), antialias=True) # antialias=True because of user warning
-        PIL_to_tensor = T.ToTensor()
+        to_tensor = T.ToTensor()
         
         # Load all frames and do preprocessing
         frame_paths = [clip_dir + '/frame_' + str(x).rjust(10, '0') + '.jpg' for x in range(clip_info['start_frame'], clip_info['stop_frame'])]
         total_frames = len(frame_paths)   
 
         # Load rgb frames with shape (3, 1920, 1080). 
-        frames = [PIL_to_tensor(Image.open(x)) for x in frame_paths if os.path.isfile(x)]
+        # frames = [PIL_to_tensor(Image.open(x)) for x in frame_paths if os.path.isfile(x)]
+        frames = [to_tensor(cv2.imread(x, cv2.IMREAD_UNCHANGED)) for x in frame_paths if os.path.isfile(x)]
 
         if len(frames) != clip_info['stop_frame'] - clip_info['start_frame']:
             exit
