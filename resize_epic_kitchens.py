@@ -45,12 +45,15 @@ for dir in ['test', 'train', 'val']:
                 if not os.path.exists(new_video_path):
                     os.mkdir(new_video_path)
                     # print(f'Created folder {new_video_path}')
-                for frame in os.listdir(video_path):
-                    frame_path = os.path.join(video_path, frame)
-                    new_frame_path = os.path.join(new_video_path, frame)
-                    img = Image.open(frame_path)
-                    img = img.resize(size=(256, 256))
-                    img.save(new_frame_path)
+                    try:
+                        for frame in os.listdir(video_path):
+                            frame_path = os.path.join(video_path, frame)
+                            new_frame_path = os.path.join(new_video_path, frame)
+                            img = Image.open(frame_path)
+                            img = img.resize(size=(256, 256))
+                            img.save(new_frame_path)
+                    except(Exception):
+                        pass
         
 
 
