@@ -76,10 +76,10 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                 # running_batch_corrects += torch.sum(preds == labels.data)
                 # total_batch_clips += len(outputs)
 
-                step_pred += preds
-                step_labels += labels.data
-                epoch_pred += preds
-                epoch_labels += labels.data
+                step_pred += preds.cpu()
+                step_labels += labels.data.cpu()
+                epoch_pred += preds.cpu()
+                epoch_labels += labels.data.cpu()
                 
                 if (i + 1) % print_batch == 0 or i == num_batches:
                     # batch_loss = running_batch_loss/total_batch_clips
