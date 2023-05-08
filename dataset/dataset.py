@@ -73,7 +73,7 @@ class Dataset(torch.utils.data.Dataset):
             
             clip = F.pad(clip, pad, 'constant', 0)
             clip = rearrange(clip, 'c w h t1 -> t1 c w h')
-            clip = clip[rand_frame:rand_frame+2*self.num_frames:2] # take 1 for every 2 frames
+            clip = clip[0:2*self.num_frames:2] # take 1 for every 2 frames
             clip = rearrange(clip, 't2 c w h -> c w h t2')   
         
         # apply  uniform sampling      
