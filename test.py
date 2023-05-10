@@ -58,7 +58,7 @@ def Test(model, dataloader, criterion, file):
             acc = accuracy_score(labels_cpu, label_pred_cpu)
             acc_lst.append(acc)
 
-            top_k_acc = top_k_accuracy_score(labels_cpu, output, k=5, labels=[x for x in range(96)])
+            top_k_acc = top_k_accuracy_score(labels_cpu, output, k=5, labels=[x for x in range(95)])
             top_k_acc_lst.append(top_k_acc)
 
             f1 = f1_score(labels_cpu, label_pred_cpu, 
