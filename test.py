@@ -14,7 +14,8 @@ from sklearn.metrics import f1_score, recall_score, precision_score, top_k_accur
 
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/val/'
 LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
-DEVICE = torch.device('cpu')
+DEVICE = torch.device('cuda')
+torch.cuda.set_device(0) 
 RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
 os.environ["HYDRA_FULL_ERROR"] = "1"
