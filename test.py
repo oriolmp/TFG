@@ -10,26 +10,21 @@ import csv
 
 from models.model_v1 import Model
 from dataset.dataset import Dataset
-from sklearn.metrics import f1_score, recall_score, precision_score, top_k_accuracy_score, accuracy_score
+from sklearn.metrics import balanced_accuracy_score, top_k_accuracy_score, accuracy_score
 
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/val/'
 LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
-DEVICE = torch.device('cuda')
-torch.cuda.set_device(0) 
 RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
 os.environ["HYDRA_FULL_ERROR"] = "1"
 
-def Test(model, dataloader, criterion, file):
+def Test(model, dataloader, criterion, file, device):
     model.eval()
 
     # initialize metrics
     test_loss = 0
     acc_lst = []
     top_k_acc_lst = []
-    f1_lst = []
-    prec_lst = []
-    recall_lst = []
     all_labels = []
     all_pred = []
     corrects = 0
@@ -39,8 +34,8 @@ def Test(model, dataloader, criterion, file):
 
         # all_labels.append(labels.numpy())
         all_labels += labels.tolist()
-        clips = clips.to(DEVICE)
-        labels = labels.to(DEVICE)
+        clips = clips.to(device)
+        labels = labels.to(device)
 
         with torch.no_grad():
 
@@ -48,62 +43,49 @@ def Test(model, dataloader, criterion, file):
             
             test_loss += criterion(output, labels).item()
        
-            label_pred = torch.max(output, dim=1)[1]
-            all_pred += label_pred.tolist()
-            corrects += torch.sum(label_pred == labels)
+            _, preds = torch.max(output, dim=1)
+            corrects += torch.sum(preds == labels)
 
-            labels_cpu = labels.cpu().numpy()
-            label_pred_cpu = label_pred.cpu().numpy()
+            all_pred += preds.cpu()
+            all_labels += labels.data.cpu()
 
-            acc = accuracy_score(labels_cpu, label_pred_cpu)
+            acc = accuracy_score(labels.cpu().numpy(), preds.cpu().numpy())
             acc_lst.append(acc)
 
-            top_k_acc = top_k_accuracy_score(labels_cpu, output, k=5, labels=[x for x in range(95)])
+            top_k_acc = top_k_accuracy_score(labels.data.cpu(), output.cpu(), k=5, labels=[x for x in range(96)])
             top_k_acc_lst.append(top_k_acc)
-
-            f1 = f1_score(labels_cpu, label_pred_cpu, 
-                              zero_division=0, average='micro')
-            f1_lst.append(f1)
-
-            recall = recall_score(labels_cpu, label_pred_cpu, 
-                                  zero_division=0, average='micro')
-            recall_lst.append(recall)
-
-            precision = precision_score(labels_cpu, label_pred_cpu, 
-                                        zero_division=0, average='micro')
-            prec_lst.append(precision)
             
             total_clips += len(output)
         pass
 
     test_acc = np.average(acc_lst)
     test_top_k_acc = np.average(top_k_acc_lst)
-    test_f1 = np.average(np.array(f1_lst))
-    test_precision = np.average(np.array(prec_lst))
-    test_recall = np.average(np.array(recall_lst))
+    balanced_acc = balanced_accuracy_score(all_labels, all_pred)
 
     print(f'Corrects/Total: {corrects}/{total_clips}')
     print(f'Test loss: {test_loss}')
     print(f'Accuracy: {test_acc}')
     print(f'Top 5 Acc: {test_top_k_acc}')
-    print(f'F1 score: {test_f1}')
-    print(f'Precision: {test_precision}')
-    print(f'Recall: {test_recall}')
+    print(f'Balanced Acc: {balanced_acc}')
 
     # write to results file
     file.write(f'Corrects/Total: {corrects}/{total_clips}\n')
     file.write(f'Test loss: {test_loss}\n')
     file.write(f'Accuracy: {test_acc}\n')
     file.write(f'Top 5 Acc: {test_top_k_acc}\n')
-    file.write(f'F1 score: {test_f1}\n')
-    file.write(f'Precision: {test_precision}\n')
-    file.write(f'Recall: {test_recall}\n')
+    file.write(f'Balanced Accuracy: {balanced_acc}\n')
     pass
 
     return all_pred, all_labels
 
 @hydra.main(version_base=None, config_path='configs', config_name='config')
 def run_inference(cfg: OmegaConf):
+
+    # Define the device
+    DEVICE = torch.device('cpu')
+    if torch.cuda.is_available:
+        DEVICE = torch.device('cuda')
+        torch.cuda.set_device(cfg.training.GPU) 
 
     model_path = cfg.inference.WEIGHTS_PATH + cfg.inference.MODEL
 
@@ -116,7 +98,7 @@ def run_inference(cfg: OmegaConf):
 
     model = Model(cfg)
     model = model.to(DEVICE)
-    model.load_state_dict(torch.load(model_path, map_location ='cpu'))
+    model.load_state_dict(torch.load(model_path, map_location=DEVICE))
     criterion = nn.CrossEntropyLoss()
 
     print("Loading the data...")
@@ -130,7 +112,7 @@ def run_inference(cfg: OmegaConf):
 
     print('Start inference...')
     print(f'Datetime: {datetime.now()}')
-    predicted, labels = Test(model, test_loader, criterion, f)
+    predicted, labels = Test(model, test_loader, criterion, f, DEVICE)
 
      # Create file to save labels and predicted labels
     i = 1
