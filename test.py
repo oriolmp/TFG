@@ -12,8 +12,8 @@ from models.model_v1 import Model
 from dataset.dataset import Dataset
 from sklearn.metrics import f1_score, recall_score, precision_score, top_k_accuracy_score, accuracy_score
 
-DATA_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/val/'
-LABEL_PATH = '/data-slow/datasets/EpicKitchens/FULL_EPIC_KITCHENS/labels/EPIC_100_validation.csv'
+DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/val/'
+LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
 DEVICE = torch.device('cpu')
 RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
