@@ -123,7 +123,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     lr = cfg.training.LEARNING_RATE 
 
     params_to_update = model.parameters()
-    optimizer = optim.Adam(params=params_to_update, lr=lr, amsgrad=True)
+    optimizer = optim.Adam(params=params_to_update, lr=lr, amsgrad=False)
     criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights, dtype=torch.float32).to(DEVICE))
 
     trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
