@@ -27,8 +27,11 @@ warnings.filterwarnings(action='ignore')
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
 LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels'
 CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
-ANNOTATIONS_NAMES = {'train': 'train.csv',
-                     'val': 'val.csv',
+# ANNOTATIONS_NAMES = {'train': 'train.csv',
+#                      'val': 'val.csv',
+#                      'test': 'EPIC_100_validation.csv'}
+ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
+                     'val': 'subset_val.csv',
                      'test': 'EPIC_100_validation.csv'}
 WEIGHTS_DIR = '/home-net/omartinez/TFG/weights/'
 
@@ -125,8 +128,9 @@ def run_experiment(cfg: OmegaConf) -> None:
     params_to_update = model.parameters()
     optimizer = optim.Adam(params=params_to_update, lr=lr, amsgrad=False)
     criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights, dtype=torch.float32).to(DEVICE))
+    scheduler = optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=5)
 
-    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
+    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler)
 
     # Save model
     i = 1
