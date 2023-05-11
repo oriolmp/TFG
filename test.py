@@ -65,7 +65,7 @@ def Test(model, dataloader, criterion, file, device):
     balanced_acc = balanced_accuracy_score(all_labels, all_pred)
 
     print(f'Corrects/Total: {corrects}/{total_clips}')
-    print(f'Test loss: {test_loss}')
+    print(f'Test loss: {test_loss / i}')
     print(f'Accuracy: {test_acc}')
     print(f'Top 5 Acc: {test_top_k_acc}')
     print(f'Balanced Acc: {balanced_acc}')
