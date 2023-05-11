@@ -30,7 +30,7 @@ def Test(model, dataloader, criterion, file, device):
     corrects = 0
     total_clips = 0
     
-    for clips, labels in dataloader:
+    for i, (clips, labels) in enumerate(dataloader):
 
         # all_labels.append(labels.numpy())
         all_labels += labels.tolist()
@@ -56,7 +56,9 @@ def Test(model, dataloader, criterion, file, device):
             top_k_acc_lst.append(top_k_acc)
             
             total_clips += len(output)
-        pass
+        
+        if i % 50:
+            print(f'Step {i} done')
 
     test_acc = np.average(acc_lst)
     test_top_k_acc = np.average(top_k_acc_lst)
@@ -74,7 +76,6 @@ def Test(model, dataloader, criterion, file, device):
     file.write(f'Accuracy: {test_acc}\n')
     file.write(f'Top 5 Acc: {test_top_k_acc}\n')
     file.write(f'Balanced Accuracy: {balanced_acc}\n')
-    pass
 
     return all_pred, all_labels
 
@@ -106,8 +107,7 @@ def run_inference(cfg: OmegaConf):
     data_threads = cfg.training.DATA_THREADS
     
     test_set = Dataset(cfg, frames_dir=DATA_PATH, annotations_file=LABEL_PATH)
-    test_sampler = torch.utils.data.sampler.RandomSampler(test_set)
-    test_loader = torch.utils.data.DataLoader(test_set, sampler=test_sampler, batch_size=batch_size,
+    test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False,
                                                 num_workers=data_threads, drop_last=True, pin_memory=True)
 
     print('Start inference...')
