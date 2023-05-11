@@ -4,7 +4,7 @@ import torch
 import wandb
 from sklearn.metrics import balanced_accuracy_score
 
-def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50):
+def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50, scheduler=None):
     since = time.time()
 
     softmax = torch.nn.Softmax(dim=0)
@@ -106,6 +106,9 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
                     # running_batch_corrects = 0
                     step_pred = []
                     step_labels = []
+
+            if phase == 'train' and scheduler is not None:
+                scheduler.step()
 
             epoch_loss = running_loss / total_clips
             # epoch_acc = running_corrects.double() / total_clips
