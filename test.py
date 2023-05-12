@@ -13,12 +13,13 @@ from dataset.dataset import Dataset
 from sklearn.metrics import balanced_accuracy_score, top_k_accuracy_score, accuracy_score
 
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/val/'
-LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
+# LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
+LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/subset_test.csv'
 RESULTS_PATH = '/home-net/omartinez/TFG/logs/test_results/'
 
 os.environ["HYDRA_FULL_ERROR"] = "1"
 
-def Test(model, dataloader, criterion, file, device):
+def Test(model, dataloader, criterion, file, device, num_classes):
     model.eval()
 
     # initialize metrics
@@ -32,8 +33,6 @@ def Test(model, dataloader, criterion, file, device):
     
     for i, (clips, labels) in enumerate(dataloader):
 
-        # all_labels.append(labels.numpy())
-        all_labels += labels.tolist()
         clips = clips.to(device)
         labels = labels.to(device)
 
@@ -52,12 +51,12 @@ def Test(model, dataloader, criterion, file, device):
             acc = accuracy_score(labels.cpu().numpy(), preds.cpu().numpy())
             acc_lst.append(acc)
 
-            top_k_acc = top_k_accuracy_score(labels.data.cpu(), output.cpu(), k=5, labels=[x for x in range(96)])
+            top_k_acc = top_k_accuracy_score(labels.data.cpu(), output.cpu(), k=5, labels=[x for x in range(num_classes)])
             top_k_acc_lst.append(top_k_acc)
             
             total_clips += len(output)
         
-        if i % 50:
+        if i % 50 == 0:
             print(f'Step {i} done')
 
     test_acc = np.average(acc_lst)
@@ -105,6 +104,7 @@ def run_inference(cfg: OmegaConf):
     print("Loading the data...")
     batch_size = cfg.training.BATCH_SIZE
     data_threads = cfg.training.DATA_THREADS
+    num_classes = cfg.model.NUM_CLASSES
     
     test_set = Dataset(cfg, frames_dir=DATA_PATH, annotations_file=LABEL_PATH)
     test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False,
@@ -112,13 +112,15 @@ def run_inference(cfg: OmegaConf):
 
     print('Start inference...')
     print(f'Datetime: {datetime.now()}')
-    predicted, labels = Test(model, test_loader, criterion, f, DEVICE)
+    predicted, labels = Test(model, test_loader, criterion, f, DEVICE, num_classes)
 
      # Create file to save labels and predicted labels
     i = 1
     f_labels = RESULTS_PATH + 'labels_' + cfg.inference.MODEL + '.csv'
     with open(f_labels, 'w') as csvfile: 
         csvwriter = csv.writer(csvfile) 
+        predicted = [int(x) for x in predicted]
+        labels = [int(x) for x in labels]
         rows = [predicted, labels] 
         csvwriter.writerows(rows)
     csvfile.close()
