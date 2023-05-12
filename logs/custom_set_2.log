@@ -1,0 +1,591 @@
+Training starting...
+Datetime: 2023-05-12 08:38:09.130311
+wandb: Currently logged in as: oriolmartinez (tfg_oriol). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.15.2 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.14.0
+wandb: Run data is saved locally in /home-net/omartinez/TFG/wandb/run-20230512_083811-4b3oybig
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run helpful-sound-98
+wandb: ⭐️ View project at https://wandb.ai/tfg_oriol/action_classification
+wandb: 🚀 View run at https://wandb.ai/tfg_oriol/action_classification/runs/4b3oybig
+NAME: action_classification
+dataset:
+  NAME: epic_kitchens
+  FRAME_SIZE: 112
+  NUM_FRAMES: 100
+  IN_CHANNELS: 3
+model:
+  ATTENTION: vanilla_attention
+  NUM_CLASSES: 4
+  PATCH_SIZE: 16
+  DEPTH: 4
+  HEADS: 4
+training:
+  EPOCHS: 6
+  SEED: 0
+  BATCH_SIZE: 2
+  DATA_THREADS: 5
+  PRINT_BATCH: 10
+  LEARNING_RATE: 1.0e-05
+  PRETRAINED_STATE_PATH: None
+  GPU: 0
+inference:
+  WEIGHTS_PATH: /home-net/omartinez/TFG/weights/
+  MODEL: vanilla_attention_1
+
+Loading the data...
+Loading the training dataset
+Loading the validation dataset
+Epoch 0/5
+----------
+ - Batch Number 10 -> Loss: 1.377 Accuracy: 0.229
+ - Batch Number 20 -> Loss: 1.431 Accuracy: 0.240
+ - Batch Number 30 -> Loss: 1.121 Accuracy: 0.281
+ - Batch Number 40 -> Loss: 1.386 Accuracy: 0.200
+ - Batch Number 50 -> Loss: 1.388 Accuracy: 0.622
+ - Batch Number 60 -> Loss: 1.072 Accuracy: 0.344
+ - Batch Number 70 -> Loss: 1.460 Accuracy: 0.389
+ - Batch Number 80 -> Loss: 1.380 Accuracy: 0.287
+ - Batch Number 90 -> Loss: 0.929 Accuracy: 0.425
+ - Batch Number 100 -> Loss: 1.038 Accuracy: 0.309
+ - Batch Number 110 -> Loss: 1.370 Accuracy: 0.583
+ - Batch Number 120 -> Loss: 0.925 Accuracy: 0.353
+ - Batch Number 130 -> Loss: 0.923 Accuracy: 0.365
+ - Batch Number 140 -> Loss: 1.460 Accuracy: 0.356
+ - Batch Number 150 -> Loss: 1.670 Accuracy: 0.081
+ - Batch Number 160 -> Loss: 1.032 Accuracy: 0.661
+ - Batch Number 170 -> Loss: 1.342 Accuracy: 0.315
+ - Batch Number 180 -> Loss: 1.017 Accuracy: 0.329
+ - Batch Number 190 -> Loss: 1.368 Accuracy: 0.295
+ - Batch Number 200 -> Loss: 1.425 Accuracy: 0.344
+ - Batch Number 210 -> Loss: 0.927 Accuracy: 0.323
+ - Batch Number 220 -> Loss: 1.411 Accuracy: 0.330
+ - Batch Number 230 -> Loss: 1.135 Accuracy: 0.333
+ - Batch Number 240 -> Loss: 1.456 Accuracy: 0.389
+ - Batch Number 250 -> Loss: 1.481 Accuracy: 0.336
+ - Batch Number 260 -> Loss: 1.470 Accuracy: 0.271
+ - Batch Number 270 -> Loss: 0.898 Accuracy: 0.387
+ - Batch Number 280 -> Loss: 1.389 Accuracy: 0.392
+ - Batch Number 290 -> Loss: 1.499 Accuracy: 0.406
+ - Batch Number 300 -> Loss: 1.390 Accuracy: 0.281
+ - Batch Number 310 -> Loss: 1.330 Accuracy: 0.402
+ - Batch Number 320 -> Loss: 1.509 Accuracy: 0.300
+ - Batch Number 330 -> Loss: 1.347 Accuracy: 0.417
+ - Batch Number 340 -> Loss: 1.387 Accuracy: 0.415
+ - Batch Number 350 -> Loss: 1.643 Accuracy: 0.083
+ - Batch Number 360 -> Loss: 1.408 Accuracy: 0.268
+ - Batch Number 370 -> Loss: 1.384 Accuracy: 0.100
+ - Batch Number 380 -> Loss: 0.972 Accuracy: 0.384
+ - Batch Number 390 -> Loss: 1.051 Accuracy: 0.278
+ - Batch Number 400 -> Loss: 1.387 Accuracy: 0.333
+ - Batch Number 410 -> Loss: 0.959 Accuracy: 0.510
+ - Batch Number 420 -> Loss: 1.072 Accuracy: 0.312
+ - Batch Number 430 -> Loss: 1.067 Accuracy: 0.375
+ - Batch Number 440 -> Loss: 1.392 Accuracy: 0.292
+ - Batch Number 450 -> Loss: 1.377 Accuracy: 0.223
+ - Batch Number 460 -> Loss: 1.468 Accuracy: 0.250
+ - Batch Number 470 -> Loss: 1.042 Accuracy: 0.383
+ - Batch Number 480 -> Loss: 1.449 Accuracy: 0.460
+ - Batch Number 490 -> Loss: 1.328 Accuracy: 0.514
+ - Batch Number 500 -> Loss: 1.398 Accuracy: 0.242
+ - Batch Number 510 -> Loss: 1.376 Accuracy: 0.175
+ - Batch Number 520 -> Loss: 1.397 Accuracy: 0.194
+ - Batch Number 530 -> Loss: 1.399 Accuracy: 0.406
+ - Batch Number 540 -> Loss: 1.416 Accuracy: 0.267
+ - Batch Number 550 -> Loss: 1.162 Accuracy: 0.312
+ - Batch Number 560 -> Loss: 1.348 Accuracy: 0.417
+ - Batch Number 570 -> Loss: 1.413 Accuracy: 0.496
+ - Batch Number 580 -> Loss: 1.346 Accuracy: 0.562
+ - Batch Number 590 -> Loss: 1.382 Accuracy: 0.399
+ - Batch Number 600 -> Loss: 1.387 Accuracy: 0.346
+ - Batch Number 610 -> Loss: 1.382 Accuracy: 0.357
+ - Batch Number 620 -> Loss: 0.986 Accuracy: 0.375
+ - Batch Number 630 -> Loss: 1.416 Accuracy: 0.238
+ - Batch Number 640 -> Loss: 1.239 Accuracy: 0.333
+ - Batch Number 650 -> Loss: 1.344 Accuracy: 0.393
+ - Batch Number 660 -> Loss: 1.449 Accuracy: 0.244
+ - Batch Number 670 -> Loss: 1.339 Accuracy: 0.510
+ - Batch Number 680 -> Loss: 1.387 Accuracy: 0.193
+ - Batch Number 690 -> Loss: 0.918 Accuracy: 0.225
+ - Batch Number 700 -> Loss: 1.477 Accuracy: 0.437
+ - Batch Number 710 -> Loss: 1.405 Accuracy: 0.146
+ - Batch Number 720 -> Loss: 1.325 Accuracy: 0.317
+ - Batch Number 730 -> Loss: 1.311 Accuracy: 0.361
+ - Batch Number 740 -> Loss: 1.448 Accuracy: 0.375
+ - Batch Number 750 -> Loss: 1.458 Accuracy: 0.487
+ - Batch Number 760 -> Loss: 1.508 Accuracy: 0.386
+ - Batch Number 770 -> Loss: 0.924 Accuracy: 0.292
+ - Batch Number 780 -> Loss: 1.422 Accuracy: 0.254
+ - Batch Number 790 -> Loss: 1.178 Accuracy: 0.136
+ - Batch Number 800 -> Loss: 0.896 Accuracy: 0.548
+ - Batch Number 810 -> Loss: 1.393 Accuracy: 0.292
+ - Batch Number 820 -> Loss: 1.441 Accuracy: 0.196
+train Loss: 1.3375 Acc: 0.3310
+val Loss: 1.3422 Acc: 0.3614
+Epoch 1/5
+----------
+ - Batch Number 10 -> Loss: 0.895 Accuracy: 0.384
+ - Batch Number 20 -> Loss: 1.417 Accuracy: 0.447
+ - Batch Number 30 -> Loss: 0.918 Accuracy: 0.554
+ - Batch Number 40 -> Loss: 0.922 Accuracy: 0.342
+ - Batch Number 50 -> Loss: 1.476 Accuracy: 0.356
+ - Batch Number 60 -> Loss: 1.423 Accuracy: 0.260
+ - Batch Number 70 -> Loss: 1.424 Accuracy: 0.421
+ - Batch Number 80 -> Loss: 1.417 Accuracy: 0.237
+ - Batch Number 90 -> Loss: 1.728 Accuracy: 0.271
+ - Batch Number 100 -> Loss: 1.389 Accuracy: 0.265
+ - Batch Number 110 -> Loss: 0.900 Accuracy: 0.398
+ - Batch Number 120 -> Loss: 1.386 Accuracy: 0.465
+ - Batch Number 130 -> Loss: 1.388 Accuracy: 0.351
+ - Batch Number 140 -> Loss: 1.474 Accuracy: 0.393
+ - Batch Number 150 -> Loss: 1.440 Accuracy: 0.271
+ - Batch Number 160 -> Loss: 0.897 Accuracy: 0.417
+ - Batch Number 170 -> Loss: 1.020 Accuracy: 0.393
+ - Batch Number 180 -> Loss: 1.389 Accuracy: 0.305
+ - Batch Number 190 -> Loss: 1.421 Accuracy: 0.325
+ - Batch Number 200 -> Loss: 1.423 Accuracy: 0.325
+ - Batch Number 210 -> Loss: 1.399 Accuracy: 0.349
+ - Batch Number 220 -> Loss: 1.364 Accuracy: 0.283
+ - Batch Number 230 -> Loss: 1.239 Accuracy: 0.410
+ - Batch Number 240 -> Loss: 1.388 Accuracy: 0.458
+ - Batch Number 250 -> Loss: 1.425 Accuracy: 0.240
+ - Batch Number 260 -> Loss: 1.460 Accuracy: 0.396
+ - Batch Number 270 -> Loss: 1.415 Accuracy: 0.375
+ - Batch Number 280 -> Loss: 1.410 Accuracy: 0.125
+ - Batch Number 290 -> Loss: 1.299 Accuracy: 0.586
+ - Batch Number 300 -> Loss: 1.379 Accuracy: 0.392
+ - Batch Number 310 -> Loss: 1.387 Accuracy: 0.492
+ - Batch Number 320 -> Loss: 0.926 Accuracy: 0.336
+ - Batch Number 330 -> Loss: 1.363 Accuracy: 0.244
+ - Batch Number 340 -> Loss: 1.415 Accuracy: 0.271
+ - Batch Number 350 -> Loss: 1.754 Accuracy: 0.372
+ - Batch Number 360 -> Loss: 1.434 Accuracy: 0.448
+ - Batch Number 370 -> Loss: 1.293 Accuracy: 0.362
+ - Batch Number 380 -> Loss: 1.422 Accuracy: 0.425
+ - Batch Number 390 -> Loss: 1.257 Accuracy: 0.367
+ - Batch Number 400 -> Loss: 1.444 Accuracy: 0.315
+ - Batch Number 410 -> Loss: 1.284 Accuracy: 0.300
+ - Batch Number 420 -> Loss: 0.917 Accuracy: 0.600
+ - Batch Number 430 -> Loss: 0.894 Accuracy: 0.283
+ - Batch Number 440 -> Loss: 1.389 Accuracy: 0.361
+ - Batch Number 450 -> Loss: 1.444 Accuracy: 0.284
+ - Batch Number 460 -> Loss: 1.362 Accuracy: 0.396
+ - Batch Number 470 -> Loss: 1.419 Accuracy: 0.215
+ - Batch Number 480 -> Loss: 1.616 Accuracy: 0.205
+ - Batch Number 490 -> Loss: 1.380 Accuracy: 0.371
+ - Batch Number 500 -> Loss: 1.242 Accuracy: 0.420
+ - Batch Number 510 -> Loss: 1.403 Accuracy: 0.338
+ - Batch Number 520 -> Loss: 1.412 Accuracy: 0.338
+ - Batch Number 530 -> Loss: 1.503 Accuracy: 0.159
+ - Batch Number 540 -> Loss: 1.598 Accuracy: 0.458
+ - Batch Number 550 -> Loss: 1.439 Accuracy: 0.421
+ - Batch Number 560 -> Loss: 1.438 Accuracy: 0.388
+ - Batch Number 570 -> Loss: 1.031 Accuracy: 0.444
+ - Batch Number 580 -> Loss: 1.438 Accuracy: 0.237
+ - Batch Number 590 -> Loss: 1.367 Accuracy: 0.339
+ - Batch Number 600 -> Loss: 1.421 Accuracy: 0.121
+ - Batch Number 610 -> Loss: 1.404 Accuracy: 0.436
+ - Batch Number 620 -> Loss: 1.441 Accuracy: 0.257
+ - Batch Number 630 -> Loss: 1.303 Accuracy: 0.361
+ - Batch Number 640 -> Loss: 0.918 Accuracy: 0.350
+ - Batch Number 650 -> Loss: 1.437 Accuracy: 0.294
+ - Batch Number 660 -> Loss: 1.380 Accuracy: 0.429
+ - Batch Number 670 -> Loss: 1.412 Accuracy: 0.365
+ - Batch Number 680 -> Loss: 1.035 Accuracy: 0.250
+ - Batch Number 690 -> Loss: 1.497 Accuracy: 0.531
+ - Batch Number 700 -> Loss: 1.401 Accuracy: 0.118
+ - Batch Number 710 -> Loss: 1.399 Accuracy: 0.336
+ - Batch Number 720 -> Loss: 1.388 Accuracy: 0.095
+ - Batch Number 730 -> Loss: 1.452 Accuracy: 0.326
+ - Batch Number 740 -> Loss: 1.377 Accuracy: 0.406
+ - Batch Number 750 -> Loss: 0.896 Accuracy: 0.281
+ - Batch Number 760 -> Loss: 1.392 Accuracy: 0.446
+ - Batch Number 770 -> Loss: 1.473 Accuracy: 0.300
+ - Batch Number 780 -> Loss: 1.320 Accuracy: 0.479
+ - Batch Number 790 -> Loss: 1.498 Accuracy: 0.417
+ - Batch Number 800 -> Loss: 0.920 Accuracy: 0.306
+ - Batch Number 810 -> Loss: 1.390 Accuracy: 0.389
+ - Batch Number 820 -> Loss: 1.025 Accuracy: 0.412
+train Loss: 1.3365 Acc: 0.3472
+val Loss: 1.3469 Acc: 0.3598
+Epoch 2/5
+----------
+ - Batch Number 10 -> Loss: 1.472 Accuracy: 0.440
+ - Batch Number 20 -> Loss: 1.440 Accuracy: 0.361
+ - Batch Number 30 -> Loss: 0.897 Accuracy: 0.448
+ - Batch Number 40 -> Loss: 1.385 Accuracy: 0.300
+ - Batch Number 50 -> Loss: 1.003 Accuracy: 0.408
+ - Batch Number 60 -> Loss: 1.364 Accuracy: 0.363
+ - Batch Number 70 -> Loss: 1.599 Accuracy: 0.309
+ - Batch Number 80 -> Loss: 0.918 Accuracy: 0.258
+ - Batch Number 90 -> Loss: 1.434 Accuracy: 0.333
+ - Batch Number 100 -> Loss: 1.360 Accuracy: 0.393
+ - Batch Number 110 -> Loss: 1.390 Accuracy: 0.190
+ - Batch Number 120 -> Loss: 1.105 Accuracy: 0.661
+ - Batch Number 130 -> Loss: 1.414 Accuracy: 0.167
+ - Batch Number 140 -> Loss: 1.461 Accuracy: 0.528
+ - Batch Number 150 -> Loss: 1.427 Accuracy: 0.356
+ - Batch Number 160 -> Loss: 1.392 Accuracy: 0.266
+ - Batch Number 170 -> Loss: 1.419 Accuracy: 0.232
+ - Batch Number 180 -> Loss: 1.393 Accuracy: 0.391
+ - Batch Number 190 -> Loss: 1.484 Accuracy: 0.125
+ - Batch Number 200 -> Loss: 1.390 Accuracy: 0.375
+ - Batch Number 210 -> Loss: 1.406 Accuracy: 0.119
+ - Batch Number 220 -> Loss: 0.903 Accuracy: 0.464
+ - Batch Number 230 -> Loss: 1.428 Accuracy: 0.369
+ - Batch Number 240 -> Loss: 1.408 Accuracy: 0.417
+ - Batch Number 250 -> Loss: 1.425 Accuracy: 0.354
+ - Batch Number 260 -> Loss: 1.487 Accuracy: 0.576
+ - Batch Number 270 -> Loss: 1.118 Accuracy: 0.181
+ - Batch Number 280 -> Loss: 1.195 Accuracy: 0.510
+ - Batch Number 290 -> Loss: 1.278 Accuracy: 0.442
+ - Batch Number 300 -> Loss: 1.412 Accuracy: 0.317
+ - Batch Number 310 -> Loss: 1.411 Accuracy: 0.369
+ - Batch Number 320 -> Loss: 1.453 Accuracy: 0.221
+ - Batch Number 330 -> Loss: 1.594 Accuracy: 0.188
+ - Batch Number 340 -> Loss: 0.919 Accuracy: 0.375
+ - Batch Number 350 -> Loss: 1.467 Accuracy: 0.306
+ - Batch Number 360 -> Loss: 1.389 Accuracy: 0.528
+ - Batch Number 370 -> Loss: 0.918 Accuracy: 0.429
+ - Batch Number 380 -> Loss: 1.011 Accuracy: 0.378
+ - Batch Number 390 -> Loss: 1.335 Accuracy: 0.333
+ - Batch Number 400 -> Loss: 1.344 Accuracy: 0.427
+ - Batch Number 410 -> Loss: 1.478 Accuracy: 0.150
+ - Batch Number 420 -> Loss: 1.388 Accuracy: 0.406
+ - Batch Number 430 -> Loss: 0.899 Accuracy: 0.468
+ - Batch Number 440 -> Loss: 0.972 Accuracy: 0.396
+ - Batch Number 450 -> Loss: 1.399 Accuracy: 0.138
+ - Batch Number 460 -> Loss: 2.039 Accuracy: 0.253
+ - Batch Number 470 -> Loss: 1.387 Accuracy: 0.448
+ - Batch Number 480 -> Loss: 1.262 Accuracy: 0.229
+ - Batch Number 490 -> Loss: 1.447 Accuracy: 0.248
+ - Batch Number 500 -> Loss: 1.442 Accuracy: 0.325
+ - Batch Number 510 -> Loss: 0.923 Accuracy: 0.400
+ - Batch Number 520 -> Loss: 1.449 Accuracy: 0.306
+ - Batch Number 530 -> Loss: 1.402 Accuracy: 0.411
+ - Batch Number 540 -> Loss: 1.454 Accuracy: 0.344
+ - Batch Number 550 -> Loss: 1.331 Accuracy: 0.420
+ - Batch Number 560 -> Loss: 1.432 Accuracy: 0.264
+ - Batch Number 570 -> Loss: 0.915 Accuracy: 0.269
+ - Batch Number 580 -> Loss: 1.377 Accuracy: 0.403
+ - Batch Number 590 -> Loss: 1.412 Accuracy: 0.637
+ - Batch Number 600 -> Loss: 1.474 Accuracy: 0.385
+ - Batch Number 610 -> Loss: 1.387 Accuracy: 0.375
+ - Batch Number 620 -> Loss: 0.937 Accuracy: 0.353
+ - Batch Number 630 -> Loss: 1.306 Accuracy: 0.265
+ - Batch Number 640 -> Loss: 1.415 Accuracy: 0.388
+ - Batch Number 650 -> Loss: 1.476 Accuracy: 0.450
+ - Batch Number 660 -> Loss: 1.387 Accuracy: 0.367
+ - Batch Number 670 -> Loss: 1.392 Accuracy: 0.292
+ - Batch Number 680 -> Loss: 0.899 Accuracy: 0.359
+ - Batch Number 690 -> Loss: 1.060 Accuracy: 0.259
+ - Batch Number 700 -> Loss: 0.922 Accuracy: 0.278
+ - Batch Number 710 -> Loss: 1.417 Accuracy: 0.111
+ - Batch Number 720 -> Loss: 1.390 Accuracy: 0.340
+ - Batch Number 730 -> Loss: 1.462 Accuracy: 0.396
+ - Batch Number 740 -> Loss: 1.617 Accuracy: 0.177
+ - Batch Number 750 -> Loss: 1.573 Accuracy: 0.372
+ - Batch Number 760 -> Loss: 1.472 Accuracy: 0.372
+ - Batch Number 770 -> Loss: 1.427 Accuracy: 0.331
+ - Batch Number 780 -> Loss: 1.318 Accuracy: 0.310
+ - Batch Number 790 -> Loss: 1.389 Accuracy: 0.294
+ - Batch Number 800 -> Loss: 1.412 Accuracy: 0.192
+ - Batch Number 810 -> Loss: 1.361 Accuracy: 0.567
+ - Batch Number 820 -> Loss: 1.387 Accuracy: 0.528
+train Loss: 1.3304 Acc: 0.3436
+val Loss: 1.3412 Acc: 0.3478
+Epoch 3/5
+----------
+ - Batch Number 10 -> Loss: 1.406 Accuracy: 0.459
+ - Batch Number 20 -> Loss: 1.365 Accuracy: 0.292
+ - Batch Number 30 -> Loss: 1.490 Accuracy: 0.375
+ - Batch Number 40 -> Loss: 2.000 Accuracy: 0.068
+ - Batch Number 50 -> Loss: 1.436 Accuracy: 0.232
+ - Batch Number 60 -> Loss: 1.048 Accuracy: 0.400
+ - Batch Number 70 -> Loss: 1.455 Accuracy: 0.308
+ - Batch Number 80 -> Loss: 1.393 Accuracy: 0.406
+ - Batch Number 90 -> Loss: 1.216 Accuracy: 0.639
+ - Batch Number 100 -> Loss: 0.921 Accuracy: 0.267
+ - Batch Number 110 -> Loss: 1.372 Accuracy: 0.455
+ - Batch Number 120 -> Loss: 1.312 Accuracy: 0.259
+ - Batch Number 130 -> Loss: 1.377 Accuracy: 0.405
+ - Batch Number 140 -> Loss: 1.422 Accuracy: 0.271
+ - Batch Number 150 -> Loss: 1.508 Accuracy: 0.250
+ - Batch Number 160 -> Loss: 1.432 Accuracy: 0.377
+ - Batch Number 170 -> Loss: 1.377 Accuracy: 0.208
+ - Batch Number 180 -> Loss: 1.495 Accuracy: 0.292
+ - Batch Number 190 -> Loss: 1.383 Accuracy: 0.256
+ - Batch Number 200 -> Loss: 1.425 Accuracy: 0.402
+ - Batch Number 210 -> Loss: 1.270 Accuracy: 0.225
+ - Batch Number 220 -> Loss: 1.398 Accuracy: 0.300
+ - Batch Number 230 -> Loss: 1.392 Accuracy: 0.305
+ - Batch Number 240 -> Loss: 1.467 Accuracy: 0.302
+ - Batch Number 250 -> Loss: 1.391 Accuracy: 0.396
+ - Batch Number 260 -> Loss: 1.396 Accuracy: 0.556
+ - Batch Number 270 -> Loss: 1.117 Accuracy: 0.492
+ - Batch Number 280 -> Loss: 1.511 Accuracy: 0.299
+ - Batch Number 290 -> Loss: 1.400 Accuracy: 0.365
+ - Batch Number 300 -> Loss: 1.356 Accuracy: 0.302
+ - Batch Number 310 -> Loss: 1.477 Accuracy: 0.315
+ - Batch Number 320 -> Loss: 1.432 Accuracy: 0.452
+ - Batch Number 330 -> Loss: 1.436 Accuracy: 0.275
+ - Batch Number 340 -> Loss: 1.419 Accuracy: 0.472
+ - Batch Number 350 -> Loss: 1.402 Accuracy: 0.469
+ - Batch Number 360 -> Loss: 1.157 Accuracy: 0.306
+ - Batch Number 370 -> Loss: 1.471 Accuracy: 0.500
+ - Batch Number 380 -> Loss: 1.470 Accuracy: 0.340
+ - Batch Number 390 -> Loss: 0.896 Accuracy: 0.315
+ - Batch Number 400 -> Loss: 1.348 Accuracy: 0.271
+ - Batch Number 410 -> Loss: 0.925 Accuracy: 0.306
+ - Batch Number 420 -> Loss: 1.423 Accuracy: 0.122
+ - Batch Number 430 -> Loss: 1.401 Accuracy: 0.356
+ - Batch Number 440 -> Loss: 1.400 Accuracy: 0.312
+ - Batch Number 450 -> Loss: 1.449 Accuracy: 0.365
+ - Batch Number 460 -> Loss: 1.329 Accuracy: 0.306
+ - Batch Number 470 -> Loss: 0.907 Accuracy: 0.333
+ - Batch Number 480 -> Loss: 1.170 Accuracy: 0.625
+ - Batch Number 490 -> Loss: 1.542 Accuracy: 0.394
+ - Batch Number 500 -> Loss: 1.462 Accuracy: 0.233
+ - Batch Number 510 -> Loss: 0.923 Accuracy: 0.441
+ - Batch Number 520 -> Loss: 1.137 Accuracy: 0.458
+ - Batch Number 530 -> Loss: 1.434 Accuracy: 0.294
+ - Batch Number 540 -> Loss: 1.400 Accuracy: 0.244
+ - Batch Number 550 -> Loss: 1.403 Accuracy: 0.365
+ - Batch Number 560 -> Loss: 0.999 Accuracy: 0.329
+ - Batch Number 570 -> Loss: 1.401 Accuracy: 0.300
+ - Batch Number 580 -> Loss: 1.333 Accuracy: 0.321
+ - Batch Number 590 -> Loss: 1.347 Accuracy: 0.411
+ - Batch Number 600 -> Loss: 1.435 Accuracy: 0.463
+ - Batch Number 610 -> Loss: 1.506 Accuracy: 0.362
+ - Batch Number 620 -> Loss: 1.404 Accuracy: 0.458
+ - Batch Number 630 -> Loss: 1.228 Accuracy: 0.485
+ - Batch Number 640 -> Loss: 1.320 Accuracy: 0.258
+ - Batch Number 650 -> Loss: 1.428 Accuracy: 0.375
+ - Batch Number 660 -> Loss: 1.388 Accuracy: 0.493
+ - Batch Number 670 -> Loss: 0.899 Accuracy: 0.354
+ - Batch Number 680 -> Loss: 1.439 Accuracy: 0.463
+ - Batch Number 690 -> Loss: 0.917 Accuracy: 0.389
+ - Batch Number 700 -> Loss: 0.917 Accuracy: 0.277
+ - Batch Number 710 -> Loss: 0.917 Accuracy: 0.321
+ - Batch Number 720 -> Loss: 1.362 Accuracy: 0.361
+ - Batch Number 730 -> Loss: 1.388 Accuracy: 0.342
+ - Batch Number 740 -> Loss: 1.506 Accuracy: 0.282
+ - Batch Number 750 -> Loss: 1.853 Accuracy: 0.517
+ - Batch Number 760 -> Loss: 1.425 Accuracy: 0.438
+ - Batch Number 770 -> Loss: 1.398 Accuracy: 0.141
+ - Batch Number 780 -> Loss: 1.458 Accuracy: 0.458
+ - Batch Number 790 -> Loss: 1.390 Accuracy: 0.300
+ - Batch Number 800 -> Loss: 1.366 Accuracy: 0.302
+ - Batch Number 810 -> Loss: 1.402 Accuracy: 0.333
+ - Batch Number 820 -> Loss: 1.276 Accuracy: 0.536
+train Loss: 1.3341 Acc: 0.3565
+val Loss: 1.3379 Acc: 0.3625
+Epoch 4/5
+----------
+ - Batch Number 10 -> Loss: 1.302 Accuracy: 0.530
+ - Batch Number 20 -> Loss: 1.428 Accuracy: 0.354
+ - Batch Number 30 -> Loss: 1.205 Accuracy: 0.508
+ - Batch Number 40 -> Loss: 1.392 Accuracy: 0.326
+ - Batch Number 50 -> Loss: 1.561 Accuracy: 0.308
+ - Batch Number 60 -> Loss: 1.365 Accuracy: 0.263
+ - Batch Number 70 -> Loss: 1.391 Accuracy: 0.278
+ - Batch Number 80 -> Loss: 1.188 Accuracy: 0.382
+ - Batch Number 90 -> Loss: 1.381 Accuracy: 0.198
+ - Batch Number 100 -> Loss: 1.302 Accuracy: 0.566
+ - Batch Number 110 -> Loss: 1.595 Accuracy: 0.463
+ - Batch Number 120 -> Loss: 1.455 Accuracy: 0.337
+ - Batch Number 130 -> Loss: 1.449 Accuracy: 0.460
+ - Batch Number 140 -> Loss: 1.477 Accuracy: 0.454
+ - Batch Number 150 -> Loss: 1.382 Accuracy: 0.213
+ - Batch Number 160 -> Loss: 1.021 Accuracy: 0.294
+ - Batch Number 170 -> Loss: 1.019 Accuracy: 0.339
+ - Batch Number 180 -> Loss: 0.939 Accuracy: 0.385
+ - Batch Number 190 -> Loss: 1.565 Accuracy: 0.411
+ - Batch Number 200 -> Loss: 1.388 Accuracy: 0.361
+ - Batch Number 210 -> Loss: 1.418 Accuracy: 0.292
+ - Batch Number 220 -> Loss: 1.389 Accuracy: 0.250
+ - Batch Number 230 -> Loss: 1.288 Accuracy: 0.250
+ - Batch Number 240 -> Loss: 2.003 Accuracy: 0.475
+ - Batch Number 250 -> Loss: 1.388 Accuracy: 0.310
+ - Batch Number 260 -> Loss: 1.388 Accuracy: 0.443
+ - Batch Number 270 -> Loss: 1.437 Accuracy: 0.265
+ - Batch Number 280 -> Loss: 1.457 Accuracy: 0.333
+ - Batch Number 290 -> Loss: 1.207 Accuracy: 0.357
+ - Batch Number 300 -> Loss: 1.361 Accuracy: 0.441
+ - Batch Number 310 -> Loss: 1.393 Accuracy: 0.393
+ - Batch Number 320 -> Loss: 1.293 Accuracy: 0.426
+ - Batch Number 330 -> Loss: 0.905 Accuracy: 0.419
+ - Batch Number 340 -> Loss: 1.369 Accuracy: 0.350
+ - Batch Number 350 -> Loss: 1.311 Accuracy: 0.475
+ - Batch Number 360 -> Loss: 0.895 Accuracy: 0.435
+ - Batch Number 370 -> Loss: 1.430 Accuracy: 0.071
+ - Batch Number 380 -> Loss: 1.382 Accuracy: 0.365
+ - Batch Number 390 -> Loss: 1.491 Accuracy: 0.312
+ - Batch Number 400 -> Loss: 1.388 Accuracy: 0.358
+ - Batch Number 410 -> Loss: 0.976 Accuracy: 0.350
+ - Batch Number 420 -> Loss: 0.895 Accuracy: 0.476
+ - Batch Number 430 -> Loss: 1.396 Accuracy: 0.342
+ - Batch Number 440 -> Loss: 0.983 Accuracy: 0.396
+ - Batch Number 450 -> Loss: 1.393 Accuracy: 0.281
+ - Batch Number 460 -> Loss: 1.387 Accuracy: 0.317
+ - Batch Number 470 -> Loss: 1.447 Accuracy: 0.200
+ - Batch Number 480 -> Loss: 1.370 Accuracy: 0.425
+ - Batch Number 490 -> Loss: 1.388 Accuracy: 0.375
+ - Batch Number 500 -> Loss: 1.478 Accuracy: 0.375
+ - Batch Number 510 -> Loss: 1.286 Accuracy: 0.283
+ - Batch Number 520 -> Loss: 1.362 Accuracy: 0.312
+ - Batch Number 530 -> Loss: 1.424 Accuracy: 0.375
+ - Batch Number 540 -> Loss: 1.438 Accuracy: 0.292
+ - Batch Number 550 -> Loss: 1.295 Accuracy: 0.396
+ - Batch Number 560 -> Loss: 1.022 Accuracy: 0.438
+ - Batch Number 570 -> Loss: 0.922 Accuracy: 0.542
+ - Batch Number 580 -> Loss: 1.387 Accuracy: 0.450
+ - Batch Number 590 -> Loss: 1.452 Accuracy: 0.367
+ - Batch Number 600 -> Loss: 1.398 Accuracy: 0.292
+ - Batch Number 610 -> Loss: 1.393 Accuracy: 0.375
+ - Batch Number 620 -> Loss: 1.328 Accuracy: 0.342
+ - Batch Number 630 -> Loss: 1.486 Accuracy: 0.407
+ - Batch Number 640 -> Loss: 1.389 Accuracy: 0.337
+ - Batch Number 650 -> Loss: 1.442 Accuracy: 0.370
+ - Batch Number 660 -> Loss: 1.391 Accuracy: 0.238
+ - Batch Number 670 -> Loss: 1.025 Accuracy: 0.403
+ - Batch Number 680 -> Loss: 1.015 Accuracy: 0.400
+ - Batch Number 690 -> Loss: 1.592 Accuracy: 0.333
+ - Batch Number 700 -> Loss: 1.388 Accuracy: 0.597
+ - Batch Number 710 -> Loss: 1.073 Accuracy: 0.408
+ - Batch Number 720 -> Loss: 1.400 Accuracy: 0.375
+ - Batch Number 730 -> Loss: 1.527 Accuracy: 0.372
+ - Batch Number 740 -> Loss: 1.882 Accuracy: 0.351
+ - Batch Number 750 -> Loss: 1.418 Accuracy: 0.403
+ - Batch Number 760 -> Loss: 1.391 Accuracy: 0.333
+ - Batch Number 770 -> Loss: 1.402 Accuracy: 0.293
+ - Batch Number 780 -> Loss: 1.477 Accuracy: 0.357
+ - Batch Number 790 -> Loss: 1.394 Accuracy: 0.100
+ - Batch Number 800 -> Loss: 1.388 Accuracy: 0.488
+ - Batch Number 810 -> Loss: 1.443 Accuracy: 0.236
+ - Batch Number 820 -> Loss: 1.459 Accuracy: 0.258
+train Loss: 1.3319 Acc: 0.3462
+val Loss: 1.3410 Acc: 0.3614
+Epoch 5/5
+----------
+ - Batch Number 10 -> Loss: 1.357 Accuracy: 0.287
+ - Batch Number 20 -> Loss: 1.361 Accuracy: 0.177
+ - Batch Number 30 -> Loss: 1.173 Accuracy: 0.306
+ - Batch Number 40 -> Loss: 1.394 Accuracy: 0.354
+ - Batch Number 50 -> Loss: 1.422 Accuracy: 0.350
+ - Batch Number 60 -> Loss: 1.450 Accuracy: 0.175
+ - Batch Number 70 -> Loss: 1.410 Accuracy: 0.403
+ - Batch Number 80 -> Loss: 1.478 Accuracy: 0.338
+ - Batch Number 90 -> Loss: 1.513 Accuracy: 0.326
+ - Batch Number 100 -> Loss: 1.444 Accuracy: 0.235
+ - Batch Number 110 -> Loss: 1.404 Accuracy: 0.297
+ - Batch Number 120 -> Loss: 1.384 Accuracy: 0.348
+ - Batch Number 130 -> Loss: 1.446 Accuracy: 0.360
+ - Batch Number 140 -> Loss: 1.394 Accuracy: 0.364
+ - Batch Number 150 -> Loss: 1.463 Accuracy: 0.153
+ - Batch Number 160 -> Loss: 1.386 Accuracy: 0.417
+ - Batch Number 170 -> Loss: 0.956 Accuracy: 0.267
+ - Batch Number 180 -> Loss: 1.856 Accuracy: 0.246
+ - Batch Number 190 -> Loss: 1.477 Accuracy: 0.490
+ - Batch Number 200 -> Loss: 1.370 Accuracy: 0.324
+ - Batch Number 210 -> Loss: 1.375 Accuracy: 0.458
+ - Batch Number 220 -> Loss: 0.941 Accuracy: 0.504
+ - Batch Number 230 -> Loss: 1.383 Accuracy: 0.287
+ - Batch Number 240 -> Loss: 1.338 Accuracy: 0.136
+ - Batch Number 250 -> Loss: 0.953 Accuracy: 0.192
+ - Batch Number 260 -> Loss: 1.542 Accuracy: 0.062
+ - Batch Number 270 -> Loss: 0.917 Accuracy: 0.522
+ - Batch Number 280 -> Loss: 0.903 Accuracy: 0.344
+ - Batch Number 290 -> Loss: 1.387 Accuracy: 0.492
+ - Batch Number 300 -> Loss: 1.684 Accuracy: 0.115
+ - Batch Number 310 -> Loss: 1.393 Accuracy: 0.242
+ - Batch Number 320 -> Loss: 1.163 Accuracy: 0.482
+ - Batch Number 330 -> Loss: 1.390 Accuracy: 0.519
+ - Batch Number 340 -> Loss: 1.064 Accuracy: 0.667
+ - Batch Number 350 -> Loss: 1.372 Accuracy: 0.208
+ - Batch Number 360 -> Loss: 1.021 Accuracy: 0.417
+ - Batch Number 370 -> Loss: 1.411 Accuracy: 0.304
+ - Batch Number 380 -> Loss: 1.390 Accuracy: 0.397
+ - Batch Number 390 -> Loss: 1.085 Accuracy: 0.438
+ - Batch Number 400 -> Loss: 1.449 Accuracy: 0.125
+ - Batch Number 410 -> Loss: 0.909 Accuracy: 0.587
+ - Batch Number 420 -> Loss: 1.355 Accuracy: 0.232
+ - Batch Number 430 -> Loss: 1.185 Accuracy: 0.386
+ - Batch Number 440 -> Loss: 1.454 Accuracy: 0.393
+ - Batch Number 450 -> Loss: 1.600 Accuracy: 0.250
+ - Batch Number 460 -> Loss: 1.413 Accuracy: 0.331
+ - Batch Number 470 -> Loss: 1.470 Accuracy: 0.259
+ - Batch Number 480 -> Loss: 1.329 Accuracy: 0.393
+ - Batch Number 490 -> Loss: 1.383 Accuracy: 0.350
+ - Batch Number 500 -> Loss: 1.207 Accuracy: 0.492
+ - Batch Number 510 -> Loss: 1.319 Accuracy: 0.403
+ - Batch Number 520 -> Loss: 1.491 Accuracy: 0.372
+ - Batch Number 530 -> Loss: 1.291 Accuracy: 0.321
+ - Batch Number 540 -> Loss: 1.444 Accuracy: 0.258
+ - Batch Number 550 -> Loss: 1.342 Accuracy: 0.528
+ - Batch Number 560 -> Loss: 1.401 Accuracy: 0.336
+ - Batch Number 570 -> Loss: 1.392 Accuracy: 0.217
+ - Batch Number 580 -> Loss: 1.458 Accuracy: 0.333
+ - Batch Number 590 -> Loss: 1.417 Accuracy: 0.232
+ - Batch Number 600 -> Loss: 0.917 Accuracy: 0.405
+ - Batch Number 610 -> Loss: 1.389 Accuracy: 0.466
+ - Batch Number 620 -> Loss: 1.404 Accuracy: 0.511
+ - Batch Number 630 -> Loss: 1.338 Accuracy: 0.447
+ - Batch Number 640 -> Loss: 1.458 Accuracy: 0.442
+ - Batch Number 650 -> Loss: 1.390 Accuracy: 0.344
+ - Batch Number 660 -> Loss: 1.416 Accuracy: 0.163
+ - Batch Number 670 -> Loss: 1.584 Accuracy: 0.333
+ - Batch Number 680 -> Loss: 1.387 Accuracy: 0.250
+ - Batch Number 690 -> Loss: 1.391 Accuracy: 0.327
+ - Batch Number 700 -> Loss: 1.393 Accuracy: 0.281
+ - Batch Number 710 -> Loss: 1.365 Accuracy: 0.599
+ - Batch Number 720 -> Loss: 1.419 Accuracy: 0.479
+ - Batch Number 730 -> Loss: 1.398 Accuracy: 0.275
+ - Batch Number 740 -> Loss: 1.388 Accuracy: 0.464
+ - Batch Number 750 -> Loss: 1.265 Accuracy: 0.425
+ - Batch Number 760 -> Loss: 1.387 Accuracy: 0.420
+ - Batch Number 770 -> Loss: 1.389 Accuracy: 0.683
+ - Batch Number 780 -> Loss: 1.383 Accuracy: 0.333
+ - Batch Number 790 -> Loss: 1.421 Accuracy: 0.292
+ - Batch Number 800 -> Loss: 1.296 Accuracy: 0.282
+ - Batch Number 810 -> Loss: 0.895 Accuracy: 0.304
+ - Batch Number 820 -> Loss: 1.430 Accuracy: 0.361
+train Loss: 1.3326 Acc: 0.3487
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: \ 0.006 MB of 0.033 MB uploaded (0.000 MB deduped)wandb: | 0.006 MB of 0.033 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:      train_batches/batch ▁▂▃▄▅▆▇▁▃▄▅▆▇█▂▃▄▅▆▇▁▂▃▄▆▇█▂▃▄▅▆▇▁▂▃▄▅▇█
+wandb:  train_batches/train_acc ▂█▅▄▂▄▄▃▃▃▅▃▁▅█▅▅▃▅▄▅▃▃▁▄▃▆▄▆▅▅▃▄▂▃▁▃▃▂▄
+wandb: train_batches/train_loss ▄▂▄▄▄▃▅▄▄▄▄▄▄▂▂▄▄▅▄▅▂▅▄▄▄▁▃▅█▁▄▄▄▅▇▆▄▄▄▄
+wandb:       train_epochs/epoch ▁▂▄▅▇█
+wandb:   train_epochs/train_acc ▁▅▄█▅▆
+wandb:  train_epochs/train_loss █▇▁▅▂▃
+wandb:        val_batches/batch ▁▂▃▄▅▆▇▁▃▄▅▆▇█▂▃▄▅▆▇▁▂▃▄▆▇█▂▃▄▅▆▇▁▂▃▄▅▆█
+wandb:      val_batches/val_acc ▆▆▆▄▅█▇▅▆▅▅▁▆▅▄▆▃▅▇▅▅▇▅█▁▆▄▄▅▄▄▂▆▅▆▅█▇▆▄
+wandb:     val_batches/val_loss ▇▆▇▇▆▇█▇▇▇██▆▁▇▇█▆██▇▆▇▇█▆▁▆▇▇▇▇█▇▇▆▆▆▇▁
+wandb:         val_epochs/epoch ▁▂▄▅▇█
+wandb:       val_epochs/val_acc ▇▆▁█▇█
+wandb:      val_epochs/val_loss ▄█▄▁▃▅
+wandb: 
+wandb: Run summary:
+wandb:      train_batches/batch 820
+wandb:  train_batches/train_acc 0.36111
+wandb: train_batches/train_loss 1.43046
+wandb:       train_epochs/epoch 5
+wandb:   train_epochs/train_acc 0.34874
+wandb:  train_epochs/train_loss 1.33259
+wandb:        val_batches/batch 140
+wandb:      val_batches/val_acc 0.30556
+wandb:     val_batches/val_loss 0.91757
+wandb:         val_epochs/epoch 5
+wandb:       val_epochs/val_acc 0.36343
+wandb:      val_epochs/val_loss 1.34367
+wandb: 
+wandb: 🚀 View run helpful-sound-98 at: https://wandb.ai/tfg_oriol/action_classification/runs/4b3oybig
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20230512_083811-4b3oybig/logs
+val Loss: 1.3437 Acc: 0.3634
+Training complete in 157m 36s
+Best val Acc: 0.363429
+Model saved at /home-net/omartinez/TFG/weights/vanilla_attention_8
