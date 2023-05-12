@@ -128,9 +128,11 @@ def run_experiment(cfg: OmegaConf) -> None:
     params_to_update = model.parameters()
     optimizer = optim.Adam(params=params_to_update, lr=lr, amsgrad=False)
     criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights, dtype=torch.float32).to(DEVICE))
-    scheduler = optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=5)
-
-    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler)
+    if cfg.training.SCHEDULER:
+        scheduler = optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=5)
+        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler)
+    else:
+        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler=None)
 
     # Save model
     i = 1
