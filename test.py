@@ -71,7 +71,7 @@ def Test(model, dataloader, criterion, file, device, num_classes):
 
     # write to results file
     file.write(f'Corrects/Total: {corrects}/{total_clips}\n')
-    file.write(f'Test loss: {test_loss}\n')
+    file.write(f'Test loss: {test_loss / i}\n')
     file.write(f'Accuracy: {test_acc}\n')
     file.write(f'Top 5 Acc: {test_top_k_acc}\n')
     file.write(f'Balanced Accuracy: {balanced_acc}\n')
