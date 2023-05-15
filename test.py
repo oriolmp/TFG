@@ -12,6 +12,9 @@ from models.model_v1 import Model
 from dataset.dataset import Dataset
 from sklearn.metrics import balanced_accuracy_score, top_k_accuracy_score, accuracy_score
 
+import warnings
+warnings.filterwarnings(action='ignore')
+
 DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/val/'
 # LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/EPIC_100_validation.csv'
 LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/subset_test.csv'
