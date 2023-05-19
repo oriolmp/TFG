@@ -2,15 +2,15 @@ import os
 import shutil
 from PIL import Image
 
-ORGINAL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS/'
-NEW_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
+ORGINAL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
+NEW_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
 
 if not os.path.exists(NEW_PATH):
     os.mkdir(NEW_PATH)
     print(f'Created folder {NEW_PATH}')
 
-original_labels_path = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS/labels/'
-new_labels_path = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/'
+original_labels_path = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/'
+new_labels_path = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels/'
 if not os.path.exists(new_labels_path):
     os.mkdir(new_labels_path)
     print(f'Created folder {new_labels_path}')
@@ -20,7 +20,7 @@ for file in os.listdir(original_labels_path):
     destination = os.path.join(new_labels_path, file)
     shutil.copy(source, destination)
 
-for dir in ['test', 'train', 'val']:
+for dir in ['train', 'val']: # test not used
     print(f'Copying frames from {dir}...')
     dir_path = os.path.join(ORGINAL_PATH, dir)
     new_dir_path = os.path.join(NEW_PATH, dir)
@@ -50,7 +50,7 @@ for dir in ['test', 'train', 'val']:
                             frame_path = os.path.join(video_path, frame)
                             new_frame_path = os.path.join(new_video_path, frame)
                             img = Image.open(frame_path)
-                            img = img.resize(size=(256, 256))
+                            img = img.resize(size=(112, 112))
                             img.save(new_frame_path)
                     except(Exception):
                         pass
