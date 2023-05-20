@@ -4,7 +4,7 @@ from PIL import Image
 import time
 import cv2
 
-ORGINAL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS/'
+ORGINAL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/'
 # NEW_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
 
 for dir in ['train']:
