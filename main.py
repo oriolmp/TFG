@@ -26,7 +26,7 @@ warnings.filterwarnings(action='ignore')
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
 DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
 LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels'
-# CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
+CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
 ANNOTATIONS_NAMES = {'train': 'train.csv',
                      'val': 'val.csv',
                      'test': 'EPIC_100_validation.csv'}
@@ -94,7 +94,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     print("Loading the training dataset")
 
     train_path = os.path.join(DATA_PATH, 'train/')
-    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['train'])
+    annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['train'])
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
     # train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
@@ -112,7 +112,7 @@ def run_experiment(cfg: OmegaConf) -> None:
     # Load the validation clips (this is the data that we test it with)
     print("Loading the validation dataset")
     val_path = os.path.join(DATA_PATH, 'train/') # we splitted train to create val. Val clips are on train folder
-    annotations_path = os.path.join(LABEL_PATH, ANNOTATIONS_NAMES['val'])
+    annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['val'])
     val_set =  Dataset(cfg, frames_dir=val_path, annotations_file=annotations_path)
 
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size, shuffle=False,
