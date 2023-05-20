@@ -24,15 +24,15 @@ warnings.filterwarnings(action='ignore')
 
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
-LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels'
-CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
-# ANNOTATIONS_NAMES = {'train': 'train.csv',
-#                      'val': 'val.csv',
-#                      'test': 'EPIC_100_validation.csv'}
-ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
-                     'val': 'subset_val.csv',
+DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
+LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels'
+# CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
+ANNOTATIONS_NAMES = {'train': 'train.csv',
+                     'val': 'val.csv',
                      'test': 'EPIC_100_validation.csv'}
+# ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
+#                      'val': 'subset_val.csv',
+#                      'test': 'EPIC_100_validation.csv'}
 WEIGHTS_DIR = '/home-net/omartinez/TFG/weights/'
 
 # We set this variable since it raises an error if not
@@ -129,10 +129,11 @@ def run_experiment(cfg: OmegaConf) -> None:
     optimizer = optim.Adam(params=params_to_update, lr=lr, amsgrad=False)
     criterion = nn.CrossEntropyLoss(weight=torch.tensor(class_weights, dtype=torch.float32).to(DEVICE))
     if cfg.training.SCHEDULER:
-        scheduler = optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=5)
-        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler)
+        # scheduler = optim.lr_scheduler.LinearLR(optimizer, start_factor=0.5, total_iters=5)
+        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=min, factor=0.5, patience=2, min_lr=1e-8, verbose=True)
+        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, WEIGHTS_DIR, scheduler)
     else:
-        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, scheduler=None)
+        trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch, WEIGHTS_DIR, scheduler=None)
 
     # Save model
     i = 1
