@@ -2,14 +2,14 @@ import os
 import shutil
 from PIL import Image
 
-ORGINAL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
+ORGINAL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/'
 NEW_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
 
 if not os.path.exists(NEW_PATH):
     os.mkdir(NEW_PATH)
     print(f'Created folder {NEW_PATH}')
 
-original_labels_path = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels/'
+original_labels_path = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/labels/'
 new_labels_path = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels/'
 if not os.path.exists(new_labels_path):
     os.mkdir(new_labels_path)
