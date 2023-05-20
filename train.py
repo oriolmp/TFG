@@ -4,7 +4,7 @@ import torch
 import wandb
 from sklearn.metrics import balanced_accuracy_score
 
-def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25, print_batch=50, scheduler=None):
+def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, print_batch, checkpoint_path, scheduler=None):
     since = time.time()
 
     softmax = torch.nn.Softmax(dim=0)
@@ -129,6 +129,8 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs=25,
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
+                checkpoint_path = checkpoint_path + f'_{epoch}'
+                torch.save(model.state_dict(), checkpoint_path)
             
 
     time_elapsed = time.time() - since
