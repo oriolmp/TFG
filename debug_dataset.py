@@ -8,8 +8,8 @@ import hydra
 import torch
 import cv2
 
-DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
-LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels'
+DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS'
+LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/labels'
 CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
 ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
                      'val': 'subset_val.csv',
