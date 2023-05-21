@@ -11,8 +11,8 @@ class LinformerAttention(AbstractAttention):
         super().__init__(n=n, h=h, in_feat=in_feat, out_feat = out_feat)
         self.model_params = hpars.model
 
-        self.to_k = nn.Linear(n, self.model_params.proj_feats, bias=False)
-        self.to_v = nn.Linear(n, self.model_params.proj_feats, bias=False)
+        self.to_k = nn.Linear(n+1, self.model_params.proj_feats, bias=False)
+        self.to_v = nn.Linear(n+1, self.model_params.proj_feats, bias=False)
 
 
     def apply_attention(self, Q: Tensor, K: Tensor, V: Tensor, debug: bool = False, mask=None) -> Tuple[Tensor, Tensor]:
