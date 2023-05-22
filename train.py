@@ -129,8 +129,8 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-                checkpoint_path = checkpoint_path + f'checkpoint_{epoch}'
-                torch.save(model.state_dict(), checkpoint_path)
+                checkpoint_path_weight = checkpoint_path + f'checkpoint_{epoch}'
+                torch.save(model.state_dict(), checkpoint_path_weight)
             
 
     time_elapsed = time.time() - since
