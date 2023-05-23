@@ -24,15 +24,19 @@ warnings.filterwarnings(action='ignore')
 
 
 # This is a simple dictionary that maps, for each of the domains D1,D2,D3, to their corresponding data folder(s)
-DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
-LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels'
+# DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/'
+# LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS_RESIZED_112/labels'
+# DATA_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/'
+# LABEL_PATH = '/data-fast/107-data4/omartinez/FULL_EPIC_KITCHENS/labels'
 CUSTOM_LABEL_PATH = '/home-net/omartinez/TFG/custom_sets/'
-ANNOTATIONS_NAMES = {'train': 'train.csv',
-                     'val': 'val.csv',
-                     'test': 'EPIC_100_validation.csv'}
-# ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
-#                      'val': 'subset_val.csv',
+DATA_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/'
+LABEL_PATH = '/data-fast/127-data2/omartinez/FULL_EPIC_KITCHENS_RESIZED_256/labels'
+# ANNOTATIONS_NAMES = {'train': 'train.csv',
+#                      'val': 'val.csv',
 #                      'test': 'EPIC_100_validation.csv'}
+ANNOTATIONS_NAMES = {'train': 'subset_train.csv',
+                     'val': 'subset_val.csv',
+                     'test': 'EPIC_100_validation.csv'}
 WEIGHTS_DIR = '/home-net/omartinez/TFG/weights/'
 
 # We set this variable since it raises an error if not
