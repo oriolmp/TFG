@@ -14,8 +14,8 @@ from sklearn.utils.class_weight import compute_class_weight
 from omegaconf import OmegaConf
 import wandb
 
-# from dataset.dataset import Dataset
-from debug_dataset_2 import Dataset
+from dataset.dataset import Dataset
+# from debug_dataset_2 import Dataset
 from train_debug import train_model
 from models.model_v1 import Model
 
