@@ -1,0 +1,6 @@
+Testing model saved at path /home-net/omartinez/TFG/weights/linformer_1
+Corrects/Total: 114/280
+Test loss: 509.43546568229795
+Accuracy: 0.40714285714285714
+Top 5 Acc: 1.0
+Balanced Accuracy: 0.344306317447135
