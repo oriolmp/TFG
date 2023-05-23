@@ -82,9 +82,15 @@ class NystromformerAttention(AbstractAttention):
 
         # eq (15) in the paper and aggregate values
         attn1, attn2, attn3 = map(lambda t: t.softmax(dim=-1), (sim1, sim2, sim3))
+        # print(f'Is nan attn1: {torch.isnan(attn1).any()}')
+        # print(f'Is nan attn2: {torch.isnan(attn2).any()}')
+        # print(f'Is nan attn3: {torch.isnan(attn3).any()}')
         attn2_inv = iterative_inv(attn2, iters)
+        # print(f'Is nan 2: {torch.isnan(attn2_inv).any()}')
 
         out = (attn1 @ attn2_inv) @ (attn3 @ V)
+        # print(f'Is nan V: {torch.isnan(V).any()}')
+        # print(f'Is nan 3: {torch.isnan(out).any()}')
 
         # Merge the multiple heads into one
         out = rearrange(out, 'b h n d -> b n (h d)')
