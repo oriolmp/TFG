@@ -66,8 +66,10 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                 with torch.set_grad_enabled(phase == 'train'):
                     # Runs the forward pass with autocasting
                     with torch.autocast(device_type='cuda', dtype=torch.float16):
+                        print(f'inputs is nan: {torch.isnan(inputs).any()}')
                         # Get model outputs and calculate loss
                         outputs = model(inputs)
+                        print(f'outputs is nan: {torch.isnan(outputs).any()}')
                         print(f'Run: {time.time() - start_time}')
                         loss = criterion(softmax(outputs), labels) # By CorrsEntropy docs, it shoul be used with normalization. However, Pythorch tutorial doesn't
                         start_time = time.time()
