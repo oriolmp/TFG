@@ -3,7 +3,6 @@ import random
 from typing import List
 from datetime import datetime
 
-import hydra
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -13,6 +12,7 @@ from sklearn.utils.class_weight import compute_class_weight
 
 from omegaconf import OmegaConf
 import wandb
+import hydra
 
 from dataset.dataset import Dataset
 from train import train_model
@@ -101,9 +101,8 @@ def run_experiment(cfg: OmegaConf) -> None:
     annotations_path = os.path.join(CUSTOM_LABEL_PATH, ANNOTATIONS_NAMES['train'])
     train_set = Dataset(cfg, frames_dir=train_path, annotations_file=annotations_path)
 
-    # train_sampler = torch.utils.data.sampler.RandomSampler(train_set)
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True, 
-                                                num_workers=data_threads, drop_last=True, pin_memory=True) # sampler=train_sampler, 
+                                                num_workers=data_threads, drop_last=True, pin_memory=True)
 
 
     # Compute class weights
