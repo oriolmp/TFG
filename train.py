@@ -30,11 +30,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
             running_loss = 0.0
             total_clips = 0
 
-            # running_corrects = 0
-            # running_batch_loss = 0
-            # running_batch_corrects = 0
-            # total_batch_clips = 0
-            
             step_pred = []
             step_labels = []
             epoch_pred = []
@@ -53,10 +48,10 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
                     # Runs the forward pass with autocasting
-                    with torch.autocast(device_type='cuda', dtype=torch.float16):
+                    with torch.autocast(device_type='cuda', dtype=torch.float16): # float32 needed for cosformer
                         # Get model outputs and calculate loss
                         outputs = model(inputs)
-                        loss = criterion(softmax(outputs), labels) # By CorrsEntropy docs, it shoul be used with normalization. However, Pythorch tutorial doesn't
+                        loss = criterion(softmax(outputs), labels) # By CrossEntropy docs, it shoul be used with normalization. However, Pythorch tutorial doesn't
 
                     _, preds = torch.max(softmax(outputs), 1)
 
@@ -71,20 +66,13 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                 running_loss += loss.item() * inputs.size(0) # loss.item = loss divided by number of batch elements
                 total_clips += len(outputs)
 
-                # running_corrects += torch.sum(preds == labels.data)
-                # running_batch_loss += loss.item()
-                # running_batch_corrects += torch.sum(preds == labels.data)
-                # total_batch_clips += len(outputs)
-
                 step_pred += preds.cpu()
                 step_labels += labels.data.cpu()
                 epoch_pred += preds.cpu()
                 epoch_labels += labels.data.cpu()
                 
                 if (i + 1) % print_batch == 0 or i == num_batches:
-                    # batch_loss = running_batch_loss/total_batch_clips
-                    # batch_acc = running_corrects.cpu().numpy()/total_batch_clips
-                    # batch_acc = torch.sum(preds == labels.data) / inputs.size(0)
+        
                     step_acc = balanced_accuracy_score(step_labels, step_pred)
 
                     if phase == 'train':
@@ -102,8 +90,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                             'val_batches/batch': i + 1
                         })
 
-                    # running_batch_loss = 0
-                    # running_batch_corrects = 0
                     step_pred = []
                     step_labels = []
 
@@ -111,7 +97,6 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                 scheduler.step()
 
             epoch_loss = running_loss / total_clips
-            # epoch_acc = running_corrects.double() / total_clips
             epoch_acc = balanced_accuracy_score(epoch_labels, epoch_pred)
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
@@ -129,6 +114,7 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
+                # save checkpoints
                 checkpoint_path_weight = checkpoint_path + f'checkpoint_{epoch}'
                 torch.save(model.state_dict(), checkpoint_path_weight)
             
