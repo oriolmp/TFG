@@ -200,19 +200,7 @@ class Model(nn.Module):
         for block in self.blocks:
             x = block.forward(x)
         
-        # TODO: You are averaging all the patches of each of the videos.
-        # TODO: Problem: You applied attention frame-wise. Also, this is what we use the CLS token for!
-        x = x[:, -1] # Get cls token to classify
+        # Get cls token to classify
+        x = x[:, -1] 
         x = self.head(x)
         return x
-
-# Debugging code
-'''
-if __name__ == '__main__':
-    # Define an input of shape 2x3x10x32x32 (BxCxTxHxW
-    x = torch.randn(2, 3, 10, 32, 32)
-
-    # Check the patchification
-    patch_embed = PatchTokenization(img_size=32, patch_size=4, in_chans=3, embed_dim=48)
-    print(patch_embed(x)[0].shape)
-'''
