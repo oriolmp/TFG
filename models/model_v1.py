@@ -144,8 +144,8 @@ class Model(nn.Module):
     """
     Model class with PatchTokenization + (MuliHeadAttention + MLP) x L + classification head
     """
-    def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0., attn_drop: float = 0.,
-                 norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0.):
+    def __init__(self, cfg: OmegaConf, mlp_ratio: float = 4., proj_drop: float = 0.25, attn_drop: float = 0.25,
+                 norm_layer: nn.Module = nn.LayerNorm, dropout: float = 0.25):
         super().__init__()
 
         self.num_classes = cfg.model.NUM_CLASSES
