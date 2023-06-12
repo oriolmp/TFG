@@ -1,0 +1,6 @@
+Testing model saved at path /home-net/omartinez/TFG/weights/cosformer_2
+Corrects/Total: 41/280
+Test loss: 1.6810294890749282
+Accuracy: 0.14642857142857144
+Top 5 Acc: 1.0
+Balanced Accuracy: 0.25
