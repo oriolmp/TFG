@@ -127,7 +127,8 @@ def train_model(model, dataloaders, criterion, optimizer, device, num_epochs, pr
                     step_pred = []
                     step_labels = []
 
-                break
+                if i == 200:
+                    break
 
             if phase == 'train' and scheduler is not None:
                 scheduler.step()
