@@ -26,6 +26,8 @@ The code is organized as follows:
 - **samples:** some video obtained from the dataset that serve as example
 - **tasks:** some useful scripts to manage the dataset and debugging
 
+**WARNING**: Attention_zoo is not publicly available. The code is associated with an unpublished paper and must remain confidential until publication.
+
 There are also 3 main files:
 - **main.py**: Runs an experiment to train a specific model
 - **train.py**: Script with the training function
