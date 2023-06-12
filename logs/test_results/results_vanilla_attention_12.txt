@@ -1,0 +1,6 @@
+Testing model saved at path /home-net/omartinez/TFG/weights/vanilla_attention_12
+Corrects/Total: 111/280
+Test loss: 4.23127983172215
+Accuracy: 0.3964285714285714
+Top 5 Acc: 1.0
+Balanced Accuracy: 0.41030661734708745
