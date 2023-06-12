@@ -1,14 +1,14 @@
 Training starting...
-Datetime: 2023-05-04 11:07:47.027108
+Datetime: 2023-06-04 09:25:26.610935
 wandb: Currently logged in as: oriolmartinez (tfg_oriol). Use `wandb login --relogin` to force relogin
-wandb: wandb version 0.15.1 is available!  To upgrade, please run:
+wandb: wandb version 0.15.3 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
 wandb: Tracking run with wandb version 0.14.0
-wandb: Run data is saved locally in /home-net/omartinez/TFG/wandb/run-20230504_110749-0d33cinx
+wandb: Run data is saved locally in /home-net/omartinez/TFG/wandb/run-20230604_092528-h2m807xo
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run ancient-carrier-52
+wandb: Syncing run lucky-feather-133
 wandb: ⭐️ View project at https://wandb.ai/tfg_oriol/action_classification
-wandb: 🚀 View run at https://wandb.ai/tfg_oriol/action_classification/runs/0d33cinx
+wandb: 🚀 View run at https://wandb.ai/tfg_oriol/action_classification/runs/h2m807xo
 NAME: action_classification
 dataset:
   NAME: epic_kitchens
@@ -18,19 +18,20 @@ dataset:
 model:
   ATTENTION: linformer
   proj_feats: 64
-  NUM_CLASSES: 96
+  NUM_CLASSES: 4
   PATCH_SIZE: 16
   DEPTH: 2
   HEADS: 4
 training:
-  EPOCHS: 4
+  EPOCHS: 80
   SEED: 0
-  BATCH_SIZE: 2
+  BATCH_SIZE: 4
   DATA_THREADS: 5
   PRINT_BATCH: 100
-  LEARNING_RATE: 1.0e-06
+  LEARNING_RATE: 1.0e-05
   PRETRAINED_STATE_PATH: None
-  GPU: 5
+  GPU: 0
+  SCHEDULER: false
 inference:
   WEIGHTS_PATH: /home-net/omartinez/TFG/weights/
   MODEL: vanilla_attention_1
@@ -38,81 +39,674 @@ inference:
 Loading the data...
 Loading the training dataset
 Loading the validation dataset
-Epoch 0/3
+Epoch 0/79
 ----------
-Error executing job with overrides: ['model=model_v5', 'training.EPOCHS=4', 'training.GPU=5']
-wandb: Waiting for W&B process to finish... (failed 1). Press Control-C to abort syncing.
-wandb: - 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: \ 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: / 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: - 0.006 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: 🚀 View run ancient-carrier-52 at: https://wandb.ai/tfg_oriol/action_classification/runs/0d33cinx
+ - Batch Number 100 -> Loss: 1.187 Accuracy: 0.363
+ - Batch Number 200 -> Loss: 1.227 Accuracy: 0.319
+ - Batch Number 300 -> Loss: 1.139 Accuracy: 0.349
+ - Batch Number 400 -> Loss: 1.373 Accuracy: 0.336
+train Loss: 1.3373 Acc: 0.3383
+val Loss: 1.3314 Acc: 0.3560
+Epoch 1/79
+----------
+ - Batch Number 100 -> Loss: 1.412 Accuracy: 0.386
+ - Batch Number 200 -> Loss: 1.428 Accuracy: 0.386
+ - Batch Number 300 -> Loss: 1.412 Accuracy: 0.335
+ - Batch Number 400 -> Loss: 1.145 Accuracy: 0.361
+train Loss: 1.3141 Acc: 0.3648
+val Loss: 1.3301 Acc: 0.3557
+Epoch 2/79
+----------
+ - Batch Number 100 -> Loss: 1.449 Accuracy: 0.344
+ - Batch Number 200 -> Loss: 1.139 Accuracy: 0.376
+ - Batch Number 300 -> Loss: 1.440 Accuracy: 0.395
+ - Batch Number 400 -> Loss: 1.397 Accuracy: 0.386
+train Loss: 1.3178 Acc: 0.3763
+val Loss: 1.3331 Acc: 0.3471
+Epoch 3/79
+----------
+ - Batch Number 100 -> Loss: 1.197 Accuracy: 0.406
+ - Batch Number 200 -> Loss: 1.410 Accuracy: 0.388
+ - Batch Number 300 -> Loss: 1.255 Accuracy: 0.411
+ - Batch Number 400 -> Loss: 1.288 Accuracy: 0.370
+train Loss: 1.3103 Acc: 0.3937
+val Loss: 1.3456 Acc: 0.3332
+Epoch 4/79
+----------
+ - Batch Number 100 -> Loss: 1.408 Accuracy: 0.426
+ - Batch Number 200 -> Loss: 1.376 Accuracy: 0.410
+ - Batch Number 300 -> Loss: 1.122 Accuracy: 0.414
+ - Batch Number 400 -> Loss: 1.459 Accuracy: 0.383
+train Loss: 1.3045 Acc: 0.4097
+val Loss: 1.3364 Acc: 0.3460
+Epoch 5/79
+----------
+ - Batch Number 100 -> Loss: 1.094 Accuracy: 0.433
+ - Batch Number 200 -> Loss: 1.513 Accuracy: 0.359
+ - Batch Number 300 -> Loss: 1.177 Accuracy: 0.461
+ - Batch Number 400 -> Loss: 1.249 Accuracy: 0.370
+train Loss: 1.3076 Acc: 0.4067
+val Loss: 1.3364 Acc: 0.3516
+Epoch 6/79
+----------
+ - Batch Number 100 -> Loss: 1.420 Accuracy: 0.414
+ - Batch Number 200 -> Loss: 1.549 Accuracy: 0.440
+ - Batch Number 300 -> Loss: 1.297 Accuracy: 0.427
+ - Batch Number 400 -> Loss: 1.545 Accuracy: 0.436
+train Loss: 1.2966 Acc: 0.4315
+val Loss: 1.3446 Acc: 0.3918
+Epoch 7/79
+----------
+ - Batch Number 100 -> Loss: 1.096 Accuracy: 0.438
+ - Batch Number 200 -> Loss: 1.413 Accuracy: 0.473
+ - Batch Number 300 -> Loss: 1.448 Accuracy: 0.405
+ - Batch Number 400 -> Loss: 1.433 Accuracy: 0.399
+train Loss: 1.2899 Acc: 0.4271
+val Loss: 1.3300 Acc: 0.3577
+Epoch 8/79
+----------
+ - Batch Number 100 -> Loss: 1.068 Accuracy: 0.420
+ - Batch Number 200 -> Loss: 1.549 Accuracy: 0.446
+ - Batch Number 300 -> Loss: 1.572 Accuracy: 0.424
+ - Batch Number 400 -> Loss: 1.204 Accuracy: 0.411
+train Loss: 1.2853 Acc: 0.4216
+val Loss: 1.3465 Acc: 0.3761
+Epoch 9/79
+----------
+ - Batch Number 100 -> Loss: 1.154 Accuracy: 0.448
+ - Batch Number 200 -> Loss: 1.411 Accuracy: 0.429
+ - Batch Number 300 -> Loss: 1.404 Accuracy: 0.442
+ - Batch Number 400 -> Loss: 1.368 Accuracy: 0.416
+train Loss: 1.2861 Acc: 0.4308
+val Loss: 1.3259 Acc: 0.3812
+Epoch 10/79
+----------
+ - Batch Number 100 -> Loss: 1.246 Accuracy: 0.437
+ - Batch Number 200 -> Loss: 0.966 Accuracy: 0.491
+ - Batch Number 300 -> Loss: 1.101 Accuracy: 0.452
+ - Batch Number 400 -> Loss: 1.531 Accuracy: 0.458
+train Loss: 1.2679 Acc: 0.4571
+val Loss: 1.3358 Acc: 0.3928
+Epoch 11/79
+----------
+ - Batch Number 100 -> Loss: 1.489 Accuracy: 0.476
+ - Batch Number 200 -> Loss: 1.491 Accuracy: 0.469
+ - Batch Number 300 -> Loss: 1.664 Accuracy: 0.465
+ - Batch Number 400 -> Loss: 1.164 Accuracy: 0.407
+train Loss: 1.2758 Acc: 0.4500
+val Loss: 1.3351 Acc: 0.3898
+Epoch 12/79
+----------
+ - Batch Number 100 -> Loss: 1.245 Accuracy: 0.457
+ - Batch Number 200 -> Loss: 1.314 Accuracy: 0.444
+ - Batch Number 300 -> Loss: 1.082 Accuracy: 0.466
+ - Batch Number 400 -> Loss: 1.152 Accuracy: 0.449
+train Loss: 1.2813 Acc: 0.4562
+val Loss: 1.3262 Acc: 0.3731
+Epoch 13/79
+----------
+ - Batch Number 100 -> Loss: 1.067 Accuracy: 0.471
+ - Batch Number 200 -> Loss: 1.201 Accuracy: 0.484
+ - Batch Number 300 -> Loss: 1.414 Accuracy: 0.454
+ - Batch Number 400 -> Loss: 1.006 Accuracy: 0.486
+train Loss: 1.2657 Acc: 0.4749
+val Loss: 1.3404 Acc: 0.4073
+Epoch 14/79
+----------
+ - Batch Number 100 -> Loss: 1.140 Accuracy: 0.510
+ - Batch Number 200 -> Loss: 1.092 Accuracy: 0.488
+ - Batch Number 300 -> Loss: 1.378 Accuracy: 0.452
+ - Batch Number 400 -> Loss: 1.433 Accuracy: 0.466
+train Loss: 1.2588 Acc: 0.4798
+val Loss: 1.3507 Acc: 0.3555
+Epoch 15/79
+----------
+ - Batch Number 100 -> Loss: 0.940 Accuracy: 0.500
+ - Batch Number 200 -> Loss: 1.512 Accuracy: 0.475
+ - Batch Number 300 -> Loss: 1.282 Accuracy: 0.500
+ - Batch Number 400 -> Loss: 1.583 Accuracy: 0.459
+train Loss: 1.2646 Acc: 0.4852
+val Loss: 1.3408 Acc: 0.4030
+Epoch 16/79
+----------
+ - Batch Number 100 -> Loss: 1.205 Accuracy: 0.460
+ - Batch Number 200 -> Loss: 0.953 Accuracy: 0.480
+ - Batch Number 300 -> Loss: 1.104 Accuracy: 0.506
+ - Batch Number 400 -> Loss: 0.925 Accuracy: 0.464
+train Loss: 1.2559 Acc: 0.4788
+val Loss: 1.3413 Acc: 0.3825
+Epoch 17/79
+----------
+ - Batch Number 100 -> Loss: 1.267 Accuracy: 0.535
+ - Batch Number 200 -> Loss: 1.325 Accuracy: 0.448
+ - Batch Number 300 -> Loss: 0.947 Accuracy: 0.489
+ - Batch Number 400 -> Loss: 1.097 Accuracy: 0.490
+train Loss: 1.2559 Acc: 0.4937
+val Loss: 1.3342 Acc: 0.4095
+Epoch 18/79
+----------
+ - Batch Number 100 -> Loss: 0.900 Accuracy: 0.520
+ - Batch Number 200 -> Loss: 1.051 Accuracy: 0.486
+ - Batch Number 300 -> Loss: 1.113 Accuracy: 0.489
+ - Batch Number 400 -> Loss: 1.420 Accuracy: 0.481
+train Loss: 1.2509 Acc: 0.4960
+val Loss: 1.3387 Acc: 0.3781
+Epoch 19/79
+----------
+ - Batch Number 100 -> Loss: 1.536 Accuracy: 0.497
+ - Batch Number 200 -> Loss: 1.245 Accuracy: 0.490
+ - Batch Number 300 -> Loss: 1.435 Accuracy: 0.521
+ - Batch Number 400 -> Loss: 1.482 Accuracy: 0.534
+train Loss: 1.2302 Acc: 0.5100
+val Loss: 1.3236 Acc: 0.4101
+Epoch 20/79
+----------
+ - Batch Number 100 -> Loss: 1.276 Accuracy: 0.494
+ - Batch Number 200 -> Loss: 1.193 Accuracy: 0.507
+ - Batch Number 300 -> Loss: 1.417 Accuracy: 0.470
+ - Batch Number 400 -> Loss: 1.646 Accuracy: 0.493
+train Loss: 1.2412 Acc: 0.4897
+val Loss: 1.3244 Acc: 0.3986
+Epoch 21/79
+----------
+ - Batch Number 100 -> Loss: 1.036 Accuracy: 0.569
+ - Batch Number 200 -> Loss: 1.421 Accuracy: 0.483
+ - Batch Number 300 -> Loss: 1.194 Accuracy: 0.520
+ - Batch Number 400 -> Loss: 1.556 Accuracy: 0.539
+train Loss: 1.2202 Acc: 0.5298
+val Loss: 1.3357 Acc: 0.3933
+Epoch 22/79
+----------
+ - Batch Number 100 -> Loss: 1.003 Accuracy: 0.558
+ - Batch Number 200 -> Loss: 1.057 Accuracy: 0.560
+ - Batch Number 300 -> Loss: 1.253 Accuracy: 0.521
+ - Batch Number 400 -> Loss: 1.528 Accuracy: 0.444
+train Loss: 1.2225 Acc: 0.5175
+val Loss: 1.3128 Acc: 0.3985
+Epoch 23/79
+----------
+ - Batch Number 100 -> Loss: 1.357 Accuracy: 0.514
+ - Batch Number 200 -> Loss: 1.328 Accuracy: 0.462
+ - Batch Number 300 -> Loss: 1.430 Accuracy: 0.530
+ - Batch Number 400 -> Loss: 1.473 Accuracy: 0.490
+train Loss: 1.2330 Acc: 0.4989
+val Loss: 1.3267 Acc: 0.4301
+Epoch 24/79
+----------
+ - Batch Number 100 -> Loss: 1.193 Accuracy: 0.530
+ - Batch Number 200 -> Loss: 1.332 Accuracy: 0.524
+ - Batch Number 300 -> Loss: 1.137 Accuracy: 0.583
+ - Batch Number 400 -> Loss: 1.177 Accuracy: 0.502
+train Loss: 1.2207 Acc: 0.5343
+val Loss: 1.3249 Acc: 0.4408
+Epoch 25/79
+----------
+ - Batch Number 100 -> Loss: 1.135 Accuracy: 0.488
+ - Batch Number 200 -> Loss: 1.424 Accuracy: 0.562
+ - Batch Number 300 -> Loss: 1.155 Accuracy: 0.528
+ - Batch Number 400 -> Loss: 1.485 Accuracy: 0.536
+train Loss: 1.2199 Acc: 0.5257
+val Loss: 1.3233 Acc: 0.4125
+Epoch 26/79
+----------
+ - Batch Number 100 -> Loss: 1.254 Accuracy: 0.536
+ - Batch Number 200 -> Loss: 1.090 Accuracy: 0.496
+ - Batch Number 300 -> Loss: 0.953 Accuracy: 0.499
+ - Batch Number 400 -> Loss: 1.472 Accuracy: 0.538
+train Loss: 1.2229 Acc: 0.5128
+val Loss: 1.3614 Acc: 0.3730
+Epoch 27/79
+----------
+ - Batch Number 100 -> Loss: 1.422 Accuracy: 0.518
+ - Batch Number 200 -> Loss: 1.359 Accuracy: 0.553
+ - Batch Number 300 -> Loss: 1.064 Accuracy: 0.560
+ - Batch Number 400 -> Loss: 1.432 Accuracy: 0.554
+train Loss: 1.2016 Acc: 0.5484
+val Loss: 1.3406 Acc: 0.3863
+Epoch 28/79
+----------
+ - Batch Number 100 -> Loss: 1.480 Accuracy: 0.482
+ - Batch Number 200 -> Loss: 0.923 Accuracy: 0.563
+ - Batch Number 300 -> Loss: 1.443 Accuracy: 0.511
+ - Batch Number 400 -> Loss: 1.185 Accuracy: 0.545
+train Loss: 1.2050 Acc: 0.5253
+val Loss: 1.3317 Acc: 0.3896
+Epoch 29/79
+----------
+ - Batch Number 100 -> Loss: 0.994 Accuracy: 0.607
+ - Batch Number 200 -> Loss: 1.266 Accuracy: 0.530
+ - Batch Number 300 -> Loss: 1.003 Accuracy: 0.553
+ - Batch Number 400 -> Loss: 1.243 Accuracy: 0.594
+train Loss: 1.1861 Acc: 0.5680
+val Loss: 1.3464 Acc: 0.3798
+Epoch 30/79
+----------
+ - Batch Number 100 -> Loss: 1.464 Accuracy: 0.599
+ - Batch Number 200 -> Loss: 0.976 Accuracy: 0.585
+ - Batch Number 300 -> Loss: 1.479 Accuracy: 0.572
+ - Batch Number 400 -> Loss: 1.376 Accuracy: 0.534
+train Loss: 1.1838 Acc: 0.5740
+val Loss: 1.3735 Acc: 0.3738
+Epoch 31/79
+----------
+ - Batch Number 100 -> Loss: 0.945 Accuracy: 0.540
+ - Batch Number 200 -> Loss: 1.125 Accuracy: 0.573
+ - Batch Number 300 -> Loss: 1.287 Accuracy: 0.579
+ - Batch Number 400 -> Loss: 1.182 Accuracy: 0.542
+train Loss: 1.1856 Acc: 0.5591
+val Loss: 1.3577 Acc: 0.3779
+Epoch 32/79
+----------
+ - Batch Number 100 -> Loss: 1.254 Accuracy: 0.570
+ - Batch Number 200 -> Loss: 0.952 Accuracy: 0.596
+ - Batch Number 300 -> Loss: 1.451 Accuracy: 0.593
+ - Batch Number 400 -> Loss: 0.922 Accuracy: 0.549
+train Loss: 1.1766 Acc: 0.5747
+val Loss: 1.3593 Acc: 0.3880
+Epoch 33/79
+----------
+ - Batch Number 100 -> Loss: 1.321 Accuracy: 0.528
+ - Batch Number 200 -> Loss: 1.181 Accuracy: 0.551
+ - Batch Number 300 -> Loss: 1.493 Accuracy: 0.566
+ - Batch Number 400 -> Loss: 1.259 Accuracy: 0.554
+train Loss: 1.1871 Acc: 0.5537
+val Loss: 1.3568 Acc: 0.3392
+Epoch 34/79
+----------
+ - Batch Number 100 -> Loss: 1.148 Accuracy: 0.578
+ - Batch Number 200 -> Loss: 0.959 Accuracy: 0.598
+ - Batch Number 300 -> Loss: 1.225 Accuracy: 0.586
+ - Batch Number 400 -> Loss: 1.039 Accuracy: 0.600
+train Loss: 1.1724 Acc: 0.5870
+val Loss: 1.3502 Acc: 0.4026
+Early stopping at epoch 34
+Epoch 35/79
+----------
+ - Batch Number 100 -> Loss: 1.125 Accuracy: 0.599
+ - Batch Number 200 -> Loss: 1.348 Accuracy: 0.599
+ - Batch Number 300 -> Loss: 1.436 Accuracy: 0.572
+ - Batch Number 400 -> Loss: 1.007 Accuracy: 0.578
+train Loss: 1.1593 Acc: 0.5873
+Early stopping at epoch 35
+Epoch 36/79
+----------
+ - Batch Number 100 -> Loss: 1.299 Accuracy: 0.610
+ - Batch Number 200 -> Loss: 1.404 Accuracy: 0.619
+ - Batch Number 300 -> Loss: 1.003 Accuracy: 0.590
+ - Batch Number 400 -> Loss: 0.917 Accuracy: 0.602
+train Loss: 1.1556 Acc: 0.6024
+Early stopping at epoch 36
+Epoch 37/79
+----------
+ - Batch Number 100 -> Loss: 1.518 Accuracy: 0.547
+ - Batch Number 200 -> Loss: 1.356 Accuracy: 0.620
+ - Batch Number 300 -> Loss: 1.375 Accuracy: 0.610
+ - Batch Number 400 -> Loss: 0.906 Accuracy: 0.579
+train Loss: 1.1637 Acc: 0.5895
+Early stopping at epoch 37
+Epoch 38/79
+----------
+ - Batch Number 100 -> Loss: 1.173 Accuracy: 0.633
+ - Batch Number 200 -> Loss: 1.208 Accuracy: 0.561
+ - Batch Number 300 -> Loss: 0.948 Accuracy: 0.604
+ - Batch Number 400 -> Loss: 1.033 Accuracy: 0.614
+train Loss: 1.1492 Acc: 0.6021
+Early stopping at epoch 38
+Epoch 39/79
+----------
+ - Batch Number 100 -> Loss: 1.154 Accuracy: 0.643
+ - Batch Number 200 -> Loss: 1.197 Accuracy: 0.574
+ - Batch Number 300 -> Loss: 0.772 Accuracy: 0.610
+ - Batch Number 400 -> Loss: 1.430 Accuracy: 0.608
+train Loss: 1.1435 Acc: 0.6054
+Early stopping at epoch 39
+Epoch 40/79
+----------
+ - Batch Number 100 -> Loss: 1.453 Accuracy: 0.608
+ - Batch Number 200 -> Loss: 1.493 Accuracy: 0.590
+ - Batch Number 300 -> Loss: 1.270 Accuracy: 0.641
+ - Batch Number 400 -> Loss: 1.091 Accuracy: 0.614
+train Loss: 1.1430 Acc: 0.6118
+Early stopping at epoch 40
+Epoch 41/79
+----------
+ - Batch Number 100 -> Loss: 0.919 Accuracy: 0.598
+ - Batch Number 200 -> Loss: 1.217 Accuracy: 0.626
+ - Batch Number 300 -> Loss: 0.948 Accuracy: 0.644
+ - Batch Number 400 -> Loss: 1.154 Accuracy: 0.639
+train Loss: 1.1355 Acc: 0.6218
+Early stopping at epoch 41
+Epoch 42/79
+----------
+ - Batch Number 100 -> Loss: 0.906 Accuracy: 0.647
+ - Batch Number 200 -> Loss: 1.176 Accuracy: 0.657
+ - Batch Number 300 -> Loss: 1.261 Accuracy: 0.610
+ - Batch Number 400 -> Loss: 1.103 Accuracy: 0.619
+train Loss: 1.1321 Acc: 0.6300
+Early stopping at epoch 42
+Epoch 43/79
+----------
+ - Batch Number 100 -> Loss: 0.744 Accuracy: 0.677
+ - Batch Number 200 -> Loss: 1.151 Accuracy: 0.646
+ - Batch Number 300 -> Loss: 1.009 Accuracy: 0.630
+ - Batch Number 400 -> Loss: 1.113 Accuracy: 0.590
+train Loss: 1.1304 Acc: 0.6354
+Early stopping at epoch 43
+Epoch 44/79
+----------
+ - Batch Number 100 -> Loss: 0.902 Accuracy: 0.645
+ - Batch Number 200 -> Loss: 1.061 Accuracy: 0.677
+ - Batch Number 300 -> Loss: 1.148 Accuracy: 0.641
+ - Batch Number 400 -> Loss: 1.225 Accuracy: 0.648
+train Loss: 1.1074 Acc: 0.6509
+Early stopping at epoch 44
+Epoch 45/79
+----------
+ - Batch Number 100 -> Loss: 0.920 Accuracy: 0.642
+ - Batch Number 200 -> Loss: 0.745 Accuracy: 0.678
+ - Batch Number 300 -> Loss: 0.967 Accuracy: 0.661
+ - Batch Number 400 -> Loss: 1.172 Accuracy: 0.651
+train Loss: 1.1152 Acc: 0.6542
+Early stopping at epoch 45
+Epoch 46/79
+----------
+ - Batch Number 100 -> Loss: 1.464 Accuracy: 0.638
+ - Batch Number 200 -> Loss: 1.132 Accuracy: 0.638
+ - Batch Number 300 -> Loss: 1.296 Accuracy: 0.613
+ - Batch Number 400 -> Loss: 0.951 Accuracy: 0.639
+train Loss: 1.1206 Acc: 0.6340
+Early stopping at epoch 46
+Epoch 47/79
+----------
+ - Batch Number 100 -> Loss: 1.187 Accuracy: 0.678
+ - Batch Number 200 -> Loss: 0.995 Accuracy: 0.605
+ - Batch Number 300 -> Loss: 0.964 Accuracy: 0.641
+ - Batch Number 400 -> Loss: 0.977 Accuracy: 0.622
+train Loss: 1.1194 Acc: 0.6353
+Early stopping at epoch 47
+Epoch 48/79
+----------
+ - Batch Number 100 -> Loss: 0.948 Accuracy: 0.676
+ - Batch Number 200 -> Loss: 0.887 Accuracy: 0.679
+ - Batch Number 300 -> Loss: 1.151 Accuracy: 0.624
+ - Batch Number 400 -> Loss: 0.907 Accuracy: 0.662
+train Loss: 1.1060 Acc: 0.6618
+Early stopping at epoch 48
+Epoch 49/79
+----------
+ - Batch Number 100 -> Loss: 1.166 Accuracy: 0.647
+ - Batch Number 200 -> Loss: 1.207 Accuracy: 0.629
+ - Batch Number 300 -> Loss: 1.100 Accuracy: 0.643
+ - Batch Number 400 -> Loss: 1.163 Accuracy: 0.651
+train Loss: 1.1138 Acc: 0.6418
+Early stopping at epoch 49
+Epoch 50/79
+----------
+ - Batch Number 100 -> Loss: 1.195 Accuracy: 0.664
+ - Batch Number 200 -> Loss: 0.975 Accuracy: 0.684
+ - Batch Number 300 -> Loss: 1.211 Accuracy: 0.663
+ - Batch Number 400 -> Loss: 1.182 Accuracy: 0.675
+train Loss: 1.0978 Acc: 0.6698
+Early stopping at epoch 50
+Epoch 51/79
+----------
+ - Batch Number 100 -> Loss: 0.752 Accuracy: 0.633
+ - Batch Number 200 -> Loss: 1.417 Accuracy: 0.652
+ - Batch Number 300 -> Loss: 1.197 Accuracy: 0.687
+ - Batch Number 400 -> Loss: 1.159 Accuracy: 0.650
+train Loss: 1.1033 Acc: 0.6557
+Early stopping at epoch 51
+Epoch 52/79
+----------
+ - Batch Number 100 -> Loss: 1.446 Accuracy: 0.651
+ - Batch Number 200 -> Loss: 1.094 Accuracy: 0.649
+ - Batch Number 300 -> Loss: 1.116 Accuracy: 0.641
+ - Batch Number 400 -> Loss: 0.910 Accuracy: 0.664
+train Loss: 1.0975 Acc: 0.6541
+Early stopping at epoch 52
+Epoch 53/79
+----------
+ - Batch Number 100 -> Loss: 0.932 Accuracy: 0.658
+ - Batch Number 200 -> Loss: 1.145 Accuracy: 0.668
+ - Batch Number 300 -> Loss: 1.103 Accuracy: 0.687
+ - Batch Number 400 -> Loss: 1.203 Accuracy: 0.646
+train Loss: 1.1025 Acc: 0.6635
+Early stopping at epoch 53
+Epoch 54/79
+----------
+ - Batch Number 100 -> Loss: 0.906 Accuracy: 0.708
+ - Batch Number 200 -> Loss: 1.227 Accuracy: 0.677
+ - Batch Number 300 -> Loss: 0.774 Accuracy: 0.647
+ - Batch Number 400 -> Loss: 1.344 Accuracy: 0.632
+train Loss: 1.1021 Acc: 0.6632
+Early stopping at epoch 54
+Epoch 55/79
+----------
+ - Batch Number 100 -> Loss: 0.929 Accuracy: 0.668
+ - Batch Number 200 -> Loss: 0.894 Accuracy: 0.718
+ - Batch Number 300 -> Loss: 1.147 Accuracy: 0.684
+ - Batch Number 400 -> Loss: 0.920 Accuracy: 0.662
+train Loss: 1.0789 Acc: 0.6817
+Early stopping at epoch 55
+Epoch 56/79
+----------
+ - Batch Number 100 -> Loss: 1.201 Accuracy: 0.699
+ - Batch Number 200 -> Loss: 0.972 Accuracy: 0.687
+ - Batch Number 300 -> Loss: 1.086 Accuracy: 0.677
+ - Batch Number 400 -> Loss: 0.912 Accuracy: 0.722
+train Loss: 1.0737 Acc: 0.6939
+Early stopping at epoch 56
+Epoch 57/79
+----------
+ - Batch Number 100 -> Loss: 0.945 Accuracy: 0.654
+ - Batch Number 200 -> Loss: 1.153 Accuracy: 0.724
+ - Batch Number 300 -> Loss: 1.061 Accuracy: 0.690
+ - Batch Number 400 -> Loss: 1.397 Accuracy: 0.656
+train Loss: 1.0948 Acc: 0.6800
+Early stopping at epoch 57
+Epoch 58/79
+----------
+ - Batch Number 100 -> Loss: 1.107 Accuracy: 0.655
+ - Batch Number 200 -> Loss: 1.037 Accuracy: 0.683
+ - Batch Number 300 -> Loss: 1.430 Accuracy: 0.664
+ - Batch Number 400 -> Loss: 1.185 Accuracy: 0.674
+train Loss: 1.0917 Acc: 0.6706
+Early stopping at epoch 58
+Epoch 59/79
+----------
+ - Batch Number 100 -> Loss: 1.189 Accuracy: 0.703
+ - Batch Number 200 -> Loss: 1.153 Accuracy: 0.692
+ - Batch Number 300 -> Loss: 0.891 Accuracy: 0.683
+ - Batch Number 400 -> Loss: 1.409 Accuracy: 0.648
+train Loss: 1.0869 Acc: 0.6822
+Early stopping at epoch 59
+Epoch 60/79
+----------
+ - Batch Number 100 -> Loss: 1.007 Accuracy: 0.705
+ - Batch Number 200 -> Loss: 1.223 Accuracy: 0.678
+ - Batch Number 300 -> Loss: 1.125 Accuracy: 0.691
+ - Batch Number 400 -> Loss: 1.058 Accuracy: 0.674
+train Loss: 1.0842 Acc: 0.6843
+Early stopping at epoch 60
+Epoch 61/79
+----------
+ - Batch Number 100 -> Loss: 1.171 Accuracy: 0.682
+ - Batch Number 200 -> Loss: 0.946 Accuracy: 0.699
+ - Batch Number 300 -> Loss: 1.217 Accuracy: 0.701
+ - Batch Number 400 -> Loss: 1.212 Accuracy: 0.690
+train Loss: 1.0844 Acc: 0.6933
+Early stopping at epoch 61
+Epoch 62/79
+----------
+ - Batch Number 100 -> Loss: 1.197 Accuracy: 0.714
+ - Batch Number 200 -> Loss: 0.994 Accuracy: 0.677
+ - Batch Number 300 -> Loss: 0.904 Accuracy: 0.718
+ - Batch Number 400 -> Loss: 0.744 Accuracy: 0.691
+train Loss: 1.0751 Acc: 0.6991
+Early stopping at epoch 62
+Epoch 63/79
+----------
+ - Batch Number 100 -> Loss: 0.996 Accuracy: 0.689
+ - Batch Number 200 -> Loss: 0.990 Accuracy: 0.716
+ - Batch Number 300 -> Loss: 1.145 Accuracy: 0.717
+ - Batch Number 400 -> Loss: 1.174 Accuracy: 0.708
+train Loss: 1.0686 Acc: 0.7036
+Early stopping at epoch 63
+Epoch 64/79
+----------
+ - Batch Number 100 -> Loss: 0.942 Accuracy: 0.687
+ - Batch Number 200 -> Loss: 0.932 Accuracy: 0.754
+ - Batch Number 300 -> Loss: 1.471 Accuracy: 0.698
+ - Batch Number 400 -> Loss: 1.095 Accuracy: 0.713
+train Loss: 1.0684 Acc: 0.7104
+Early stopping at epoch 64
+Epoch 65/79
+----------
+ - Batch Number 100 -> Loss: 1.214 Accuracy: 0.712
+ - Batch Number 200 -> Loss: 0.906 Accuracy: 0.720
+ - Batch Number 300 -> Loss: 0.916 Accuracy: 0.687
+ - Batch Number 400 -> Loss: 0.997 Accuracy: 0.713
+train Loss: 1.0694 Acc: 0.7086
+Early stopping at epoch 65
+Epoch 66/79
+----------
+ - Batch Number 100 -> Loss: 0.944 Accuracy: 0.732
+ - Batch Number 200 -> Loss: 1.098 Accuracy: 0.727
+ - Batch Number 300 -> Loss: 0.904 Accuracy: 0.682
+ - Batch Number 400 -> Loss: 1.180 Accuracy: 0.701
+train Loss: 1.0709 Acc: 0.7111
+Early stopping at epoch 66
+Epoch 67/79
+----------
+ - Batch Number 100 -> Loss: 1.429 Accuracy: 0.711
+ - Batch Number 200 -> Loss: 0.941 Accuracy: 0.711
+ - Batch Number 300 -> Loss: 0.929 Accuracy: 0.738
+ - Batch Number 400 -> Loss: 1.138 Accuracy: 0.732
+train Loss: 1.0514 Acc: 0.7206
+Early stopping at epoch 67
+Epoch 68/79
+----------
+ - Batch Number 100 -> Loss: 1.129 Accuracy: 0.736
+ - Batch Number 200 -> Loss: 1.146 Accuracy: 0.702
+ - Batch Number 300 -> Loss: 1.233 Accuracy: 0.723
+ - Batch Number 400 -> Loss: 0.900 Accuracy: 0.720
+train Loss: 1.0598 Acc: 0.7183
+Early stopping at epoch 68
+Epoch 69/79
+----------
+ - Batch Number 100 -> Loss: 1.170 Accuracy: 0.712
+ - Batch Number 200 -> Loss: 0.911 Accuracy: 0.723
+ - Batch Number 300 -> Loss: 0.746 Accuracy: 0.724
+ - Batch Number 400 -> Loss: 1.391 Accuracy: 0.714
+train Loss: 1.0658 Acc: 0.7201
+Early stopping at epoch 69
+Epoch 70/79
+----------
+ - Batch Number 100 -> Loss: 0.744 Accuracy: 0.741
+ - Batch Number 200 -> Loss: 1.122 Accuracy: 0.712
+ - Batch Number 300 -> Loss: 0.991 Accuracy: 0.747
+ - Batch Number 400 -> Loss: 1.011 Accuracy: 0.706
+train Loss: 1.0571 Acc: 0.7226
+Early stopping at epoch 70
+Epoch 71/79
+----------
+ - Batch Number 100 -> Loss: 1.157 Accuracy: 0.733
+ - Batch Number 200 -> Loss: 1.437 Accuracy: 0.736
+ - Batch Number 300 -> Loss: 1.125 Accuracy: 0.727
+ - Batch Number 400 -> Loss: 0.916 Accuracy: 0.738
+train Loss: 1.0553 Acc: 0.7329
+Early stopping at epoch 71
+Epoch 72/79
+----------
+ - Batch Number 100 -> Loss: 0.892 Accuracy: 0.738
+ - Batch Number 200 -> Loss: 0.932 Accuracy: 0.705
+ - Batch Number 300 -> Loss: 0.744 Accuracy: 0.693
+ - Batch Number 400 -> Loss: 1.209 Accuracy: 0.737
+train Loss: 1.0586 Acc: 0.7178
+Early stopping at epoch 72
+Epoch 73/79
+----------
+ - Batch Number 100 -> Loss: 0.952 Accuracy: 0.688
+ - Batch Number 200 -> Loss: 1.473 Accuracy: 0.706
+ - Batch Number 300 -> Loss: 1.123 Accuracy: 0.699
+ - Batch Number 400 -> Loss: 0.931 Accuracy: 0.743
+train Loss: 1.0777 Acc: 0.7066
+Early stopping at epoch 73
+Epoch 74/79
+----------
+ - Batch Number 100 -> Loss: 1.158 Accuracy: 0.745
+ - Batch Number 200 -> Loss: 1.186 Accuracy: 0.750
+ - Batch Number 300 -> Loss: 1.419 Accuracy: 0.740
+ - Batch Number 400 -> Loss: 0.746 Accuracy: 0.735
+train Loss: 1.0409 Acc: 0.7436
+Early stopping at epoch 74
+Epoch 75/79
+----------
+ - Batch Number 100 -> Loss: 0.934 Accuracy: 0.750
+ - Batch Number 200 -> Loss: 1.082 Accuracy: 0.756
+ - Batch Number 300 -> Loss: 1.184 Accuracy: 0.735
+ - Batch Number 400 -> Loss: 0.901 Accuracy: 0.722
+train Loss: 1.0466 Acc: 0.7371
+Early stopping at epoch 75
+Epoch 76/79
+----------
+ - Batch Number 100 -> Loss: 1.134 Accuracy: 0.756
+ - Batch Number 200 -> Loss: 1.089 Accuracy: 0.744
+ - Batch Number 300 -> Loss: 0.930 Accuracy: 0.759
+ - Batch Number 400 -> Loss: 0.951 Accuracy: 0.757
+train Loss: 1.0443 Acc: 0.7524
+Early stopping at epoch 76
+Epoch 77/79
+----------
+ - Batch Number 100 -> Loss: 1.160 Accuracy: 0.748
+ - Batch Number 200 -> Loss: 1.188 Accuracy: 0.751
+ - Batch Number 300 -> Loss: 1.166 Accuracy: 0.712
+ - Batch Number 400 -> Loss: 0.992 Accuracy: 0.730
+train Loss: 1.0492 Acc: 0.7339
+Early stopping at epoch 77
+Epoch 78/79
+----------
+ - Batch Number 100 -> Loss: 1.210 Accuracy: 0.759
+ - Batch Number 200 -> Loss: 1.204 Accuracy: 0.744
+ - Batch Number 300 -> Loss: 1.179 Accuracy: 0.734
+ - Batch Number 400 -> Loss: 1.446 Accuracy: 0.731
+train Loss: 1.0522 Acc: 0.7442
+Early stopping at epoch 78
+Epoch 79/79
+----------
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:      train_batches/batch ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_batches/train_acc ▁▂▂▃▂▃▃▃▃▃▄▃▄▄▄▄▅▅▅▆▆▆▆▆▆▇▆▆▇▇▇▇▇▇▇▇████
+wandb: train_batches/train_loss ▆▆▇▇▅▇▄▆▂▆█▇▄▇▄▆▂▃▂▃▄▄▅▃▂▄▂▆▂▄▃▁▄▄▂▃▅▁▃▅
+wandb:       train_epochs/epoch ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇███
+wandb:   train_epochs/train_acc ▁▂▂▃▂▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▆▆▇▇▇▇▇▇▇▇▇███
+wandb:  train_epochs/train_loss ██▇▇▇▆▇▆▆▆▆▅▅▅▅▅▄▄▄▄▄▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁
+wandb:         val_epochs/epoch ▁▁▁▂▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇███
+wandb:       val_epochs/val_acc ▂▂▂▁▂▂▅▃▄▄▅▅▄▆▂▆▄▆▄▆▅▅▅▇█▆▄▄▅▄▄▄▅▁▆
+wandb:      val_epochs/val_loss ▃▃▃▅▄▄▅▃▅▃▄▄▃▄▅▄▄▃▄▂▂▄▁▃▂▂▇▄▃▅█▆▆▆▅
+wandb: 
+wandb: Run summary:
+wandb:      train_batches/batch 400
+wandb:  train_batches/train_acc 0.72993
+wandb: train_batches/train_loss 1.2533
+wandb:       train_epochs/epoch 79
+wandb:   train_epochs/train_acc 0.75897
+wandb:  train_epochs/train_loss 1.02927
+wandb:         val_epochs/epoch 34
+wandb:       val_epochs/val_acc 0.40261
+wandb:      val_epochs/val_loss 1.35015
+wandb: 
+wandb: 🚀 View run lucky-feather-133 at: https://wandb.ai/tfg_oriol/action_classification/runs/h2m807xo
 wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20230504_110749-0d33cinx/logs
-Traceback (most recent call last):
-  File "main.py", line 147, in <module>
-    run_experiment()
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/main.py", line 94, in decorated_main
-    _run_hydra(
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
-    _run_app(
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 457, in _run_app
-    run_and_report(
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
-    raise ex
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
-    return func()
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
-    lambda: hydra.run(
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/_internal/hydra.py", line 132, in run
-    _ = ret.return_value
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 260, in return_value
-    raise self._return_value
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/hydra/core/utils.py", line 186, in run_job
-    ret.return_value = task_function(task_cfg)
-  File "main.py", line 125, in run_experiment
-    trained_model = train_model(model, dataloaders, criterion, optimizer, DEVICE, num_epochs, print_batch)
-  File "/home-net/omartinez/TFG/train.py", line 49, in train_model
-    outputs = model(inputs)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home-net/omartinez/TFG/models/model_v1.py", line 201, in forward
-    x = block.forward(x)
-  File "/home-net/omartinez/TFG/models/model_v1.py", line 113, in forward
-    x = x + self.attn(self.norm1(x))[0] # [out, scores]
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home-net/omartinez/TFG/models/model_v1.py", line 67, in forward
-    output = self.attention.apply_attention(Q=q, K=k, V=v)
-  File "/home-net/omartinez/TFG/attention_zoo/attentions/linformer/linformer.py", line 26, in apply_attention
-    K = self.to_k(K)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
-    return F.linear(input, self.weight, self.bias)
-RuntimeError: mat1 and mat2 shapes cannot be multiplied (1536x4901 and 4900x64)
-Exception in thread ChkStopThr:
-Traceback (most recent call last):
-  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
-    self.run()
-  File "/usr/lib/python3.8/threading.py", line 870, in run
-    self._target(*self._args, **self._kwargs)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 276, in check_stop_status
-    self._loop_check_status(
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 214, in _loop_check_status
-    local_handle = request()
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface.py", line 787, in deliver_stop_status
-    return self._deliver_stop_status(status)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_shared.py", line 585, in _deliver_stop_status
-    return self._deliver_record(record)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_shared.py", line 560, in _deliver_record
-    handle = mailbox._deliver_record(record, interface=self)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/mailbox.py", line 455, in _deliver_record
-    interface._publish(record)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/interface/interface_sock.py", line 51, in _publish
-    self._sock_client.send_record_publish(record)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 221, in send_record_publish
-    self.send_server_request(server_req)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 155, in send_server_request
-    self._send_message(msg)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 152, in _send_message
-    self._sendall_with_error_handle(header + data)
-  File "/home-net/omartinez/TFG/TFG_venv/lib/python3.8/site-packages/wandb/sdk/lib/sock_client.py", line 130, in _sendall_with_error_handle
-    sent = self._sock.send(data)
-BrokenPipeError: [Errno 32] Broken pipe
+wandb: Find logs at: ./wandb/run-20230604_092528-h2m807xo/logs
+ - Batch Number 100 -> Loss: 0.903 Accuracy: 0.763
+ - Batch Number 200 -> Loss: 0.977 Accuracy: 0.783
+ - Batch Number 300 -> Loss: 1.140 Accuracy: 0.761
+ - Batch Number 400 -> Loss: 1.253 Accuracy: 0.730
+train Loss: 1.0293 Acc: 0.7590
+Early stopping at epoch 79
+Training complete in 3552m 23s
+Best val Acc: 0.440832
+Model saved at /home-net/omartinez/TFG/weights/linformer_2
